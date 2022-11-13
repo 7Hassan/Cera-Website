@@ -1,0 +1,155 @@
+exports.productsData = [
+  {
+    imgUrl: "imgs/products/f1.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 100,
+  },
+  {
+    imgUrl: "imgs/products/f2.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 99,
+  },
+  {
+    imgUrl: "imgs/products/f3.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 99,
+  },
+  {
+    imgUrl: "imgs/products/f4.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 90,
+  },
+  {
+    imgUrl: "imgs/products/f5.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 95,
+  },
+  {
+    imgUrl: "imgs/products/f6.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 199,
+  },
+  {
+    imgUrl: "imgs/products/f7.jpg",
+    name: "Pants",
+    stars: 3,
+    price: 170,
+  },
+  {
+    imgUrl: "imgs/products/f8.jpg",
+    name: "Blouse",
+    stars: 4,
+    price: 90,
+  },
+  {
+    imgUrl: "imgs/products/f9.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 199,
+  },
+  {
+    imgUrl: "imgs/products/f10.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 199,
+  },
+  {
+    imgUrl: "imgs/products/f11.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 149,
+  },
+  {
+    imgUrl: "imgs/products/f12.jpg",
+    name: "Jacket",
+    stars: 5,
+    price: 299,
+  },
+
+  {
+    imgUrl: "imgs/products/f14.jpg",
+    name: "Long Jacket",
+    stars: 5,
+    price: 349,
+  },
+
+  {
+    imgUrl: "imgs/products/f6.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 99,
+  },
+
+  {
+    imgUrl: "imgs/products/f18.jpg",
+    name: "Shirt",
+    stars: 2,
+    price: 70,
+  },
+  {
+    imgUrl: "imgs/products/f19.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 90,
+  },
+  {
+    imgUrl: "imgs/products/f20.jpg",
+    name: "Shirt",
+    stars: 3,
+    price: 50,
+  },
+  {
+    imgUrl: "imgs/products/f21.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 90,
+  },
+  {
+    imgUrl: "imgs/products/f23.jpg",
+    name: "Short",
+    stars: 3,
+    price: 109,
+  },
+  {
+    imgUrl: "imgs/products/f24.jpg",
+    name: "T-Shirt",
+    stars: 2,
+    price: 69,
+  },
+  {
+    imgUrl: "imgs/products/f25.jpg",
+    name: "T-Shirt",
+    stars: 5,
+    price: 119,
+  },
+  {
+    imgUrl: "imgs/products/f22.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 149,
+  },
+  {
+    imgUrl: "imgs/products/f17.jpg",
+    name: "Shirt",
+    stars: 5,
+    price: 109,
+  },
+  {
+    imgUrl: "imgs/products/f15.jpg",
+    name: "Shirt",
+    stars: 4,
+    price: 99,
+  },
+  {
+    imgUrl: "imgs/products/f13.jpg",
+    name: "Jacket",
+    stars: 5,
+    price: 399,
+  },
+];
