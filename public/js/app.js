@@ -6,12 +6,14 @@ let navA = [...document.querySelectorAll(".nav ul a")];
 let navIcon = document.querySelector(".shop-icon");
 let userIcon = document.querySelector(".user-icon i");
 let nav = document.getElementById("nav-bar");
-let navButtom = document.getElementById("nav-buttom");
+let navButtom = document.querySelector("#nav-buttom i");
+let xIcon = document.querySelector(".x-icon i");
 let holderDivsCart = document.querySelector(".holder-cart");
+let holderDivUser = document.querySelector(".user-div");
 let containerDivsCart = document.querySelector(".container-cart");
 
 // Run Function
-if (window.location.pathname != "/payment.hbs") {
+if (window.location.pathname != "/payment.hbs" && window.location.pathname != "/createAccount.hbs" && window.location.pathname != "/registration.hbs") {
   addActiveBar();
   clickHaederMenu();
   getLocalStroageData();
@@ -31,11 +33,20 @@ function addActiveBar() {
 
   //add and remove active class from navbar icon
   navIcon.addEventListener("click", () => {
+    if (userIcon.classList.contains("active")) {
+      userIcon.classList.remove("active");
+      holderDivUser.classList.remove("show");
+    }
     navIcon.classList.toggle("active");
     holderDivsCart.classList.toggle("show");
   });
   userIcon.addEventListener("click", () => {
+    if (navIcon.classList.contains("active")) {
+      navIcon.classList.remove("active");
+      holderDivsCart.classList.remove("show");
+    }
     userIcon.classList.toggle("active");
+    holderDivUser.classList.toggle("show");
   });
 }
 
@@ -44,9 +55,20 @@ function addActiveBar() {
 // Function to add and remove click class from heder menu buttom
 function clickHaederMenu() {
   navButtom.addEventListener("click", () => {
-    navButtom.classList.toggle("click");
-    nav.classList.toggle("click");
+    document.querySelector(".over-layout").classList.add('click-nav');
+    document.querySelector(".x-icon").classList.add('show');
+    document.body.classList.add('hidden')
+    nav.classList.add("click");
   });
+  xIcon.addEventListener("click", () => {
+    document.querySelector(".over-layout").classList.remove('click-nav');
+    document.querySelector(".x-icon").classList.remove('show');
+    document.body.classList.remove('hidden')
+    nav.classList.remove("click");
+  });
+
+
+
 }
 
 /*Local storage */
@@ -330,11 +352,10 @@ function setDataonload() {
 /* Payment */
 // Function to on create popup overlay
 function popupOverlay(elements) {
-  let divOverlay = document.createElement("div");
-  document.body.appendChild(divOverlay);
+  let divOverlay = document.querySelector(".over-layout");
   elements.forEach((ele) => {
     ele.addEventListener("click", () => {
-      divOverlay.classList.add("over-layout");
+      divOverlay.classList.add("show");
       if (ele == elements[0]) {
         document.querySelector(".credit-card").classList.remove("show");
       } else {
@@ -343,7 +364,7 @@ function popupOverlay(elements) {
     });
   });
   divOverlay.addEventListener("click", () => {
-    divOverlay.classList.remove("over-layout");
+    divOverlay.classList.remove("show");
     document.querySelector(".credit-card").classList.add("show");
     document.querySelector(".location").classList.add("show");
   });
@@ -511,6 +532,24 @@ function createEndSecProducts() {
 </div>
   `;
 }
+/* see and hide passord function */
+function passordFunction() {
+  let passInput = document.querySelector('.password-input');
+  let seeEye = document.querySelector('.fa-eye');
+  let hideEye = document.querySelector('.fa-eye-slash');
+
+  //Hide password
+  seeEye.addEventListener('click', () => {
+    passInput.type = "password";
+    seeEye.style.display = 'none';
+    hideEye.style.display = 'inline';
+  });
+  //see password
+  hideEye.addEventListener('click', () => {
+    passInput.type = "text";
+    seeEye.style.display = 'inline';
+    hideEye.style.display = 'none';
+  });
+}
 
 
-/* */

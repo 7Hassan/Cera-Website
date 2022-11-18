@@ -17,3 +17,9 @@ exports.contactPageFunction = (req, res) => {
 exports.blogPageFunction = (req, res) => {
   res.render("blog");
 };
+exports.registrationPageFunction = (req, res) => {
+  res.render("registration");
+};
+exports.createAccountPageFunction = (req, res) => {
+  res.render("createAccount");
+};
