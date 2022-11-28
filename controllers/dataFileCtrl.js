@@ -1,11 +1,12 @@
-const { productsData } = require("../Data.js");
 
 exports.getDataFunction = (req, res) => {
   try {
-    res.json({
-      products: productsData,
-    });
-  } catch (error) {
-    console.log(error);
+    const Event = require("../models/products");
+    Event.find({}, (err, products) => res.json({ products: products }));
+  } catch (err) {
+    console.log(err);
   }
 };
+
+
+

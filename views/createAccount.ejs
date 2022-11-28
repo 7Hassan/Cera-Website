@@ -1,0 +1,66 @@
+<%- include('partials/head.ejs') %>
+
+  <body>
+    <div class="layout sin-up">
+      <div class="img-log">
+        <img src="imgs/logo.png" alt="">
+        <a href="registration">Log In</a>
+      </div>
+      <div class="main-log">
+        <div class="text-head">
+          Sin Up to Cera
+        </div>
+        <div class="log">
+          <div class="accounts">
+
+            <div class="apple-log">
+              <button><i class="fa-brands fa-apple"></i> Containue with Apple</button>
+            </div>
+            <div class="google-log">
+              <button>Containue with Google</button>
+            </div>
+            <span>or </span>
+          </div>
+          <div class="email-input">
+            <form action="">
+              <div class="User-sinUp-name">
+                <input required type="text" maxlength="12" name="" id="" placeholder="Frist name">
+                <input required type="text" maxlength="12" name="" id="" placeholder="Last name">
+              </div>
+              <div class="User-sinUp-email">
+                <input required type="email" name="" id="" placeholder="Email">
+              </div>
+              <div class="User-sinUp-pass">
+                <input required type="password" maxlength="8" name="" class="password-input" id="userSinUpPass"
+                  placeholder="Password">
+                <i class="fa-sharp fa-solid fa-eye-slash"></i>
+                <i class="fa-solid fa-eye" style="display:none ;"></i>
+              </div>
+              <div class="User-sinUp-country">
+                <input required type="text" name="" id="" placeholder="Country">
+              </div>
+              <button class="normal">Create my account</button>
+            </form>
+          </div>
+
+          <div class="log-in-text">
+            Already have an account?<a href="registration"> Log In</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+    <script src="js/app.js"></script>
+    <script>
+      passordFunction();
+    </script>
+
+  </body>
+
+  </html>

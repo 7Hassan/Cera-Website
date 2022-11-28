@@ -1,6 +1,12 @@
 // Data in carte
 let carteData = [];
 
+
+// Get Data
+async function getAllData() {
+  res = await axios.get("http://localhost:3000/Data");
+  return res.data.products;
+}
 // Get Elements in header
 let navA = [...document.querySelectorAll(".nav ul a")];
 let navIcon = document.querySelector(".shop-icon");
@@ -13,7 +19,7 @@ let holderDivUser = document.querySelector(".user-div");
 let containerDivsCart = document.querySelector(".container-cart");
 
 // Run Function
-if (window.location.pathname != "/payment.hbs" && window.location.pathname != "/createAccount.hbs" && window.location.pathname != "/registration.hbs") {
+if (window.location.pathname != "/payment" && window.location.pathname != "/createAccount" && window.location.pathname != "/registration") {
   addActiveBar();
   clickHaederMenu();
   getLocalStroageData();
@@ -25,9 +31,13 @@ if (window.location.pathname != "/payment.hbs" && window.location.pathname != "/
 function addActiveBar() {
   //add active class  to navbar a elements
   navA.forEach((a) => {
+    if (a.href == window.location.href) {
+      a.classList.add('active');
+    } else if (window.location.href == 'http://localhost:3000/') {
+      navA[0].classList.add('active');
+    }
     a.addEventListener("click", () => {
       removeActiveBar();
-      a.classList.add("active");
     });
   });
 
@@ -85,31 +95,9 @@ function setLocalStroageData() {
   localStorage.setItem("data", JSON.stringify(carteData));
 }
 
-/* Shop page */
-async function showData() {
-  //All data
-  products = await getAllData();
 
-  setAllproducts(products);
 
-  setProdutBoxs(document.querySelector(".other-products .container"), products, 4, 8);
-  //on click on product
-  ProductsOnclick(products);
 
-  //Add products to shop carte
-  addProductToCart(
-    document.getElementById("main-img"),
-    document.getElementById("price-product")
-  );
-
-  totalPrice(document.querySelectorAll(".total"));
-}
-
-// Get Data
-async function getAllData() {
-  response = await axios.get("http://localhost:3000/Data");
-  return response.data.products;
-}
 
 // set all producrs in shop page
 function setAllproducts(products) {
@@ -137,37 +125,27 @@ function setAllproducts(products) {
 }
 
 // Function to set products boxs
-async function setProdutBoxs(element, path, min, max) {
+async function setProdutBoxs(element, products, min, max) {
   for (let i = min; i < max; i++) {
-    element.innerHTML += createProdutBox(path, i);
+    element.innerHTML += createProdutBox(products, i);
   }
 }
 
-// get and set product on click
-function ProductsOnclick(products) {
-  document.querySelectorAll(".product-box").forEach((product) => {
-    product.addEventListener("click", () => {
-      document.querySelector(".mian-shop").style.display = "none";
-      document.querySelector(".product-home").style.display = "block";
 
-      //get data of current product
-      let productImgSrc = product.firstElementChild.src.split("3000/")[1];
-      let productData = products.filter((obj) => obj.imgUrl == productImgSrc);
-      let indexProduct = products.indexOf(productData[0]);
 
-      getDataProduct(productData[0]);
-      // show imgs thats are around main img of product
-      showOtherImgs(products, indexProduct);
-    });
-  });
-}
+
+
+
+
+
 
 // push data in carteData and local stroage
-function addProductToCart(img, price) {
+function addProductToCart(id, img, price) {
   document.getElementById("cart-shop").addEventListener("click", () => {
     let check = carteData.filter((prod) => prod.imgUrl == img.src);
     if (check == 0) {
       carteData.push({
+        id: id,
         imgUrl: img.src,
         price: price.textContent,
         count: document.getElementById("count-product").value,
@@ -201,37 +179,43 @@ function totalPrice(elements) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Create box for product
-function createProdutBox(path, i) {
+function createProdutBox(products, i) {
   let stars = "";
-  for (let i = 0; i < path[i].stars; i++) {
+  for (let j = 0; j < products[i].stars; j++) {
     stars += '<i class="fa-solid fa-star"></i>';
   }
-  return `
-        <div class="product-box"><img src="${path[i].imgUrl}" alt="product image">
-          <div class="details"><span>Cera</span>
-            <h5>Cartoon Astronaut ${path[i].name}</h5>
-            <div class="stars">
-            ${stars}
-            </div>
-            <h4>$${path[i].price}</h4>
-          </div>
-          <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+  if (products[i].stoked == true) {
+    return `
+    <div class="product-box" onclick='window.location.pathname= "/shop/${products[i]._id}"'>
+    <img src="${products[i].imgUrl}" alt="product image">
+      <div class="details"><span>Cera</span>
+        <h5>Cartoon Astronaut ${products[i].name}</h5>
+        <div class="stars">
+        ${stars}
         </div>
-    `;
+        <h4>$${products[i].price}</h4>
+      </div>
+      <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+    </div>
+`
+  } else {
+    return `
+    <div class="product-box" style="opacity:.5; pointer-events: none;" >
+    <img src="${products[i].imgUrl}" alt="product image">
+      <div style="color:red; font-weight:600;">It will be soon</div>
+      <div class="details"><span>Cera</span>
+        <h5>Cartoon Astronaut ${products[i].name}</h5>
+        <div class="stars">
+        ${stars}
+        </div>
+        <h4>$${products[i].price}</h4>
+      </div>
+      <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+    </div>
+`
+  }
+
 }
 
 
@@ -471,23 +455,8 @@ function luhnAlgorithmCheck(num) {
 }
 
 
-// onclick on img to show
-function showOtherImgs(products, Index) {
-  allImgs = [...document.querySelectorAll(".other-imgs img")];
-  allImgs[0].src = products[Index].imgUrl;
-  for (let i = 0; i < allImgs.length; i++) {
-    if (Index + i >= products.length) {
-      Index = 0;
-    }
-    console.log(Index + i);
 
-    allImgs[i].src = products[Index + i].imgUrl;
-    allImgs[i].addEventListener("click", () => {
-      document.getElementById("main-img").src = allImgs[i].src;
-      getDataProduct(products[Index + i]);
-    });
-  }
-}
+
 
 
 
@@ -505,7 +474,7 @@ function getDataProduct(product) {
 
 function createSecProducts() {
   return `
-    <div class="button-products">
+      <div div class= "button-products" >
       <button class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
         <i class="fa-solid fa-angles-left"></i>
       </button>
@@ -514,13 +483,13 @@ function createSecProducts() {
       <button class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
         <i class="fa-solid fa-angles-right"></i>
       </button>
-    </div>
-  `;
+    </div >
+        `;
 }
 
 function createEndSecProducts() {
   return `
-  <div class="button-products">
+        <div div class="button-products" >
   <button style=" visibility: hidden;"  class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
     <i class="fa-solid fa-angles-left"></i>
   </button>
@@ -528,9 +497,9 @@ function createEndSecProducts() {
   </div>
   <button style=" visibility: hidden;" class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
     <i class="fa-solid fa-angles-right"></i>
-  </button>
-</div>
-  `;
+  </button>s
+</div >
+        `;
 }
 /* see and hide passord function */
 function passordFunction() {
@@ -551,5 +520,9 @@ function passordFunction() {
     hideEye.style.display = 'none';
   });
 }
+
+
+
+
 
 

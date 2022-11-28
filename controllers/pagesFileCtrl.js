@@ -1,25 +1,31 @@
 // create function and export it to pages.js
 exports.homePageFunction = (req, res) => {
-  res.render("index"); // send the rendered view to the client
+  const Event = require("../models/products");
+  Event.find({}, (err, products) => {
+    res.render("index", { products: products, title: "Cera" }); // send the rendered view to the client
+  })
 };
 exports.shopPageFunction = (req, res) => {
-  res.render("shop");
+  const Event = require("../models/products");
+  Event.find({}, (err, products) => {
+    res.render("shop", { products: products, title: "Cera Shop" })
+  });
 };
 exports.aboutPageFunction = (req, res) => {
-  res.render("about");
+  res.render("about", { title: "About Us" });
 };
 exports.paymentPageFunction = (req, res) => {
-  res.render("payment");
+  res.render("payment", { title: "Payment" });
 };
 exports.contactPageFunction = (req, res) => {
-  res.render("contact");
+  res.render("contact", { title: "Contact Us" });
 };
 exports.blogPageFunction = (req, res) => {
-  res.render("blog");
+  res.render("blog", { title: "Cera Blog" });
 };
 exports.registrationPageFunction = (req, res) => {
-  res.render("registration");
+  res.render("registration", { title: "Log In" });
 };
 exports.createAccountPageFunction = (req, res) => {
-  res.render("createAccount");
+  res.render("createAccount", { title: "Sin Up" });
 };

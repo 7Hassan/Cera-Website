@@ -14,13 +14,13 @@ const {
 const router = express.Router();
 
 router.get("/", homePageFunction);
-router.get("/index.hbs", homePageFunction);
-router.get("/shop.hbs", shopPageFunction);
-router.get("/about.hbs", aboutPageFunction);
-router.get("/payment.hbs", paymentPageFunction);
-router.get("/registration.hbs", registrationPageFunction);
-router.get("/contact.hbs", contactPageFunction);
-router.get("/blog.hbs", blogPageFunction);
-router.get("/createAccount.hbs", createAccountPageFunction);
+router.get("/shop", shopPageFunction);
+router.get("/about", aboutPageFunction);
+router.get("/payment", paymentPageFunction);
+router.get("/registration", registrationPageFunction);
+router.get("/contact", contactPageFunction);
+router.get("/blog", blogPageFunction);
+router.get("/createAccount", createAccountPageFunction);
+
 
 module.exports = router;

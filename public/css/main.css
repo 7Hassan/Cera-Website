@@ -313,6 +313,7 @@ body.hidden {
   border: none;
   font-size: 17px;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .user-div .log-out:hover {
@@ -770,7 +771,7 @@ footer .container {
   justify-content: space-between;
   justify-content: flex-start;
   gap: 30px;
-  margin-top: 15px;
+  margin: 15px 0 30px;
 }
 
 footer .container div {
@@ -940,6 +941,10 @@ footer .copyright {
   flex-direction: column;
   justify-content: center;
   gap: 5px;
+}
+
+.product .container .imgs #main-img {
+  height: 400px;
 }
 
 .product .container .imgs img,
@@ -1306,23 +1311,27 @@ footer .copyright {
 }
 
 .over-layout {
-  background-color: rgb(0, 0, 0, .7);
-  width: 100%;
-  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 4;
-  display: none;
+  z-index: 2;
+  width: 0%;
+  height: 100%;
+  transition: .2s;
+  background-color: rgb(0, 0, 0, .7);
+}
+
+.main-payment .over-layout {
+  width: 100%;
+  height: 0%;
 }
 
 .over-layout.show {
-  display: block;
+  height: 100%;
 }
 
 .over-layout.click-nav {
-  display: block;
-  width: calc(100% - 250px);
+  width: 100%;
 }
 
 
@@ -1331,8 +1340,12 @@ footer .copyright {
   margin: 50px 0;
 }
 
+footer .contact {
+  margin: 0;
+}
+
 .contact .container div {
-  margin: auto;
+  margin: 30px auto;
 }
 
 .contact .container form {
@@ -1357,11 +1370,11 @@ footer .copyright {
 
 .contact .container form textarea {
   padding: 10px 15px;
-
   border: 1px solid #ccc;
   font-size: 18px;
   outline: none;
   border-radius: 10px;
+  width: 100%;
 
 }
 
@@ -1489,14 +1502,14 @@ footer .copyright {
   }
 }
 
-@media (max-width: 1299px) {
+@media (max-width: 1050px) {
   .container.boxs:not(.mian-shop .container.boxs) {
     justify-content: space-evenly;
     justify-content: center;
   }
 
   .main-sec-home {
-    height: 60vh;
+    height: 40vh;
     background-position: top 30% right 70%;
   }
 
@@ -1556,7 +1569,7 @@ footer .copyright {
 
 @media (max-width: 899px) {
   .container {
-    padding: 0 40px;
+    padding: 0 20px;
   }
 
   .mian-shop .container {
@@ -1564,10 +1577,10 @@ footer .copyright {
     margin: 0;
   }
 
-  .main-sec-home {
+  /* .main-sec-home {
     height: 40vh;
     background-position: top 30% right 70%;
-  }
+  } */
 
   .main-sec-home h2 {
     font-size: 30px;
@@ -1622,41 +1635,25 @@ footer .copyright {
 
 
 
-
-
-
-
-
 #nav-bar .user a {
   color: white;
   font-weight: 700;
 }
 
-.x-icon.show {
-  z-index: 1000;
-  opacity: 1;
-  transition: .5s;
-}
-
 .x-icon {
-  position: fixed;
-  right: 272px;
-  top: 33px;
-  z-index: -1;
-  opacity: 0;
+  position: absolute;
+  left: -40px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-.x-icon i {
-  color: white;
-  cursor: pointer;
-  font-size: 19px;
-}
 
 
 @media (max-width: 799px) {
   #nav-bar {
-    top: 328px;
-    left: calc(100% + 125px);
+    position: fixed;
+    bottom: -50%;
+    left: calc(100% + 200px);
     width: 250px;
     z-index: 6;
     height: 100vh;
@@ -1760,10 +1757,6 @@ footer .copyright {
 }
 
 @media (max-height: 599px) {
-  .main-sec-home {
-    height: 60vh;
-    background-position: top 30% right 70%;
-  }
 
   .sm-banner .banner-box {
     height: 35vh;
@@ -1785,6 +1778,13 @@ footer .copyright {
 
   .third-banner .container div {
     height: 20vh;
+  }
+
+}
+
+@media (max-height:700px) {
+  .main-sec-home {
+    height: 100vh;
   }
 
 }
@@ -2190,6 +2190,7 @@ footer p a:hover {
   justify-content: space-between;
   padding: 15px;
   align-items: center;
+  padding: 0 30px;
 }
 
 .sin-up .accounts .google-log::before {
@@ -2253,6 +2254,7 @@ footer p a:hover {
 .sin-up .img-log a {
   font-weight: 600;
   color: #1f57c3;
+
 }
 
 .sin-up .log-in-text a:hover,

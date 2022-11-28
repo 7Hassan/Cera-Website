@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" href="../imgs/Logo/logo.png">
+  <title>product</title>
+</head>
+
+<body>
+  <div id="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="../imgs/logo.png" alt="logo" /></a>
+      </div>
+      <div class="text">
+        <i data-content="0" class="fa-solid fa-cart-shopping shop-icon"></i>
+        <div class="user-icon">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div id="nav-buttom">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </div>
+      <div class="holder-cart">
+        <div class="holde-total">
+          <div class="total-carte">
+            Total:
+            <span class="total"></span>
+          </div>
+        </div>
+
+        <div class="container-cart">
+          <h6 style="text-align: center">add products to cart</h6>
+        </div>
+        <div>
+          <a href="/payment">
+            <button id="buy-button" class="normal" style="background-color: #088178">
+              Buy
+            </button></a>
+        </div>
+      </div>
+      <div class="user-div">
+        <div class="user-img">
+          <img src="imgs/features/f1.png" alt="">
+        </div>
+        <div class="user-name">
+          Hassan Hossam
+        </div>
+        <div class="log-out">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <button>Log out</button>
+        </div>
+      </div>
+      <div class="nav" id="nav-bar">
+        <div class="user">
+          <div class="x-icon">
+            <i class="fa-solid fa-x"></i>
+          </div>
+          <div class="img-user">
+            <img src="" alt="">
+          </div>
+          <div>Hello, <a href="#">Hassan</a></div>
+        </div>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/shop" class="active">Shop</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="over-layout"></div>
+  </div>
+  <div class="product-home">
+    <div class="product">
+      <div class="container" id=<%=product._id %>>
+        <div class="imgs">
+          <img src="../<%=product.imgUrl %>" id="main-img" alt="product image" />
+          <div class="other-imgs">
+            <img src="../<%=product.imgUrl %>" alt="product image" />
+            <img src="../imgs/TempImg/images.png" alt="product image" />
+            <img src="../imgs/TempImg/White_full.png" alt="product image" />
+            <img src="../imgs/TempImg/download.jpeg" alt="product image" />
+          </div>
+        </div>
+        <div class="text">
+          <h6>Home / <%= product.name %> <span class="name-product"></span></h6>
+          <h4>Fashion <span class="name-product"></span></h4>
+          <h2 id="price-product">
+            $<%= product.price %>
+          </h2>
+          <select name="" id="">
+            <option value="">XL</option>
+            <option value="">L</option>
+            <option value="">M</option>
+            <option value="">S</option>
+          </select>
+          <input id="count-product" type="text" maxlength="1" value="1" onkeypress="return onlyNumbers(event)" />
+          <button id="cart-shop" class="normal">Add To Cart</button>
+          <h4>Product Details</h4>
+          <span>
+            Lorem ipsum dolor sit amet consectetur adipisicing, ducimus rerum
+            fugiat corrupti amet hic porro? Perspiciatis iste expedita
+            similique dolore! Nemo vero corporis quasi dicta aut hic odit?
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="other-products product01">
+      <h2>Other products</h2>
+      <div class="container boxs">
+        <% for (let i=4; i < 8; i++) {%>
+          <%if (products[i].stoked==true) {%>
+            <div class="product-box" onclick="window.location.pathname='/shop/<%= products[i]._id %>'">
+              <img src=" ../<%=products[i].imgUrl %>" alt="product image">
+              <div class="details"><span>Cera</span>
+                <h5>Cartoon Astronaut <%= products[i].name %>
+                </h5>
+                <div class="stars">
+                </div>
+                <h4>$<%= products[i].price %>
+                </h4>
+              </div>
+              <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+            </div>
+            <% } else { %>
+              <div class="product-box" style="opacity:.5; pointer-events: none;">
+                <img src="../<%=products[i].imgUrl %>" alt="product image">
+                <div style="color:red; font-weight:600;">It will be soon</div>
+                <div class="details"><span>Cera</span>
+                  <h5>Cartoon Astronaut <%= products[i].name %>
+                  </h5>
+                  <div class="stars">
+                  </div>
+                  <h4>$<%= products[i].price %>
+                  </h4>
+                </div>
+                <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+              </div>
+              <%}}%>
+
+      </div>
+    </div>
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+<script src="../js/app.js"></script>
+<script>
+
+
+  addProductToCart(document.querySelector(".product .container").id,
+    document.getElementById("main-img"),
+    document.getElementById("price-product")
+  );
+
+  // totalPrice(document.querySelectorAll(".total"));
+
+    // showOtherImgs(products, 5);
+    // setAllproducts(products);
+    // setProdutBoxs(document.querySelector(".other-products .container"), products, 4, 8);
+    //on click on product
+    // ProductsOnclick(products);
+    //Add products to shop carte
+
+
+
+</script>
+
+</html>
