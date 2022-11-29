@@ -1,7 +1,7 @@
 
 const express = require("express");
 const router = express.Router();
-const { singleProdFun } = require("../controllers/single.prod.ctrl");
+const { singleProdFun } = require("../controllers/pagesFileCtrl");
 const { getDataFunction } = require("../controllers/dataFileCtrl");
 
 router.get("/Data", getDataFunction);

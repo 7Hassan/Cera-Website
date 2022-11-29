@@ -4,8 +4,12 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     require: true,
   },
-  imgUrl: {
+  imgSrc: {
     type: String,
+    require: true,
+  },
+  imgs: {
+    type: Array,
     require: true,
   },
   name: {

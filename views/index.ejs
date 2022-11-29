@@ -59,34 +59,18 @@
       </div>
       </div>
       <%- include('partials/footer.ejs') %>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="js/app.js"></script>
-        <script>
-          showData();
-
-          //Show data in page
-          async function showData() {
-            products = await getAllData();
-            setProdutBoxs(document.querySelector(".feature .container"), products, 0, 8);
-            setProdutBoxs(document.querySelector(".arrivals .container"), products, 8, 12);
-            // ProductsOnclick();
-            totalPrice(document.querySelectorAll(".total"));
-          }
-
-          function ProductsOnclick() {
-            document.querySelectorAll(".product-box").forEach(product => {
-              product.addEventListener("click", () => {
-                window.location.pathname = 'shop';
-              });
-            });
-          }
-        </script>
+        
   </body>
-
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    showData();
+    async function showData() {
+      products = await getAllData();
+      setProdutBoxs(document.querySelector(".feature .container"), products, 0, 8);
+      setProdutBoxs(document.querySelector(".arrivals .container"), products, 8, 12);
+    }
+  </script>
 
 
   </html>

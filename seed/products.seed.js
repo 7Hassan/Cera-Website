@@ -12,6 +12,7 @@ productsData.forEach((product) => {
     }
   });
 })
+console.log("end");
 
 
 

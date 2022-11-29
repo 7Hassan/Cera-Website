@@ -7,7 +7,13 @@ exports.homePageFunction = (req, res) => {
 };
 exports.shopPageFunction = (req, res) => {
   const Event = require("../models/products");
-  Event.find({}, (err, products) => {
+  Event.find({}, (err, productsData) => {
+    let products = [];
+    let productsSize = 8;
+    for (let i = 0; i < productsData.length; i += productsSize) {
+      products.push(productsData.slice(i, productsSize + i));
+    }
+    // res.json(products);
     res.render("shop", { products: products, title: "Cera Shop" })
   });
 };
@@ -29,3 +35,12 @@ exports.registrationPageFunction = (req, res) => {
 exports.createAccountPageFunction = (req, res) => {
   res.render("createAccount", { title: "Sin Up" });
 };
+exports.singleProdFun = (req, res) => {
+  const Event = require("../models/products");
+  Event.find({ _id: req.params.id }, (err, product) => {
+    Event.find({}, (err, products) => {
+      res.render("product", { title: "Product", product: product[0], products: products });
+    })
+  });
+  ;
+}

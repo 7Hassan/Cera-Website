@@ -31,16 +31,20 @@ if (window.location.pathname != "/payment" && window.location.pathname != "/crea
 function addActiveBar() {
   //add active class  to navbar a elements
   navA.forEach((a) => {
-    if (a.href == window.location.href) {
+    if (window.location.pathname == a.attributes[0].value) {
       a.classList.add('active');
-    } else if (window.location.href == 'http://localhost:3000/') {
-      navA[0].classList.add('active');
     }
     a.addEventListener("click", () => {
       removeActiveBar();
     });
   });
 
+  // Function to remove all active classes  form navbar elements
+  function removeActiveBar() {
+    navA.forEach((a) => {
+      a.classList.remove("active");
+    });
+  }
   //add and remove active class from navbar icon
   navIcon.addEventListener("click", () => {
     if (userIcon.classList.contains("active")) {
@@ -219,12 +223,7 @@ function createProdutBox(products, i) {
 }
 
 
-// Function to remove all active classes  form navbar elements
-function removeActiveBar() {
-  navA.forEach((a) => {
-    a.classList.remove("active");
-  });
-}
+
 
 
 
@@ -520,7 +519,6 @@ function passordFunction() {
     hideEye.style.display = 'none';
   });
 }
-
 
 
 

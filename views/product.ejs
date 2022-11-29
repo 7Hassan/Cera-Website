@@ -1,0 +1,91 @@
+<%- include('partials/head.ejs') -%>
+
+  <body>
+    <%- include('partials/header.ejs') -%>
+      <div class="product-home">
+        <div class="product">
+          <div class="container" id=<%=product._id %>>
+            <div class="imgs">
+              <img src="../<%=product.imgUrl %>" id="main-img" alt="product image" />
+              <div class="other-imgs">
+                <img src="../<%=product.imgUrl %>" alt="product image" />
+                <img src="../imgs/" alt="product image" />
+                <img src="../imgs/products/shirts/f1" alt="product image" />
+                <img src="../imgs/TempImg/download.jpeg" alt="product image" />
+              </div>
+            </div>
+            <div class="text">
+              <h6>Home / <%= product.name %> <span class="name-product"></span></h6>
+              <h4>Fashion <span class="name-product"></span></h4>
+              <h2 id="price-product">
+                $<%= product.price %>
+              </h2>
+              <select name="" id="">
+                <option value="">XL</option>
+                <option value="">L</option>
+                <option value="">M</option>
+                <option value="">S</option>
+              </select>
+              <input id="count-product" type="text" maxlength="1" value="1" onkeypress="return onlyNumbers(event)" />
+              <button id="cart-shop" class="normal">Add To Cart</button>
+              <h4>Product Details</h4>
+              <span>
+                Lorem ipsum dolor sit amet consectetur adipisicing, ducimus rerum
+                fugiat corrupti amet hic porro? Perspiciatis iste expedita
+                similique dolore! Nemo vero corporis quasi dicta aut hic odit?
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="other-products product01">
+          <h2>Other products</h2>
+          <div class="container boxs">
+            <% for (let i=4; i < 8; i++) {%>
+              <%if (products[i].stoked==true) {%>
+                <div class="product-box" onclick="window.location.pathname='/shop/<%= products[i]._id %>'">
+                  <img src="/<%=products[i].imgUrl %>" alt="product image">
+                  <div class="details"><span>Cera</span>
+                    <h5>Cartoon Astronaut <%= products[i].name %>
+                    </h5>
+                    <div class="stars">
+                    </div>
+                    <h4>$<%= products[i].price %>
+                    </h4>
+                  </div>
+                  <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                </div>
+                <% } else { %>
+                  <div class="product-box" style="opacity:.5; pointer-events: none;">
+                    <img src="../<%=products[i].imgUrl %>" alt="product image">
+                    <div style="color:red; font-weight:600;">It will be soon</div>
+                    <div class="details"><span>Cera</span>
+                      <h5>Cartoon Astronaut <%= products[i].name %>
+                      </h5>
+                      <div class="stars">
+                      </div>
+                      <h4>$<%= products[i].price %>
+                      </h4>
+                    </div>
+                    <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                  </div>
+                  <%}}%>
+
+          </div>
+        </div>
+      </div>
+      <%- include('partials/footer.ejs') %>
+  </body>
+  <script src="../js/app.js"></script>
+  <script>
+    addProductToCart(document.querySelector(".product .container").id,
+      document.getElementById("main-img"),
+      document.getElementById("price-product")
+    );
+    // setAllproducts(products);
+    // setProdutBoxs(document.querySelector(".other-products .container"), products, 4, 8);
+    //on click on product
+    // ProductsOnclick(products);
+    //Add products to shop carte
+  </script>
+
+  </html>
