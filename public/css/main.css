@@ -8,6 +8,56 @@
   font-family: "Spartan", sans-serif;
 }
 
+.product-show-top {
+  animation: slideTop .5s ease-in-out both;
+}
+
+.product-show-right {
+  animation: slideRight .5s ease-in-out both;
+}
+
+.product-show-left {
+  animation: slideLeft .5s ease-in-out both;
+}
+
+@keyframes slideTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+
 html {
   scroll-behavior: smooth;
 }
@@ -121,7 +171,6 @@ body.hidden {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 
 
@@ -540,7 +589,8 @@ body.hidden {
 
 .product01 .product-box {
   width: 23%;
-  min-width: 250px;
+  min-width: 230px;
+  max-width: 250px;
   padding: 10px 12px;
   border: 1px solid #cce7d0;
   border-radius: 25px;
@@ -550,7 +600,9 @@ body.hidden {
   transition: 0.3s ease;
   position: relative;
   margin: 20px 0;
+  opacity: 0;
 }
+
 
 .product01 .product-box:hover {
   box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.09);
@@ -847,38 +899,38 @@ footer .copyright {
 
 /* ----------------------------------------------------- */
 /* Shop Page */
-.mian-shop .container {
+.products-holder .container {
   flex-direction: row;
   flex-wrap: nowrap;
   white-space: nowrap;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
   padding: 0 20px;
+  scroll-behavior: smooth;
 }
 
-.mian-shop .container::-webkit-scrollbar {
+.products-holder .container::-webkit-scrollbar {
   width: 10px;
 
 }
 
-.mian-shop .container::-webkit-scrollbar-track {
+.products-holder .container::-webkit-scrollbar-track {
   background-color: hsl(216, 12%, 92%, .5);
   border-radius: 100vw;
 
 }
 
-.mian-shop .container::-webkit-scrollbar-thumb {
+.products-holder .container::-webkit-scrollbar-thumb {
   background-color: rgb(22, 151, 143, .5);
   border-radius: 100vw;
 }
 
-.mian-shop .container:hover::-webkit-scrollbar-thumb {
+.products-holder .container:hover::-webkit-scrollbar-thumb {
   background-color: rgb(22, 151, 143, 1);
 }
 
 
-.mian-shop .button-products {
-
+.products-holder .button-products {
   display: flex;
   align-items: center;
 }
@@ -888,7 +940,7 @@ footer .copyright {
 }
 
 
-.mian-shop button {
+.products-holder button {
   cursor: pointer;
   border: none;
   border-radius: 5px;
@@ -897,20 +949,15 @@ footer .copyright {
   opacity: .7;
 }
 
-.mian-shop button:hover {
+.products-holder button:hover {
   opacity: 1;
 }
 
-.mian-shop button i {
+.products-holder button i {
   padding: 10px;
   font-size: 30px;
   color: white;
 }
-
-
-
-
-
 
 /* ----------------------------------------------------- */
 
@@ -941,10 +988,12 @@ footer .copyright {
   flex-direction: column;
   justify-content: center;
   gap: 5px;
+  min-width: 250px;
+  max-width: 300px;
 }
 
 .product .container .imgs #main-img {
-  height: 400px;
+  background-color: rebeccapurple;
 }
 
 .product .container .imgs img,
@@ -962,8 +1011,9 @@ footer .copyright {
 }
 
 .product .container .imgs .other-imgs img {
-  width: 24%;
+  width: 25%;
   cursor: pointer;
+
 }
 
 .product .container .text {
@@ -971,7 +1021,20 @@ footer .copyright {
 }
 
 .product .text h4 {
-  padding: 40px 0 5px 0;
+  padding: 5px 0 10px;
+  font-weight: 400;
+}
+
+.product .text .product-details {
+  margin-top: 15px;
+}
+
+.product .text h4 span {
+  font-weight: 700;
+}
+
+.product .text h6 span {
+  color: var(--main-color);
 }
 
 .product .text h2 {
@@ -1503,7 +1566,7 @@ footer .contact {
 }
 
 @media (max-width: 1050px) {
-  .container.boxs:not(.mian-shop .container.boxs) {
+  .container.boxs:not(.holder-cont .container.boxs) {
     justify-content: space-evenly;
     justify-content: center;
   }
@@ -1523,12 +1586,9 @@ footer .contact {
 
   .product .container {
     justify-content: space-evenly;
-    justify-content: center;
+    justify-content: flex-start;
   }
-}
 
-/* Responsive For Tablets */
-@media (max-width: 1050px) {
   .sm-banner .banner-box {
     height: 25vh;
     background-position: top 10% right 20%;
@@ -1562,25 +1622,21 @@ footer .contact {
   }
 
   /* shop page */
-  .mian-shop .button-products button {
+  .products-holder .button-products button {
     display: none;
   }
 }
+
 
 @media (max-width: 899px) {
   .container {
     padding: 0 20px;
   }
 
-  .mian-shop .container {
+  .products-holder .container {
     padding: 0 20px;
     margin: 0;
   }
-
-  /* .main-sec-home {
-    height: 40vh;
-    background-position: top 30% right 70%;
-  } */
 
   .main-sec-home h2 {
     font-size: 30px;
@@ -2239,6 +2295,18 @@ footer p a:hover {
 
 .sin-up .email-input {
   border: none;
+}
+
+.sin-up .User-sinUp-email {
+  position: relative;
+}
+
+.sin-up #pass-exist {
+  position: absolute;
+  right: 9px;
+  top: -12px;
+  color: red;
+  font-size: 9px;
 }
 
 .sin-up .User-sinUp-name input {

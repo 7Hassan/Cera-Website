@@ -1,19 +1,17 @@
 // create function and export it to pages.js
+const Event = require("../models/products");
 exports.homePageFunction = (req, res) => {
-  const Event = require("../models/products");
   Event.find({}, (err, products) => {
-    res.render("index", { products: products, title: "Cera" }); // send the rendered view to the client
-  })
+    res.render("index", { products: products, title: "Cera" });
+  });
 };
 exports.shopPageFunction = (req, res) => {
-  const Event = require("../models/products");
   Event.find({}, (err, productsData) => {
     let products = [];
     let productsSize = 8;
     for (let i = 0; i < productsData.length; i += productsSize) {
       products.push(productsData.slice(i, productsSize + i));
     }
-    // res.json(products);
     res.render("shop", { products: products, title: "Cera Shop" })
   });
 };
@@ -30,17 +28,25 @@ exports.blogPageFunction = (req, res) => {
   res.render("blog", { title: "Cera Blog" });
 };
 exports.registrationPageFunction = (req, res) => {
-  res.render("registration", { title: "Log In" });
+  res.render("user/registration", { title: "Log In" });
 };
 exports.createAccountPageFunction = (req, res) => {
-  res.render("createAccount", { title: "Sin Up" });
+  res.render("user/createAccount", { title: "Sin Up" });
 };
 exports.singleProdFun = (req, res) => {
-  const Event = require("../models/products");
-  Event.find({ _id: req.params.id }, (err, product) => {
-    Event.find({}, (err, products) => {
+  Event.find({ _id: req.params.id, }, (err, product) => {
+    Event.find({ stoked: true }, (err, productsData) => {
+      let products = [];
+      let productsSize = 8;
+      for (let i = 0; i < productsData.length / 2; i += productsSize) {
+        products.push(productsData.slice(i, productsSize + i));
+      }
       res.render("product", { title: "Product", product: product[0], products: products });
     })
   });
   ;
+}
+
+exports.notFoundPage = (req, res) => {
+  res.status(404).render('404', { title: '404' });
 }

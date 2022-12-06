@@ -3,10 +3,10 @@ let carteData = [];
 
 
 // Get Data
-async function getAllData() {
-  res = await axios.get("http://localhost:3000/Data");
-  return res.data.products;
-}
+// async function getAllData() {
+//   res = await axios.get("http://localhost:3000/Data");
+//   return res.data.products;
+// }
 // Get Elements in header
 let navA = [...document.querySelectorAll(".nav ul a")];
 let navIcon = document.querySelector(".shop-icon");
@@ -104,36 +104,36 @@ function setLocalStroageData() {
 
 
 // set all producrs in shop page
-function setAllproducts(products) {
-  let holder = document.querySelector(".holder-cont");
-  let counter = 0;
-  let countContainers = parseInt(products.length / 8);
+// function setAllproducts(products) {
+//   let holder = document.querySelector(".holder-cont");
+//   let counter = 0;
+//   let countContainers = parseInt(products.length / 8);
 
-  for (let i = 0; i < countContainers; i++) {
-    holder.innerHTML += createSecProducts();
-    setProdutBoxs(holder.children[i].children[1], products, counter, counter + 8);
-    counter += 8;
-  }
-  if (products.length % 8 != 0) {
-    if (products.length % 8 > 4) {
-      holder.innerHTML += createSecProducts();
-      setProdutBoxs(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
+//   for (let i = 0; i < countContainers; i++) {
+//     holder.innerHTML += createSecProducts();
+//     setProdutBoxs(holder.children[i].children[1], products, counter, counter + 8);
+//     counter += 8;
+//   }
+//   if (products.length % 8 != 0) {
+//     if (products.length % 8 > 4) {
+//       holder.innerHTML += createSecProducts();
+//       setProdutBoxs(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
 
-    } else {
-      holder.innerHTML += createEndSecProducts();
-      setProdutBoxs(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
+//     } else {
+//       holder.innerHTML += createEndSecProducts();
+//       setProdutBoxs(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
 
-    }
-  }
+//     }
+//   }
 
-}
+// }
 
 // Function to set products boxs
-async function setProdutBoxs(element, products, min, max) {
-  for (let i = min; i < max; i++) {
-    element.innerHTML += createProdutBox(products, i);
-  }
-}
+// async function setProdutBoxs(element, products, min, max) {
+//   for (let i = min; i < max; i++) {
+//     element.innerHTML += createProdutBox(products, i);
+//   }
+// }
 
 
 
@@ -184,43 +184,43 @@ function totalPrice(elements) {
 
 
 // Create box for product
-function createProdutBox(products, i) {
-  let stars = "";
-  for (let j = 0; j < products[i].stars; j++) {
-    stars += '<i class="fa-solid fa-star"></i>';
-  }
-  if (products[i].stoked == true) {
-    return `
-    <div class="product-box" onclick='window.location.pathname= "/shop/${products[i]._id}"'>
-    <img src="${products[i].imgUrl}" alt="product image">
-      <div class="details"><span>Cera</span>
-        <h5>Cartoon Astronaut ${products[i].name}</h5>
-        <div class="stars">
-        ${stars}
-        </div>
-        <h4>$${products[i].price}</h4>
-      </div>
-      <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-    </div>
-`
-  } else {
-    return `
-    <div class="product-box" style="opacity:.5; pointer-events: none;" >
-    <img src="${products[i].imgUrl}" alt="product image">
-      <div style="color:red; font-weight:600;">It will be soon</div>
-      <div class="details"><span>Cera</span>
-        <h5>Cartoon Astronaut ${products[i].name}</h5>
-        <div class="stars">
-        ${stars}
-        </div>
-        <h4>$${products[i].price}</h4>
-      </div>
-      <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-    </div>
-`
-  }
+// function createProdutBox(products, i) {
+//   let stars = "";
+//   for (let j = 0; j < products[i].stars; j++) {
+//     stars += '<i class="fa-solid fa-star"></i>';
+//   }
+//   if (products[i].stoked == true) {
+//     return `
+//     <div class="product-box" onclick='window.location.pathname= "/shop/${products[i]._id}"'>
+//     <img src="${products[i].imgUrl}" alt="product image">
+//       <div class="details"><span>Cera</span>
+//         <h5>Cartoon Astronaut ${products[i].name}</h5>
+//         <div class="stars">
+//         ${stars}
+//         </div>
+//         <h4>$${products[i].price}</h4>
+//       </div>
+//       <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+//     </div>
+// `
+//   } else {
+//     return `
+//     <div class="product-box" style="opacity:.5; pointer-events: none;" >
+//     <img src="${products[i].imgUrl}" alt="product image">
+//       <div style="color:red; font-weight:600;">It will be soon</div>
+//       <div class="details"><span>Cera</span>
+//         <h5>Cartoon Astronaut ${products[i].name}</h5>
+//         <div class="stars">
+//         ${stars}
+//         </div>
+//         <h4>$${products[i].price}</h4>
+//       </div>
+//       <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+//     </div>
+// `
+//   }
 
-}
+// }
 
 
 
@@ -471,35 +471,35 @@ function getDataProduct(product) {
 
 
 
-function createSecProducts() {
-  return `
-      <div div class= "button-products" >
-      <button class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
-        <i class="fa-solid fa-angles-left"></i>
-      </button>
-      <div class="container boxs">
-      </div>
-      <button class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
-        <i class="fa-solid fa-angles-right"></i>
-      </button>
-    </div >
-        `;
-}
+// function createSecProducts() {
+//   return `
+//       <div div class= "button-products" >
+//       <button class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
+//         <i class="fa-solid fa-angles-left"></i>
+//       </button>
+//       <div class="container boxs">
+//       </div>
+//       <button class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
+//         <i class="fa-solid fa-angles-right"></i>
+//       </button>
+//     </div >
+//         `;
+// }
 
-function createEndSecProducts() {
-  return `
-        <div div class="button-products" >
-  <button style=" visibility: hidden;"  class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
-    <i class="fa-solid fa-angles-left"></i>
-  </button>
-  <div class="container boxs">
-  </div>
-  <button style=" visibility: hidden;" class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
-    <i class="fa-solid fa-angles-right"></i>
-  </button>s
-</div >
-        `;
-}
+// function createEndSecProducts() {
+//   return `
+//         <div div class="button-products" >
+//   <button style=" visibility: hidden;"  class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
+//     <i class="fa-solid fa-angles-left"></i>
+//   </button>
+//   <div class="container boxs">
+//   </div>
+//   <button style=" visibility: hidden;" class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
+//     <i class="fa-solid fa-angles-right"></i>
+//   </button>s
+// </div >
+//         `;
+// }
 /* see and hide passord function */
 function passordFunction() {
   let passInput = document.querySelector('.password-input');
@@ -520,7 +520,39 @@ function passordFunction() {
   });
 }
 
+function observesTop() {
+  let divs = document.querySelectorAll('.product-box');
+  const option = {
+    root: null,
+    rootMargin: '250px 0px 0px',
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(ele => ele.target.classList.toggle('product-show-top', ele.isIntersecting));
+  }, option);
+  divs.forEach(div => {
+    observer.observe(div);
+  })
+}
 
+function observesLeft() {
+  let divs = document.querySelectorAll('.other-imgs img');
+  const option = {};
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(ele => ele.target.classList.toggle('product-show-left', ele.isIntersecting));
+  }, option);
+  divs.forEach(div => {
+    observer.observe(div);
+  })
+}
 
-
+function observesRight() {
+  let divs = document.querySelectorAll('.product-box');
+  const option = {};
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(ele => ele.target.classList.toggle('product-show-right', ele.isIntersecting));
+  }, option);
+  divs.forEach(div => {
+    observer.observe(div);
+  })
+}
 

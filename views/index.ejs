@@ -44,6 +44,26 @@
         <h2>Features Products</h2>
         <p>Summer Collection New Modern desgin</p>
         <div class="container boxs">
+          <% for (let i=0; i < 40; i++) {%>
+            <%if (products[i].stoked==false) {%>
+              <div class="product-box" style="opacity:.5 !important; pointer-events: none;">
+                <img src="../<%=products[i].imgSrc %>" alt="product image">
+                <div style="color:red; font-weight:600;">It will be soon</div>
+                <div class="details"><span>Cera</span>
+                  <h5>Cartoon Astronaut <%= products[i].name %>
+                  </h5>
+                  <div class="stars">
+                    <% for (let k=0; k < products[i].stars; k++) {%>
+                      <i class="fa-solid fa-star"></i>
+                      <% } %>
+                  </div>
+                  <h4>$<%= products[i].price %>
+                  </h4>
+                </div>
+                <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+              </div>
+              <% }}%>
+
         </div>
       </div>
       <div class="banner">
@@ -52,19 +72,43 @@
         <button class="normal">Explore More</button>
       </div>
       <div class="arrivals product01">
-        <h2>New Arrivals</h2>
+        <h2> New Arrivals</h2>
         <p>Summer Collection New Modern desgin</p>
         <div class="container boxs">
+          <% for (let i=23; i < products.length/5; i++) {%>
+
+            <%if (products[i].stoked==true) {%>
+              <a href="/shop#<%= products[i]._id  %> " style="display: block;">
+                <div class="product-box">
+                  <img src="<%=products[i].imgSrc %>" alt="product image">
+                  <div class="details"><span>Cera</span>
+                    <h5>Cartoon Astronaut <%= products[i].name %>
+                    </h5>
+                    <div class="stars">
+                      <% for (let k=0; k < products[i].stars; k++) {%>
+                        <i class="fa-solid fa-star"></i>
+                        <% } %>
+                    </div>
+
+                    <h4>$<%= products[i].price %>
+                    </h4>
+                  </div>
+                  <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                </div>
+              </a>
+              <% }}%>
+
         </div>
       </div>
       </div>
       <%- include('partials/footer.ejs') %>
-        
+
   </body>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="js/app.js"></script>
   <script>
-    showData();
+    // showData();
+    observesRight();
     async function showData() {
       products = await getAllData();
       setProdutBoxs(document.querySelector(".feature .container"), products, 0, 8);

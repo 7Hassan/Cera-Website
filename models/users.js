@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// const bcrypt = require('bcryptjs'); //passport
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -20,11 +22,25 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  carte: {
+    type: Array,
+    require: true,
+  },
   date: {
     type: Date,
     require: true,
   }
 });
 
-let Event = mongoose.model("Event", userSchema, "users");
-module.exports = Event;
+// password لتشفير 
+// userSchema.methods.hashPassword = (password) => {
+//   return bcrypt.hashSync(password, bcrypt.genSaltSync(15));
+// }
+
+// password لمقارنة 
+// userSchema.methods.comparePassword = (password, hash) => {
+//   return bcrypt.compareSync(password, hash);
+// }
+// mongoose.models = {};
+let User = mongoose.model("User", userSchema, "users");
+module.exports = User;

@@ -1,10 +1,10 @@
-<%- include('partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>
 
   <body>
     <div class="layout sin-up">
       <div class="img-log">
-        <img src="imgs/logo.png" alt="">
-        <a href="registration">Log In</a>
+        <img src="../imgs/logo.png" alt="">
+        <a href="/users/login">Log In</a>
       </div>
       <div class="main-log">
         <div class="text-head">
@@ -22,36 +22,36 @@
             <span>or </span>
           </div>
           <div class="email-input">
-            <form action="">
+            <form action="" method="post">
               <div class="User-sinUp-name">
-                <input required type="text" maxlength="12" name="" id="" placeholder="Frist name">
-                <input required type="text" maxlength="12" name="" id="" placeholder="Last name">
+                <input required type="text" minlength="2" name="firstName" id="firstName" placeholder="Frist name"
+                  maxlength="12">
+                <input required type="text" name="lastName" id="lastName" placeholder="Last name">
               </div>
               <div class="User-sinUp-email">
-                <input required type="email" name="" id="" placeholder="Email">
+                <span id="pass-exist">Email is exist, Please Log In</span>
+                <input required type="email" name="email" id="email" placeholder="Email">
               </div>
               <div class="User-sinUp-pass">
-                <input required type="password" maxlength="8" name="" class="password-input" id="userSinUpPass"
-                  placeholder="Password">
+                <input required type="password" minlength="8" maxlength="15" name="password" class="password-input"
+                  id="password" placeholder="Password">
                 <i class="fa-sharp fa-solid fa-eye-slash"></i>
                 <i class="fa-solid fa-eye" style="display:none ;"></i>
               </div>
               <div class="User-sinUp-country">
-                <input required type="text" name="" id="" placeholder="Country">
+                <input required type="text" name="country" id="country" placeholder="Country">
               </div>
               <button class="normal">Create my account</button>
             </form>
           </div>
-
           <div class="log-in-text">
-            Already have an account?<a href="registration"> Log In</a>
+            Already have an account?<a href="/users/login"> Log In</a>
           </div>
         </div>
       </div>
-
     </div>
   </body>
-  <script src="js/app.js"></script>
+  <script src="../js/app.js"></script>
   <script>
     passordFunction();
   </script>
