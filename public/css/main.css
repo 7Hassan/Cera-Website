@@ -2126,7 +2126,7 @@ footer p a:hover {
 
 .main-log .email-input form div i {
   position: absolute;
-  left: 78px;
+  left: 75px;
   margin-top: 8px;
 }
 
@@ -2138,7 +2138,7 @@ footer p a:hover {
   width: 325px;
   border: 2px solid #e4ebe4;
   height: 20px;
-  padding: 17px 5px 17px 30px;
+  padding: 17px 5px 17px 35px;
   border-radius: 10px;
 }
 
@@ -2173,6 +2173,11 @@ footer p a:hover {
   background-color: white;
   font-size: 15px;
   color: #747474;
+}
+
+.main-log .email-input .User-login-email {
+  margin-bottom: 20px;
+
 }
 
 .main-log .accounts {

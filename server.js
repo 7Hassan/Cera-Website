@@ -11,10 +11,14 @@ const passportSetup = require('./config/passport-setup');
 const port = 3000;
 const app = express();
 
-// Templete engine => ejs
+// Files
 const publicDir = path.join(__dirname, "./public"); //هنا بجيب الباث
+
+// EJS
 app.use(express.static(publicDir)); //public هنا بيقراء الملاف الي موجوده ف
 app.set("view engine", "ejs");
+
+
 
 // body- parser
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -65,9 +69,6 @@ app.use("/users", require("./routes/users"));
 app.use((req, res) => {
   res.status(404).render('404', { title: 404 });
 })
-
-/*respose to rqueste from front end */
-// app.use("/Data", require("./routes/data"));
 
 /* Run server */
 app.listen(port, () => {

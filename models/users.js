@@ -24,11 +24,11 @@ const userSchema = new mongoose.Schema({
   },
   carte: {
     type: Array,
-    require: true,
+    default: [],
   },
   date: {
     type: Date,
-    require: true,
+    default: Date.now(),
   }
 });
 

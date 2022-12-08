@@ -31,7 +31,7 @@ exports.registrationPageFunction = (req, res) => {
   res.render("user/registration", { title: "Log In" });
 };
 exports.createAccountPageFunction = (req, res) => {
-  res.render("user/createAccount", { title: "Sin Up" });
+  res.render("user/createAccount", { title: "Sin Up", error: false });
 };
 exports.singleProdFun = (req, res) => {
   Event.find({ _id: req.params.id, }, (err, product) => {

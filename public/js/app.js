@@ -1,12 +1,6 @@
 // Data in carte
 let carteData = [];
 
-
-// Get Data
-// async function getAllData() {
-//   res = await axios.get("http://localhost:3000/Data");
-//   return res.data.products;
-// }
 // Get Elements in header
 let navA = [...document.querySelectorAll(".nav ul a")];
 let navIcon = document.querySelector(".shop-icon");
@@ -19,7 +13,7 @@ let holderDivUser = document.querySelector(".user-div");
 let containerDivsCart = document.querySelector(".container-cart");
 
 // Run Function
-if (window.location.pathname != "/payment" && window.location.pathname != "/createAccount" && window.location.pathname != "/registration") {
+if (window.location.pathname != "/payment" && window.location.pathname != "/users/sinup" && window.location.pathname != "/users/login") {
   addActiveBar();
   clickHaederMenu();
   getLocalStroageData();

@@ -29,8 +29,12 @@
                 <input required type="text" name="lastName" id="lastName" placeholder="Last name">
               </div>
               <div class="User-sinUp-email">
-                <span id="pass-exist">Email is exist, Please Log In</span>
-                <input required type="email" name="email" id="email" placeholder="Email">
+                <% if(error){ %>
+                  <span id="pass-exist">Email is exist, Please <a href="/users/login" style="color: red; text-decoration: underline;">Log In</a>
+                  </span>
+                  <% } %>
+
+                    <input required type="email" name="email" id="email" placeholder="Email">
               </div>
               <div class="User-sinUp-pass">
                 <input required type="password" minlength="8" maxlength="15" name="password" class="password-input"
