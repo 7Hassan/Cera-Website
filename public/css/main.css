@@ -2124,12 +2124,11 @@ footer p a:hover {
 
 }
 
-.main-log .email-input form div i {
+.main-log .User-login-email i,
+.main-log .User-login-pass div {
   position: absolute;
-  left: 75px;
-  margin-top: 8px;
+  left: 7px;
 }
-
 
 .main-log .email-input form div input {
   outline: none;
@@ -2175,9 +2174,11 @@ footer p a:hover {
   color: #747474;
 }
 
-.main-log .email-input .User-login-email {
+.main-log .email-input form>div {
   margin-bottom: 20px;
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .main-log .accounts {
@@ -2280,10 +2281,6 @@ footer p a:hover {
   bottom: -15px;
 }
 
-.sin-up form div {
-  margin-bottom: 15px;
-}
-
 .sin-up form input {
   padding: 17px 5px 17px 10px !important;
   width: 100% !important;
@@ -2302,11 +2299,16 @@ footer p a:hover {
   border: none;
 }
 
-.sin-up .User-sinUp-email {
+form>div {
   position: relative;
 }
 
-.sin-up #pass-exist {
+.icon-eyes {
+  position: absolute;
+  right: 10px;
+}
+
+.errors {
   position: absolute;
   right: 9px;
   top: -12px;
@@ -2335,12 +2337,12 @@ footer p a:hover {
   text-decoration: underline;
 }
 
-.sin-up .email-input form div i {
+/* .sin-up .email-input form div i {
   right: 35px;
   margin-top: 10px;
   left: auto;
   cursor: pointer;
-}
+} */
 
 
 @media (max-width:999px) {

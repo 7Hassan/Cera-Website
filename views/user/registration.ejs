@@ -11,16 +11,27 @@
         </div>
         <div class="log">
           <div class="email-input">
-            <form action="">
+            <form action="" method="post">
               <div class="User-login-email">
+                <span class="errors">
+                  <%= errors.email %>
+                </span>
                 <i class="fa-solid fa-user"></i>
-                <input required type="text" name="" id="" placeholder="Username or Email">
+                <input required type="email" name="userEmail" id="userEmail" placeholder="Username or Email">
+
               </div>
               <div class="User-login-pass">
-                <input required type="password" minlength="8" maxlength="15" name="password" class="password-input"
-                  id="password" placeholder="Password">
-                <i class="fa-sharp fa-solid fa-eye-slash"></i>
-                <i class="fa-solid fa-eye" style="display:none ;"></i>
+                <span class="errors">
+                  <%= errors.password %>
+                </span>
+                <div>
+                  <i class="fa-sharp fa-solid fa-eye-slash"></i>
+                  <i class="fa-solid fa-eye" style="display:none ;"></i>
+                </div>
+                
+                <input required type="password" name="userPassword" class="password-input" id="userPassword"
+                  placeholder="Password">
+
               </div>
               <button class="normal">Containue with Email</button>
             </form>

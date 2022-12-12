@@ -3,6 +3,7 @@ const path = require("path");
 const db = require("./config/dataBase");
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const SessionStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator')
 const flash = require('connect-flash');
@@ -25,11 +26,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 // Session
+const STORE = new SessionStore({
+  uri: 'mongodb://localhost:27017/eventsDB',
+  collection: 'sessions'
+})
+
 app.use(session({
-  secret: 'lorem ipsum',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 6000 * 15 },
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 100 },
+  store: STORE,
 }));
 
 // Cookiess

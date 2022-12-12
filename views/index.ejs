@@ -45,7 +45,7 @@
         <p>Summer Collection New Modern desgin</p>
         <div class="container boxs">
           <% for (let i=0; i < 40; i++) {%>
-            <%if (products[i].stoked==false) {%>
+            <%if (products[i].stoked===false) {%>
               <div class="product-box" style="opacity:.5 !important; pointer-events: none;">
                 <img src="../<%=products[i].imgSrc %>" alt="product image">
                 <div style="color:red; font-weight:600;">It will be soon</div>

@@ -29,19 +29,21 @@
                 <input required type="text" name="lastName" id="lastName" placeholder="Last name">
               </div>
               <div class="User-sinUp-email">
-                <% if(error){ %>
-                  <span id="pass-exist">Email is exist, Please <a href="/users/login" style="color: red; text-decoration: underline;">Log In</a>
-                  </span>
-                  <% } %>
-
-                    <input required type="email" name="email" id="email" placeholder="Email">
+                <span class="errors">
+                  <%= errors.email %>
+                </span>
+                <input required type="email" name="email" id="email" placeholder="Email">
               </div>
               <div class="User-sinUp-pass">
                 <input required type="password" minlength="8" maxlength="15" name="password" class="password-input"
                   id="password" placeholder="Password">
-                <i class="fa-sharp fa-solid fa-eye-slash"></i>
-                <i class="fa-solid fa-eye" style="display:none ;"></i>
+
+                <div class="icon-eyes">
+                  <i class="fa-sharp fa-solid fa-eye-slash"></i>
+                  <i class="fa-solid fa-eye" style="display:none ;"></i>
+                </div>
               </div>
+
               <div class="User-sinUp-country">
                 <input required type="text" name="country" id="country" placeholder="Country">
               </div>

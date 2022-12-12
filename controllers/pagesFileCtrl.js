@@ -28,10 +28,12 @@ exports.blogPageFunction = (req, res) => {
   res.render("blog", { title: "Cera Blog" });
 };
 exports.registrationPageFunction = (req, res) => {
-  res.render("user/registration", { title: "Log In" });
+  let errors = { email: '', password: '' };
+  res.render("user/registration", { title: "Log In", errors });
 };
 exports.createAccountPageFunction = (req, res) => {
-  res.render("user/createAccount", { title: "Sin Up", error: false });
+  let errors = { email: '' };
+  res.render("user/createAccount", { title: "Sin Up", errors });
 };
 exports.singleProdFun = (req, res) => {
   Event.find({ _id: req.params.id, }, (err, product) => {
