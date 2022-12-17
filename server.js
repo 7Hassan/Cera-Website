@@ -67,6 +67,7 @@ app.use(passport.session());
 
 /* Rendering pages */
 app.use("/", require("./routes/pages"));
+
 // single product
 app.use("/shop", require("./routes/single_prod"));
 // handeling user pages

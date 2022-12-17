@@ -1,5 +1,6 @@
 // create function and export it to pages.js
 const Event = require("../models/products");
+
 exports.homePageFunction = (req, res) => {
   Event.find({}, (err, products) => {
     res.render("index", { products: products, title: "Cera" });
@@ -12,7 +13,7 @@ exports.shopPageFunction = (req, res) => {
     for (let i = 0; i < productsData.length; i += productsSize) {
       products.push(productsData.slice(i, productsSize + i));
     }
-    res.render("shop", { products: products, title: "Cera Shop" })
+    res.render("shop", { products: products, title: "Cera-Shop" })
   });
 };
 exports.aboutPageFunction = (req, res) => {
@@ -25,16 +26,9 @@ exports.contactPageFunction = (req, res) => {
   res.render("contact", { title: "Contact Us" });
 };
 exports.blogPageFunction = (req, res) => {
-  res.render("blog", { title: "Cera Blog" });
+  res.render("blog", { title: "Cera-Blog" });
 };
-exports.registrationPageFunction = (req, res) => {
-  let errors = { email: '', password: '' };
-  res.render("user/registration", { title: "Log In", errors });
-};
-exports.createAccountPageFunction = (req, res) => {
-  let errors = { email: '' };
-  res.render("user/createAccount", { title: "Sin Up", errors });
-};
+
 exports.singleProdFun = (req, res) => {
   Event.find({ _id: req.params.id, }, (err, product) => {
     Event.find({ stoked: true }, (err, productsData) => {

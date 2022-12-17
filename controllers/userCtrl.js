@@ -3,48 +3,51 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/users');
 
 
-
-
-
-exports.signUp = (req, res) => {
+/* Get */
+exports.registrationPageFunction = (req, res) => {
+  let errors = { email: '', password: '' };
+  res.render("user/registration", { title: "Log In", errors });
+};
+exports.createAccountPageFunction = (req, res) => {
   let errors = { email: '' };
-  const { firstName, lastName, email, password, country } = req.body;
-  User.findOne({ email }, (err, emailReq) => {
-    if (!emailReq) {
-      const user = new User({ firstName, lastName, email, password, country });
-      // hash password
-      bcrypt.genSalt(10, (err, salt) =>
-        bcrypt.hash(user.password, salt, (err, hash) => {
-          if (err) throw err;
-          // set password hashed
-          user.password = hash;
-          user.save()
-            .then(user => {
-              req.flash("success_msg", "You are registered")
-              res.redirect('/users/login')
-            })
-            .catch(err => console.log(err));
-        }))
-    } else {
-      errors.email = "Email is exist, Please Log In";
-      res.render("user/createAccount", { title: "Sin Up", errors });
-    }
-  });
+  res.render("user/createAccount", { title: "Sin Up", errors });
+};
+
+exports.checkEmail = (req, res) => {
+  const { emailValidation } = req.body;
+
+  User.findOne({ email: emailValidation }, (err, emailReq) =>
+    (!emailReq) ? res.status(200).json({ res: true }) : res.status(200).json({ res: false }));
 };
 
 
+exports.verification = (req, res) => {
 
 
+  res.render("user/verification", { title: "Verify your email", email: "email" });
+};
 
 
+/* Post */
+exports.signUp = (req, res) => {
+  console.log(req.body);
+  const user = new User(req.body);
+  // hash password
+  bcrypt.genSalt(10, (err, salt) =>
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) throw err;
+      // set password hashed
+      user.password = hash;
+      user.save()
+        .then(user => res.redirect("/users/sinup/verify"))
+        .catch(err => console.log(err));
+    }))
+};
 
 
-
-
-
-
-
-
+exports.changEmailVerify = (req, res) => {
+  console.log(req.body)
+}
 
 
 exports.logIn = (req, res) => {

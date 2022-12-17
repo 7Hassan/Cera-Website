@@ -1,5 +1,8 @@
+
 // Data in carte
 let carteData = [];
+
+
 
 // Get Elements in header
 let navA = [...document.querySelectorAll(".nav ul a")];
@@ -12,8 +15,14 @@ let holderDivsCart = document.querySelector(".holder-cart");
 let holderDivUser = document.querySelector(".user-div");
 let containerDivsCart = document.querySelector(".container-cart");
 
+
+
+
+
+
+
 // Run Function
-if (window.location.pathname != "/payment" && window.location.pathname != "/users/sinup" && window.location.pathname != "/users/login") {
+if (window.location.pathname != "/payment" && !(window.location.pathname.includes('users'))) {
   addActiveBar();
   clickHaederMenu();
   getLocalStroageData();
@@ -549,4 +558,138 @@ function observesRight() {
     observer.observe(div);
   })
 }
+
+async function getCountries() {
+  let countries = [];
+  let countriesHolder = document.getElementById('countries');
+  let searchInput = document.querySelector('.searchInput');
+  await fetch('https://restcountries.com/v3.1/all').then(res => res.json()).then((data) => {
+    data.forEach(country => countries.push(country.name.common));
+    countries.sort();
+    countries.forEach(country => countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)">${country}</li>`);
+  }).catch((err) => console.log(err));
+
+  searchInput.addEventListener('input', (event) => {
+    countriesHolder.innerHTML = "";
+    countries.filter((country) => {
+      if (country.toLowerCase().includes(event.target.value.toLowerCase())) {
+        countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)"> ${country}</li>`
+      }
+    });
+    if (countriesHolder.children.length === 0) {
+      countriesHolder.innerHTML = `<li style="cursor: context-menu; color:red;">! No results found</li>`;
+    }
+  });
+}
+
+function clickListcountries(ele) {
+  let countryselect = document.getElementById('countrySelected');
+  let eleSelected = document.querySelector('#countries .selected');
+  if (eleSelected) eleSelected.classList.remove('selected');
+  ele.classList.add('selected');
+  console.log(countryselect.value)
+  countryselect.value = ele.textContent;
+
+  countryselect.style.color = 'black';
+  document.querySelector('.options').classList.toggle('hidden');
+}
+
+
+
+
+
+
+
+let validationEmail;
+async function checkEmail(ele) {
+  validationEmail = false;
+  let errorEle = document.querySelector('.email .errors');
+
+  if (ValidateEmail(ele)) {
+    await axios.post('http://localhost:3000/users/sinup/check', { 'emailValidation': ele.value })
+      .then(res => res.data.res).then(res => {
+        if (res) {
+          errorEle.innerHTML = ``;
+          validationEmail = res;
+        } else {
+          errorEle.innerHTML = `This email is already in use. Want to <a href="/users/login">Log In</a>?.`;
+
+        }
+      })
+      .catch((error) => console.log(error));
+  } else {
+    errorEle.innerHTML = "Please enter a valid Email.";
+  }
+}
+
+
+
+
+function ValidateEmail(input) {
+  var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if (input.value.match(validRegex))
+    return true;
+  else
+    return false;
+}
+
+function checkAllInputs() {
+  let errorEle = [...document.querySelectorAll('.errors')];
+  let firstName = document.getElementById('firstName').value;
+  let lastName = document.getElementById('lastName').value;
+  let email = document.getElementById('email');
+  let password = document.getElementById('password').value;
+  let country = document.getElementById('countrySelected').value;
+  let emailConfim = document.getElementById('checkboxInput');
+
+  if (firstName.length === 0) {
+    errorEle[0].innerHTML = "First name is required.";
+    return false;
+  } else {
+    errorEle[0].innerHTML = "";
+  }
+  if (lastName.length === 0) {
+    errorEle[1].innerHTML = "Last name is required.";
+    return false;
+  } else {
+    errorEle[1].innerHTML = "";
+  }
+  if (email.value.length === 0) {
+    errorEle[2].innerHTML = "Email is required.";
+    return false;
+  } else {
+    if (!validationEmail) {
+      return false
+    }
+  }
+  if (password.length === 0) {
+    errorEle[3].innerHTML = "Password is required";
+    return false;
+  } else if (password.length < 8) {
+    errorEle[3].innerHTML = "Please enter 8 characters or more";
+    return false;
+  } else {
+    errorEle[3].innerHTML = "";
+  }
+  if (country === "") {
+    errorEle[4].innerHTML = "Countey is required";
+    return false;
+  } else {
+    errorEle[4].innerHTML = "";
+  }
+  if (!emailConfim.checked) {
+    errorEle[5].innerHTML = "This field is required";
+    return false;
+  } else {
+    errorEle[5].innerHTML = "";
+  }
+}
+
+
+async function sendData(event) {
+  if (checkAllInputs() == false) event.preventDefault();
+}
+
+
+
 

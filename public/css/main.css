@@ -2105,7 +2105,7 @@ footer p a:hover {
   padding: 30px 30px 20px;
 }
 
-.main-log .text-head {
+.main-log .head {
   text-align: center;
   font-weight: 600;
   font-size: 26px;
@@ -2139,6 +2139,104 @@ footer p a:hover {
   height: 20px;
   padding: 17px 5px 17px 35px;
   border-radius: 10px;
+}
+
+
+
+.main-log .email-input form .User-sinUp-country .layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.main-log .email-input form ul {
+  max-height: 200px;
+  overflow-y: scroll;
+
+}
+
+.main-log .email-input form .options {
+  position: absolute;
+  z-index: 2;
+  left: 2px;
+  top: 41px;
+  background-color: white;
+  width: 100%;
+  text-align: left;
+  border-radius: 7px;
+  box-shadow: -6px 20px 30px rgb(0 0 0 / 9%);
+  overflow: hidden;
+}
+
+.main-log .email-input form .options.hidden {
+  height: 0;
+
+}
+
+.main-log .email-input form .search {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+}
+
+
+.main-log .email-input form .search div {
+  position: relative;
+  left: 28px;
+
+}
+
+.main-log .email-input form ul li {
+  position: relative;
+  font-size: 14px;
+  font-weight: 550;
+  cursor: pointer;
+  padding: 10px 0 10px 25px;
+}
+
+.main-log .email-input form ul li.selected::before {
+  content: '';
+  height: 5px;
+  width: 5px;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+
+.main-log .email-input form ul li:hover {
+  background-color: #f2f7f2;
+}
+
+
+.main-log .email-input form #checkboxInput {
+  width: 15px !important;
+  margin: 10px !important;
+  padding: 0 !important;
+}
+
+.main-log .email-input form .search input {
+
+  border-radius: 30px !important;
+  padding: 5px 35px !important;
+  font-size: 12px;
+  height: 25px !important;
+}
+
+.main-log .email-input form div svg {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 10px;
+
 }
 
 .main-log .email-input form div input:focus {
@@ -2264,11 +2362,11 @@ footer p a:hover {
 }
 
 .sin-up .main-log .log {
-  margin: 0 0px 30px;
+  margin: 0 0 100px;
   width: 100%;
 }
 
-.sin-up .text-head {
+.sin-up .head {
   margin: 0 35px 10px;
 }
 
@@ -2295,6 +2393,11 @@ footer p a:hover {
   flex-wrap: wrap;
 }
 
+.sin-up .User-sinUp-name div {
+  flex-grow: 1;
+  position: relative;
+}
+
 .sin-up .email-input {
   border: none;
 }
@@ -2314,6 +2417,11 @@ form>div {
   top: -12px;
   color: red;
   font-size: 9px;
+}
+
+.errors a {
+  text-decoration: underline;
+  color: red;
 }
 
 .sin-up .User-sinUp-name input {
@@ -2337,12 +2445,6 @@ form>div {
   text-decoration: underline;
 }
 
-/* .sin-up .email-input form div i {
-  right: 35px;
-  margin-top: 10px;
-  left: auto;
-  cursor: pointer;
-} */
 
 
 @media (max-width:999px) {
@@ -2351,6 +2453,143 @@ form>div {
   }
 
   .sin-up .User-sinUp-name {
-    gap: 10px !important;
+    gap: 20px !important;
   }
+}
+
+.verify-holder,
+.verify-holder>div {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.verify-holder .text-verify {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .6px;
+}
+
+.verify-holder p {
+  color: #747474;
+  font-size: 10px !important;
+  font-weight: 500;
+  margin: 4px 0 !important;
+}
+
+.verify-holder .change-email {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.verify-holder a {
+  font-size: 12px !important;
+  text-decoration: underline;
+  margin: auto;
+  font-weight: 600;
+
+}
+
+.verify-holder i {
+  font-size: 8px;
+  background: blue;
+  border-radius: 50%;
+  color: white;
+  padding: 2px;
+}
+
+.verify-holder .update-email {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 0;
+  overflow: hidden;
+  transition: .3s;
+  margin-top: 5px;
+}
+
+.verify-holder .update-email.show {
+  height: 81px;
+}
+
+.verify-holder .change-email .update-email input {
+  padding: 14px 0px 14px 5px;
+  width: 200px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+  border: 2px solid #e4ebe4;
+  height: 20px;
+  font-size: 12px;
+}
+
+.verify-holder .change-email .update-email .sin-up button {
+  width: 150px !important;
+}
+
+.verify-holder button {
+  border-color: transparent;
+  border-radius: 30px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 200px;
+  margin: 0;
+  background-color: transparent;
+  color: #14a800;
+  border: 1px solid #14a800;
+
+}
+
+.verify-holder .normal {
+  border-color: transparent;
+  background-color: #14a800;
+  color: white;
+  border-radius: 30px;
+  width: 100%;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 14px;
+  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.verify-holder .normal:hover {
+  background-color: #3c8224;
+}
+
+.verify-holder .help-verify div {
+  margin-bottom: 25px;
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.verify-holder .help-verify .info-verify {
+  height: 0;
+  overflow: hidden;
+  transition: .3s;
+}
+
+.verify-holder .help-verify .info-verify.show {
+  height: 193px;
+}
+
+.verify-holder .help-verify div p {
+  font-size: 8px !important;
+}
+
+i.hidden-slide {
+  display: none;
 }
