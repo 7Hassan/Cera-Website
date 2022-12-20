@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const SessionStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
+
+// const morgan = require('morgan')
 const expressValidator = require('express-validator')
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -25,22 +27,28 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-// Session
+
+// Cookiess
+app.use(cookieParser());
+
+
+// Store Session in data base
 const STORE = new SessionStore({
   uri: 'mongodb://localhost:27017/eventsDB',
   collection: 'sessions'
 })
 
+
+// set Session
 app.use(session({
-  secret: 'secret',
+  key: 'user_side',
+  secret: 'hassan-hossam',
   saveUninitialized: true,
   resave: true,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 100 },
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 100 }, // 30 Days
   store: STORE,
 }));
 
-// Cookiess
-app.use(cookieParser());
 
 // flash express
 app.use(flash());
@@ -59,9 +67,6 @@ app.use(function (req, res, next) {
 // connect passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
 
 
 

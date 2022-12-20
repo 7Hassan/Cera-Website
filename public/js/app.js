@@ -23,6 +23,7 @@ let containerDivsCart = document.querySelector(".container-cart");
 
 // Run Function
 if (window.location.pathname != "/payment" && !(window.location.pathname.includes('users'))) {
+
   addActiveBar();
   clickHaederMenu();
   getLocalStroageData();
@@ -603,7 +604,7 @@ function clickListcountries(ele) {
 let validationEmail;
 async function checkEmail(ele) {
   validationEmail = false;
-  let errorEle = document.querySelector('.email .errors');
+  let errorEle = document.querySelector('.User-sinUp-email .errors');
 
   if (ValidateEmail(ele)) {
     await axios.post('http://localhost:3000/users/sinup/check', { 'emailValidation': ele.value })
@@ -687,6 +688,7 @@ function checkAllInputs() {
 
 
 async function sendData(event) {
+
   if (checkAllInputs() == false) event.preventDefault();
 }
 

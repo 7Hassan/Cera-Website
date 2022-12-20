@@ -30,7 +30,7 @@ exports.blogPageFunction = (req, res) => {
 };
 
 exports.singleProdFun = (req, res) => {
-  Event.find({ _id: req.params.id, }, (err, product) => {
+  Event.find({ _id: req.params.id }, (err, product) => {
     Event.find({ stoked: true }, (err, productsData) => {
       let products = [];
       let productsSize = 8;

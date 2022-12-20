@@ -988,8 +988,9 @@ footer .copyright {
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  min-width: 250px;
+  /* min-width: 250px; */
   max-width: 300px;
+  flex: 1;
 }
 
 .product .container .imgs #main-img {
@@ -1124,8 +1125,7 @@ footer .copyright {
 
 /* Start contact page */
 .main-sec-contact {
-  background: rgb(13, 143, 134);
-  background: linear-gradient(90deg, rgb(28, 170, 161) 0%, rgba(6, 59, 55, 1) 100%);
+  background: linear-gradient(273deg, rgb(28, 170, 161) 0%, rgba(6, 59, 55, 1) 100%);
 }
 
 .main-sec-about {
@@ -2489,16 +2489,16 @@ form>div {
 }
 
 .verify-holder a {
-  font-size: 12px !important;
+  font-size: 10px !important;
   text-decoration: underline;
-  margin: auto;
-  font-weight: 600;
+  font-weight: 700;
+  color: #108a00;
 
 }
 
 .verify-holder i {
   font-size: 8px;
-  background: blue;
+  background: #108a00;
   border-radius: 50%;
   color: white;
   padding: 2px;
@@ -2534,6 +2534,7 @@ form>div {
 
 .verify-holder .change-email .update-email .sin-up button {
   width: 150px !important;
+  padding: 6px 0;
 }
 
 .verify-holder button {
@@ -2571,9 +2572,9 @@ form>div {
 }
 
 .verify-holder .help-verify div {
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 600;
 }
 
 .verify-holder .help-verify .info-verify {
@@ -2582,8 +2583,12 @@ form>div {
   transition: .3s;
 }
 
+.verify-holder .help-verify .info-verify div {
+  margin-bottom: 25px;
+}
+
 .verify-holder .help-verify .info-verify.show {
-  height: 193px;
+  height: 165px;
 }
 
 .verify-holder .help-verify div p {
@@ -2592,4 +2597,99 @@ form>div {
 
 i.hidden-slide {
   display: none;
+}
+
+.flash-errors,
+.flash-success {
+  background-color: #fcede9;
+  min-width: 270px;
+  max-width: 350px;
+  width: 90%;
+  height: 30px;
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: .3s;
+  box-shadow: 1px 20px 30px rgb(0 0 0 / 15%);
+  z-index: 10;
+  border: 1px solid #f5c6bc;
+
+
+}
+
+.flash-errors .content-flash,
+.flash-success .content-flash {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.flash-errors .icon-flash {
+  padding: 4px;
+  background-color: red;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.flash-errors .icon-flash i {
+  color: white;
+}
+
+.flash-success .icon-flash {
+  padding: 3px;
+  background-color: #3ebe61;
+  border-radius: 7px;
+  margin-right: 10px;
+}
+
+.flash-success .icon-flash i {
+  color: #3ebe61 !important;
+  padding: 2px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+
+.flash-success {
+  
+  background-color: #ebf7ee;
+  border-color: #bee5c8;
+  max-width: 300px;
+  box-shadow: 0px 0px 30px rgb(0 0 0 / 15%);
+}
+
+.flash-errors.hidden,
+.flash-success.hidden {
+  top: -30px;
+  box-shadow: none;
+}
+
+.flash-success i {
+  color: var(--main-color) !important;
+
+}
+
+.flash-success h6,
+.flash-errors h6 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.flash-errors i,
+.flash-success i {
+  color: hsl(0deg 96% 45%);
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+
 }

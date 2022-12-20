@@ -6,6 +6,33 @@
         <img src="/imgs/logo.png" alt="">
       </div>
 
+      <div class="flash-errors hidden">
+        <div class="icon-flash">
+          <!-- <i class="fa-solid fa-check"></i> -->
+          <i class="fa-regular fa-triangle-exclamation"></i>
+        </div>
+        <div class="content-flash">
+          <h6 class="text-flash">
+            <%= errors %>
+          </h6>
+          <i class="fa-regular fa-circle-xmark" onclick="this.offsetParent.classList.add('hidden')"></i>
+
+        </div>
+      </div>
+
+      <div class="flash-success hidden">
+        <div class="icon-flash">
+          <i class="fa-solid fa-check"></i>
+
+        </div>
+        <div class="content-flash">
+          <h6 class="text-flash">
+            <%= success %>
+          </h6>
+          <i class="fa-regular fa-circle-xmark" onclick="this.offsetParent.classList.add('hidden');"></i>
+        </div>
+      </div>
+
       <div class="main-log verify-holder">
         <div class="head">
           <svg style="width: 100px;" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145 130"
@@ -151,14 +178,16 @@
             <i class="fa-solid fa-chevron-down"></i>
             <a id="change-email" href="" onclick="event.preventDefault();"> Change email</a>
           </div>
-          <div class="update-email ">
-            <div>
-              <input type="text" placeholder="Email" onblur="checkEmail(this)">
+          <form action="" method="POST">
+            <div class="update-email ">
+              <div>
+                <input type="text" placeholder="Email" name="newEamil" id="newEamil">
+              </div>
+              <div class="sin-up">
+                <button>Update & Resend</button>
+              </div>
             </div>
-            <div class="sin-up">
-              <button>Update & Resend</button>
-            </div>
-          </div>
+          </form>
 
         </div>
         <div class="help-verify">
@@ -171,7 +200,8 @@
             <div>
               Why do we ask for email confirmation?
               <p>
-                Email confirmation is an important security check that helps prevent other people from signing up for an
+                Email confirmation is an important security check that helps prevent other people from signing up for
+                an
                 Upwork account using your email address.
               </p>
             </div>
@@ -185,7 +215,8 @@
             <div>
               If you haven't received the confirmation email, please:
               <p>
-                Check the junk mail folder or spam filter in your email account. Make sure your email address is entered
+                Check the junk mail folder or spam filter in your email account. Make sure your email address is
+                entered
                 correctly.
               </p>
             </div>
@@ -202,6 +233,8 @@
     <script>
       let emailSec = document.querySelector('.update-email');
       let infoSec = document.querySelector('.info-verify ');
+
+
       document.getElementById('change-email').addEventListener('click', (e) => {
         e.preventDefault();
         [...document.querySelectorAll('.change-email i')].forEach(ele => ele.classList.toggle('hidden-slide'));
@@ -212,6 +245,19 @@
         [...document.querySelectorAll('.help-verify i')].forEach(ele => ele.classList.toggle('hidden-slide'));
         infoSec.classList.toggle('show');
       })
+
+      // let flashErrors = document.querySelector('.flash-errors');
+      let flashContents = [...document.querySelectorAll('.text-flash')];
+
+      flashContents.forEach((flashContent) => {
+        if (flashContent.innerText != "") {
+          flashContent.offsetParent.classList.remove('hidden');
+          setTimeout(() => { document.querySelector('.flash-success').classList.add('hidden'); }, 3000)
+        }
+      })
+
+
+
 
 
     </script>
