@@ -15,26 +15,24 @@ const transport = nodemailer.createTransport(
 
 
 
-module.exports.sendConfirmationEmail = async () => {
-  console.log("email");
-
+module.exports.sendConfirmationEmail = async (email, emailActivationCode, name) => {
   await transport.sendMail(
     {
       from: 'cera.shp@gmail.com',
-      to: 'egoker1234@gmail.com',
+      to: email,
       subject: 'Verify your email address',
       text: "texting",
       html: `
       <div>
         <h3>Verify your email address to complete registration</h3>
-        <h4>Hi,Hassan</h4>
+        <h4>Hi, ${name}</h4>
       <p>
-        Thanks for your interest in joining Cera! To complete your registration, we need you to verify your email address.
+        Thanks for your interest in joining Cera!
+        <br>
+        To complete your registration, we need you to verify your email address.
       </p>
       <br>
-      <a href=" 
-         style="margin:auto;
-                display: block;">
+      <a href=http://localhost:3000/users/sinup/verify/${emailActivationCode}>
       <button
          style="background-color: #14a800;
                 border-color: transparent;
@@ -52,7 +50,7 @@ module.exports.sendConfirmationEmail = async () => {
       <br>
       <p>
         Thanks for your time,<br>
-        The Upwork Team
+        The Cera Team
       </p>
     </div>
       `,
@@ -69,25 +67,3 @@ module.exports.sendConfirmationEmail = async () => {
 
 
 
-// let transporter = nodemailer.createTransport({
-//   service: 'Gmail',
-//   // port: 587,
-//   // secure: false, // true for 465, false for other ports
-//   auth: {
-//     user: 'egoker1234@gmail.com',
-//     Pass: 'tfffrsss6',
-//   },
-// });
-
-// // send mail with defined transport object
-// exports.sendConfirmationEmail = async () => {
-//   console.log("gmail")
-//   await transporter.sendMail({
-//     from: 'egoker1234@gmail.com', // sender address
-//     to: "cera.shp@gmail.com", // list of receivers
-//     subject: "Hello ✔", // Subject line
-//     text: "Hello world?", // plain text body
-//     html: "<b>Hello world?</b>", // html body
-//   }).catch(err => console.log(err));
-
-// }

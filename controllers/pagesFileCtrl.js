@@ -3,7 +3,12 @@ const Event = require("../models/products");
 
 exports.homePageFunction = (req, res) => {
   Event.find({}, (err, products) => {
-    res.render("index", { products: products, title: "Cera" });
+    res.render("index", {
+      products: products,
+      title: "Cera",
+      errors: req.flash('errors'),
+      success: req.flash('success'),
+    });
   });
 };
 exports.shopPageFunction = (req, res) => {

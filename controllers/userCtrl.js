@@ -60,9 +60,8 @@ exports.signUp = (req, res) => {
             carteData: [],
             emailActivationCode: token,
           }
-          res.redirect("/users/sinup/verify")
-
-          // sendConfirmationEmail()
+          res.redirect("/users/sinup/verify");
+          sendConfirmationEmail(user.email, req.session.user.emailActivationCode, user.firstName)
 
         })
         .catch(err => console.log(err));
@@ -80,6 +79,10 @@ exports.changEmailVerify = (req, res) => {
           if (err) console.log(err)
           req.flash('success', 'Email updated')
           res.redirect('/users/sinup/verify')
+          User.findOne({ _id: req.session.user.userId }, (err, user) => {
+            if (err) console.log(err)
+            sendConfirmationEmail(newEmail, req.session.user.emailActivationCode, user.firstName)
+          })
         })
 
       } else {
@@ -91,15 +94,22 @@ exports.changEmailVerify = (req, res) => {
   } else {
     req.flash('errors', 'Please enter a valid email !')
     res.redirect('/users/sinup/verify');
-    sendConfirmationEmail()
+
+
   }
 };
 
 
 exports.confirmationEmail = (req, res) => {
-
   if (req.session.user.emailActivationCode == req.params.emailActivationCode) {
-    res.redirect("/");
+    User.updateOne({ _id: req.session.user.userId }, { emailConf: true }, (err) => {
+      if (err) console.log(err)
+      req.flash('success', 'Registration Successed')
+      res.redirect("/")
+
+    });
+
+
   }
 
 }

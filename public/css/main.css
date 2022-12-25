@@ -2606,7 +2606,7 @@ i.hidden-slide {
   max-width: 350px;
   width: 90%;
   height: 30px;
-  position: absolute;
+  position: fixed;
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
@@ -2661,7 +2661,7 @@ i.hidden-slide {
 
 
 .flash-success {
-  
+
   background-color: #ebf7ee;
   border-color: #bee5c8;
   max-width: 300px;
