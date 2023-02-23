@@ -8,7 +8,6 @@ const {
   contactPageFunction,
   blogPageFunction,
 } = require(path);
-
 const router = express.Router();
 
 router.get("/", homePageFunction);

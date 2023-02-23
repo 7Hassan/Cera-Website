@@ -3,11 +3,13 @@ const Event = require("../models/products");
 
 exports.homePageFunction = (req, res) => {
   Event.find({}, (err, products) => {
-    res.render("index", {
+    res.render("pages/index", {
       products: products,
       title: "Cera",
       errors: req.flash('errors'),
+      warning: req.flash('warning'),
       success: req.flash('success'),
+      toast: req.flash('toast'),
     });
   });
 };
@@ -18,20 +20,20 @@ exports.shopPageFunction = (req, res) => {
     for (let i = 0; i < productsData.length; i += productsSize) {
       products.push(productsData.slice(i, productsSize + i));
     }
-    res.render("shop", { products: products, title: "Cera-Shop" })
+    res.render("pages/shop", { products: products, title: "Cera-Shop" })
   });
 };
 exports.aboutPageFunction = (req, res) => {
-  res.render("about", { title: "About Us" });
+  res.render("pages/about", { title: "About Us" });
 };
 exports.paymentPageFunction = (req, res) => {
-  res.render("payment", { title: "Payment" });
+  res.render("pages/payment", { title: "Payment" });
 };
 exports.contactPageFunction = (req, res) => {
-  res.render("contact", { title: "Contact Us" });
+  res.render("pages/contact", { title: "Contact Us" });
 };
 exports.blogPageFunction = (req, res) => {
-  res.render("blog", { title: "Cera-Blog" });
+  res.render("pages/blog", { title: "Cera-Blog" });
 };
 
 exports.singleProdFun = (req, res) => {
@@ -42,12 +44,12 @@ exports.singleProdFun = (req, res) => {
       for (let i = 0; i < productsData.length / 2; i += productsSize) {
         products.push(productsData.slice(i, productsSize + i));
       }
-      res.render("product", { title: "Product", product: product[0], products: products });
+      res.render("pages/product", { title: "Product", product: product[0], products: products });
     })
   });
   ;
 }
 
 exports.notFoundPage = (req, res) => {
-  res.status(404).render('404', { title: '404' });
+  res.status(404).render('pages/404', { title: '404' });
 }

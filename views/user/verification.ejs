@@ -221,13 +221,16 @@
         infoSec.classList.toggle('show');
       })
 
-      // let flashErrors = document.querySelector('.flash-errors');
       let flashContents = [...document.querySelectorAll('.text-flash')];
 
       flashContents.forEach((flashContent) => {
         if (flashContent.innerText != "") {
           flashContent.offsetParent.classList.remove('hidden');
-          setTimeout(() => { document.querySelector('.flash-success').classList.add('hidden'); }, 3000)
+
+          setTimeout(() => {
+            if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
+
+          }, 5000);
         }
       })
 

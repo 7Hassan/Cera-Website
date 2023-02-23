@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div class="flash-success hidden">
+<div class="flash-success hidden up-mess">
   <div class="icon-flash">
     <i class="fa-solid fa-check"></i>
 
@@ -19,6 +19,32 @@
   <div class="content-flash">
     <h6 class="text-flash">
       <%= success %>
+    </h6>
+    <i class="fa-regular fa-circle-xmark" onclick="this.offsetParent.classList.add('hidden');"></i>
+  </div>
+</div>
+
+<div class="flash-warning hidden up-mess">
+  <div class="icon-flash">
+    <i class="fa-regular fa-triangle-exclamation"></i>
+  </div>
+
+  <div class="content-flash">
+    <h6 class="text-flash">
+      <%= warning %>
+    </h6>
+    <i class="fa-regular fa-circle-xmark" onclick="this.offsetParent.classList.add('hidden');"></i>
+  </div>
+</div>
+
+<div class="flash-toast hidden up-mess">
+  <div class="icon-flash">
+    <i class="fa-solid fa-info"></i>
+  </div>
+
+  <div class="content-flash">
+    <h6 class="text-flash">
+      <%= toast %>
     </h6>
     <i class="fa-regular fa-circle-xmark" onclick="this.offsetParent.classList.add('hidden');"></i>
   </div>

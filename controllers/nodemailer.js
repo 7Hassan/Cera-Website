@@ -7,12 +7,10 @@ const transport = nodemailer.createTransport(
     host: 'smtp.gmail.com',
     auth: {
       user: 'cera.shp@gmail.com',
-      pass: 'yqfpgikjypnbntem',
+      pass: 'qygfatsvshfzdlqb',
     },
 
   });
-
-
 
 
 module.exports.sendConfirmationEmail = async (email, emailActivationCode, name) => {
@@ -22,41 +20,46 @@ module.exports.sendConfirmationEmail = async (email, emailActivationCode, name) 
       to: email,
       subject: 'Verify your email address',
       text: "texting",
-      html: `
-      <div>
-        <h3>Verify your email address to complete registration</h3>
-        <h4>Hi, ${name}</h4>
-      <p>
-        Thanks for your interest in joining Cera!
-        <br>
-        To complete your registration, we need you to verify your email address.
-      </p>
-      <br>
-      <a href=http://localhost:3000/users/sinup/verify/${emailActivationCode}>
-      <button
-         style="background-color: #14a800;
-                border-color: transparent;
-                color: white;
-                border-radius: 20px;
-                width: 200px;
-                padding-bottom: 10px;
-                padding-top: 10px;
-                font-size: 13px;
-                margin-top: 20px;
-                font-weight: 600;">
-        Verify Email</button></a>
-      <br>
-      <br>
-      <br>
-      <p>
-        Thanks for your time,<br>
-        The Cera Team
-      </p>
-    </div>
-      `,
+      html: emailDesign(emailActivationCode, name),
     }).catch(err => console.log(err));
 }
 
+
+
+function emailDesign(emailActivationCode, name) {
+  return `     
+   <div>
+  <h3>Verify your email address to complete registration</h3>
+  <h4>Hi, ${name}</h4>
+<p>
+  Thanks for your interest in joining Cera!
+  <br>
+  To complete your registration, we need you to verify your email address.
+</p>
+<br>
+<a href=http://localhost:8000/auth/sinup/verify/${emailActivationCode}>
+<button
+   style="background-color: #14a800;
+          border-color: transparent;
+          color: white;
+          border-radius: 20px;
+          width: 200px;
+          padding-bottom: 10px;
+          padding-top: 10px;
+          font-size: 13px;
+          margin-top: 20px;
+          font-weight: 600;">
+  Verify Email</button></a>
+<br>
+<br>
+<br>
+<p>
+  Thanks for your time,<br>
+  The Cera Team
+</p>
+</div>
+`
+}
 
 
 

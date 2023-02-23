@@ -1,7 +1,13 @@
 
+
+// All Countries
+const countries_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+
 // Data in carte
 let carteData = [];
 
+// check email
+let validationEmail;
 
 
 // Get Elements in header
@@ -22,12 +28,12 @@ let containerDivsCart = document.querySelector(".container-cart");
 
 
 // Run Function
-if (window.location.pathname != "/payment" && !(window.location.pathname.includes('users'))) {
+if (window.location.pathname != "/payment" && !(window.location.pathname.includes('auth'))) {
 
   addActiveBar();
   clickHaederMenu();
   getLocalStroageData();
-  totalPrice(document.querySelectorAll(".total"));
+  // totalPrice(document.querySelectorAll(".total"));
 }
 
 
@@ -560,19 +566,15 @@ function observesRight() {
   })
 }
 
-async function getCountries() {
-  let countries = [];
+function getCountries() {
   let countriesHolder = document.getElementById('countries');
   let searchInput = document.querySelector('.searchInput');
-  await fetch('https://restcountries.com/v3.1/all').then(res => res.json()).then((data) => {
-    data.forEach(country => countries.push(country.name.common));
-    countries.sort();
-    countries.forEach(country => countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)">${country}</li>`);
-  }).catch((err) => console.log(err));
+
+  countries_list.map(country => countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)">${country}</li>`)
 
   searchInput.addEventListener('input', (event) => {
     countriesHolder.innerHTML = "";
-    countries.filter((country) => {
+    countries_list.filter((country) => {
       if (country.toLowerCase().includes(event.target.value.toLowerCase())) {
         countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)"> ${country}</li>`
       }
@@ -588,39 +590,11 @@ function clickListcountries(ele) {
   let eleSelected = document.querySelector('#countries .selected');
   if (eleSelected) eleSelected.classList.remove('selected');
   ele.classList.add('selected');
-  console.log(countryselect.value)
+
   countryselect.value = ele.textContent;
 
   countryselect.style.color = 'black';
   document.querySelector('.options').classList.toggle('hidden');
-}
-
-
-
-
-
-
-
-let validationEmail;
-async function checkEmail(ele) {
-  validationEmail = false;
-  let errorEle = document.querySelector('.User-sinUp-email .errors');
-
-  if (ValidateEmail(ele)) {
-    await axios.post('http://localhost:3000/users/sinup/check', { 'emailValidation': ele.value })
-      .then(res => res.data.res).then(res => {
-        if (res) {
-          errorEle.innerHTML = ``;
-          validationEmail = res;
-        } else {
-          errorEle.innerHTML = `This email is already in use. Want to <a href="/users/login">Log In</a>?.`;
-
-        }
-      })
-      .catch((error) => console.log(error));
-  } else {
-    errorEle.innerHTML = "Please enter a valid Email.";
-  }
 }
 
 
@@ -633,6 +607,29 @@ function ValidateEmail(input) {
   else
     return false;
 }
+
+
+
+async function checkEmail(ele) {
+  validationEmail = false;
+  let errorEle = document.querySelector('.User-sinUp-email .errors');
+
+  if (ValidateEmail(ele)) {
+    await axios.post('/auth/sinup/check', { 'emailValidation': ele.value })
+      .then(res => res.data.res).then(res => {
+        if (res) {
+          errorEle.innerHTML = ``;
+          validationEmail = res;
+        } else {
+          errorEle.innerHTML = `This email is already in use. Want to <a href="/auth/login">Log In</a>?.`;
+        }
+      })
+      .catch((error) => console.log(error));
+  } else {
+    errorEle.innerHTML = "Please enter a valid Email.";
+  }
+}
+
 
 function checkAllInputs() {
   let errorEle = [...document.querySelectorAll('.errors')];
@@ -688,10 +685,14 @@ function checkAllInputs() {
 
 
 async function sendData(event) {
-
   if (checkAllInputs() == false) event.preventDefault();
 }
 
 
-
+async function countryLocation() {
+  await axios.get('http://ip-api.com/json/?fields=61439').then(res => {
+    if (res.status == 200)
+      document.getElementById('countrySelected').value = res.data.country;
+  }).catch((err) => console.log(err));
+}
 

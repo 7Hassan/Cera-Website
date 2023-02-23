@@ -2600,7 +2600,9 @@ i.hidden-slide {
 }
 
 .flash-errors,
-.flash-success {
+.flash-success,
+.flash-warning,
+.flash-toast {
   background-color: #fcede9;
   min-width: 270px;
   max-width: 350px;
@@ -2626,7 +2628,9 @@ i.hidden-slide {
 }
 
 .flash-errors .content-flash,
-.flash-success .content-flash {
+.flash-success .content-flash,
+.flash-warning .content-flash,
+.flash-toast .content-flash {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2634,7 +2638,8 @@ i.hidden-slide {
   width: 100%;
 }
 
-.flash-errors .icon-flash {
+.flash-errors .icon-flash,
+.flash-warning .icon-flash {
   padding: 4px;
   background-color: red;
   border-radius: 6px;
@@ -2645,14 +2650,16 @@ i.hidden-slide {
   color: white;
 }
 
-.flash-success .icon-flash {
+.flash-success .icon-flash,
+.flash-toast .icon-flash {
   padding: 3px;
   background-color: #3ebe61;
   border-radius: 7px;
   margin-right: 10px;
 }
 
-.flash-success .icon-flash i {
+.flash-success .icon-flash i,
+.flash-toast .icon-flash i {
   color: #3ebe61 !important;
   padding: 2px;
   background-color: white;
@@ -2661,7 +2668,6 @@ i.hidden-slide {
 
 
 .flash-success {
-
   background-color: #ebf7ee;
   border-color: #bee5c8;
   max-width: 300px;
@@ -2669,7 +2675,9 @@ i.hidden-slide {
 }
 
 .flash-errors.hidden,
-.flash-success.hidden {
+.flash-success.hidden,
+.flash-warning.hidden,
+.flash-toast.hidden {
   top: -30px;
   box-shadow: none;
 }
@@ -2680,16 +2688,60 @@ i.hidden-slide {
 }
 
 .flash-success h6,
-.flash-errors h6 {
+.flash-errors h6,
+.flash-warning h6,
+.flash-toast h6 {
   font-size: 12px;
   font-weight: 500;
 }
 
 .flash-errors i,
-.flash-success i {
+.flash-success i,
+.flash-warning i,
+.flash-toast i {
   color: hsl(0deg 96% 45%);
   font-size: 13px;
   font-weight: 900;
   cursor: pointer;
 
+}
+
+.flash-warning {
+  background-color: #fef7ea;
+  border-color: #f9ddae;
+}
+
+.flash-warning .icon-flash {
+  background-color: #ef9400;
+}
+
+.flash-warning .icon-flash i {
+  color: white;
+}
+
+.flash-warning .content-flash i {
+  color: #ef9400;
+
+}
+
+.flash-toast {
+  background-color: #e5effa;
+  border-color: #bfd8f4;
+}
+
+.flash-toast .icon-flash i {
+  font-size: 14px;
+  padding: 2px 1px 1px 6px;
+  color: #006ce4 !important;
+  width: 17px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.flash-toast .icon-flash {
+  background-color: #006ce4;
+}
+
+.flash-toast .content-flash i {
+  color: #006ce4;
 }
