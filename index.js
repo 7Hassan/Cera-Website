@@ -1,46 +1,35 @@
-
-const express = require("express");
-
-require('dotenv').config();
-
-const db = require("./config/dataBase");
-
+const express = require('express');
+// const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
-
 const session = require('express-session');
-
 const SessionStore = require('connect-mongodb-session')(session);
-
 const cookieParser = require('cookie-parser');
-
-const expressValidator = require('express-validator');
-
 const flash = require('connect-flash');
-
-const passport = require('passport');
-const passportSetup = require('./config/passport-setup');
-
 const app = express();
 
+//? configuration for dotenv
+require('dotenv').config({ path: './.env' });
 
-// Files
-const path = require("path");
-const publicDir = path.join(__dirname, "./public"); //هنا بجيب الباث
+//? Run Data Base connection
+require('./config/dataBase')
 
-// EJS
-app.use(express.static(publicDir)); //public هنا بيقراء الملاف الي موجوده ف
-app.set("view engine", "ejs");
+//? Read files in 'public' folder
+app.use(express.static(`${__dirname}/public`));
 
-// body- parser
+//? EJS
+app.set('view engine', 'ejs');
+
+//? body- parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-// Cookiess
+//? Cookies
 app.use(cookieParser());
 
-// Store Session in data base
+//? Store Session in data base
+const sessionLink = process.env.DATA_BASE_URL.replace('<DATABASENAME>', process.env.DATA_BASE_NAME).replace('<PASSWORD>', process.env.DATA_BASE_PASSWORD)
 const STORE = new SessionStore({
-  uri: process.env.SESSIONURL,
+  uri: sessionLink,
   collection: 'sessions'
 })
 
@@ -50,7 +39,7 @@ app.use(session({
   secret: 'hassan-hossam',
   saveUninitialized: true,
   resave: true,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 100 }, // 30 Days
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 100 }, //! 30 Days
   store: STORE,
 }));
 
@@ -58,31 +47,19 @@ app.use(session({
 app.use(flash());
 
 // setup express message
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
 
-// connect passport
-app.use(passport.initialize());
-app.use(passport.session());
 
-/* Rendering pages */
-app.use("/", require("./routes/pages"));
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
 
-// single product
-app.use("/shop", require("./routes/single_prod"));
-
-// handeling user pages
-app.use("/auth", require("./routes/auth"));
-
-// difine 404 page (not found)
+// define 404 page (not found)
 app.use((req, res) => {
   res.status(404).render('404', { title: 404 });
 })
 
-/* Run server */
-const port = process.env.PORT;
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+
+module.exports = app

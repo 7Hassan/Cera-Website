@@ -28,5 +28,5 @@ const productSchema = new mongoose.Schema({
 
 
 
-let Event = mongoose.model("Event", productSchema, "products");
-module.exports = Event;
+let Product = mongoose.model("products", productSchema);
+module.exports = Product;

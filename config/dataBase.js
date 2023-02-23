@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
+const dataBaseLink = process.env.DATA_BASE_URL.replace('<DATABASENAME>', process.env.DATA_BASE_NAME).replace('<PASSWORD>', process.env.DATA_BASE_PASSWORD)
 
-mongoose.connect(process.env.DATABASEURL, (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("database connected");
-
-  }
-});
+//? Connect with Data Base
+mongoose.connect(dataBaseLink)
+  .then(() => console.log('DataBase Connected'))
+  .catch((err) => console.log('🚀 ~ file: dataBase.js:6 ~ err:', err))
