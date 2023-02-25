@@ -1,0 +1,66 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "semi": "off",
+    "no-var": "off",
+    "no-console": "off",
+    "no-undef": "off",
+    "camelcase": "warn",
+    "no-empty": "error",
+    "no-shadow": "error",
+    "complexity": "error",
+    "func-names": "error",
+    "require-await": "warn",
+    "default-case": "error",
+    "object-shorthand": "off",
+    "no-unused-vars": "error",
+    "no-unused-labels": "warn",
+    "no-useless-catch": "error",
+    "default-case-last": "error",
+    "no-useless-escape": "error",
+    "no-empty-function": "error",
+    "no-restricted-syntax": "warn",
+    "no-unused-expressions": "warn",
+    "no-use-before-define": "off",
+    "no-shadow-restricted-names": "error",
+    "id-length": [
+      "off",
+      {
+        "min": 2,
+        "max": 15
+      }
+    ],
+    "max-depth": [
+      "error",
+      {
+        "max": 4
+      }
+    ],
+    "quotes": ["warn", "single"]
+  }
+}
+/*
+
+TODO: Installing
+! npm i -D eslint
+
+TODO: File configuration
+! npm run lint -- --init
+
+TODO: Run
+? package.json in "script object" => "lint": "eslint ./index.js"
+! npm run lint
+
+TODO: Fix
+! npm run lint -- --fix
+
+*/
