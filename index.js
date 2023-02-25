@@ -55,6 +55,7 @@ app.use((req, res, next) => {
 
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
+app.use('/api', require('./routes/api'));
 
 // define 404 page (not found)
 app.use((req, res) => {
@@ -63,3 +64,6 @@ app.use((req, res) => {
 
 
 module.exports = app
+
+
+

@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="other-products product01 ">
-        <h2>Other products</h2>
+        <h2>Other <%= product.name %>s</h2>
         <div class="holder-cont products-holder">
           <div class="button-products ">
             <button class="left-slide" onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 1000)">
@@ -54,23 +54,22 @@
             </button>
             <div class="container boxs">
               <% for (let i=0; i < products.length; i++) {%>
-                <% for (let j=0; j < products[i].length; j++) {%>
-                  <div class="product-box" onclick="window.location.pathname='/shop/<%= products[i][j]._id %>'">
-                    <img src="/<%=products[i][j].imgSrc %>" alt="product image">
-                    <div class="details"><span>Cera</span>
-                      <h5>Cartoon Astronaut <%= products[i][j].name %>
-                      </h5>
-                      <div class="stars">
-                        <% for (let k=0; k < products[i][j].stars; k++) {%>
-                          <i class="fa-solid fa-star"></i>
-                          <% } %>
-                      </div>
-                      <h4>$<%= products[i][j].price %>
-                      </h4>
+                <div class="product-box" onclick="window.location.pathname='/shop/<%= products[i]._id %>'">
+                  <img src="/<%=products[i].imgSrc %>" alt="product image">
+                  <div class="details"><span>Cera</span>
+                    <h5>Cartoon Astronaut <%= products[i].name %>
+                    </h5>
+                    <div class="stars">
+                      <% for (let k=0; k < products[i].stars; k++) {%>
+                        <i class="fa-solid fa-star"></i>
+                        <% } %>
                     </div>
-                    <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                    <h4>$<%= products[i].price %>
+                    </h4>
                   </div>
-                  <% }} %>
+                  <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                </div>
+                <% } %>
             </div>
             <button class="right-slide" onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 1000)">
               <i class="fa-solid fa-angles-right"></i>

@@ -1,40 +1,44 @@
 const Product = require('../models/products');
 
-exports.homePage = (req, res) => {
-  Product.find({}, (err, products) => {
+exports.homePage = async (req, res) => {
+
+  try {
+    const featureProd = await Product.find({ stoked: false })
+    const newProd = await Product.find({ stoked: false })
     res.render('pages/index', {
-      products: products,
+      featureProd: featureProd,
+      newProd: newProd,
       title: 'Cera',
       errors: req.flash('errors'),
       warning: req.flash('warning'),
       success: req.flash('success'),
       toast: req.flash('toast'),
-    });
-  });
-};
-exports.shopPage = (req, res) => {
-  Product.find({}, (err, productsData) => {
-    let products = [];
-    let productsSize = 8;
-    for (let i = 0; i < productsData.length; i += productsSize) {
-      products.push(productsData.slice(i, productsSize + i));
-    }
-    res.render('pages/shop', { products: products, title: 'Cera-Shop' })
-  });
+    })
+  } catch (err) {
+    console.log('🚀 ~ file: pages.js:25 ~ exports.homePage= ~ err:', err)
+  }
+}
+
+exports.shopPage = async (req, res) => {
+  try {
+    const result = await Product.find()
+    const data = sliceDataShop(result, 8)
+    res.render('pages/shop', { products: data, title: 'Cera-Shop' })
+  } catch (err) {
+    console.log('🚀 ~ file: pages.js:29 ~ exports.shopPage= ~ err:', err)
+    res.render('pages/shop', { products: [], title: 'Cera-Shop' })
+  }
 };
 
-exports.singleProd = (req, res) => {
-  Product.find({ _id: req.params.id }, (error, product) => {
-    Product.find({ stoked: true }, (err, productsData) => {
-      let products = [];
-      let productsSize = 8;
-      for (let i = 0; i < productsData.length / 2; i += productsSize) {
-        products.push(productsData.slice(i, productsSize + i));
-      }
-      res.render('pages/product', { title: 'Product', product: product[0], products: products });
-    })
-  });
-  
+exports.singleProd = async (req, res) => {
+  try {
+    const singleProduct = await Product.findOne({ _id: req.params.id })
+    const result = await Product.find({ stoked: true, name: singleProduct.name })
+    res.render('pages/product', { title: 'Product', product: singleProduct, products: result });
+  } catch (err) {
+    console.log('🚀 ~ file: pages.js:38 ~ exports.singleProd= ~ err:', err)
+    res.render('pages/product', { title: 'Product', product: {}, products: [] })
+  }
 }
 
 exports.aboutPage = (req, res) => res.render('pages/about', { title: 'About Us' })
@@ -42,3 +46,13 @@ exports.paymentPage = (req, res) => res.render('pages/payment', { title: 'Paymen
 exports.contactPage = (req, res) => res.render('pages/contact', { title: 'Contact Us' })
 exports.blogPage = (req, res) => res.render('pages/blog', { title: 'Cera-Blog' });
 exports.notFoundPage = (req, res) => res.status(404).render('pages/404', { title: '404' })
+
+
+
+
+//! To slice data to show it in a shop page
+function sliceDataShop(data, length) {
+  let products = []
+  for (let i = 0; i < data.length; i += length) products.push(data.slice(i, length + i))
+  return products
+}
