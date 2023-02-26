@@ -19,7 +19,7 @@
           <div class="information">
             <div class="carde-info  div-click">
               <h4>Credit Card</h4>
-              <div class="holde">
+              <div class="holed">
                 <div> ENTER CARD NUMBER </div>
                 <div>
                   <img src="https://secure-media.hotstarext.com/web-assets/prod/images/dc-sg-card-icons.svg" alt="">
@@ -28,7 +28,7 @@
             </div>
             <div class="place-info div-click">
               <h4>Delivery Location</h4>
-              <div class="holde">
+              <div class="holed">
                 <div> ENTER DELIVERY LOCATION</div>
                 <div>
                   <i class="fa-solid fa-location-dot"></i>
@@ -52,8 +52,8 @@
             <form action="" method="post">
               <div>
                 <input id="carde-number" name="Card Number" maxlength="19" type="text" required
-                  placeholder="XXXX XXXX XXXX XXXX" onblur="checkCardeAllNumbers(this)" onkeypress="return cardeSpace()"
-                  oninput="checkCardeFirstNumbers(this,document.getElementById('visa-img'))" />
+                  placeholder="XXXX XXXX XXXX XXXX" onblur="checkCaredAllNumbers(this)" onkeypress="return cardedSpace()"
+                  oninput="checkCaredFirstNumbers(this,document.getElementById('visa-img'))" />
                 <label for="carde-number">Card Number</label>
                 <span id="error-carde">Please enter a valid Card Number</span>
                 <img id="visa-img" src="">
@@ -95,8 +95,8 @@
                 <label for="">Full Name</label>
               </div>
               <div>
-                <input name="Adress" type="text" required />
-                <label for="">Adress</label>
+                <input name="Address" type="text" required />
+                <label for="">Address</label>
               </div>
               <div class="row-input">
                 <div>
@@ -126,7 +126,7 @@
     <script src="js/app.js"></script>
     <script>
       totalPrice(document.querySelectorAll(".total"));
-      popupOverlay(document.querySelectorAll(".holde"));
+      popupOverlay(document.querySelectorAll(".holed"));
     </script>
 
   </body>

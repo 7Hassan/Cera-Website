@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "lint": "eslint ./index.js"
+    "lint": "eslint ./public/js/app.js"
   },
   "keywords": [],
   "author": "",

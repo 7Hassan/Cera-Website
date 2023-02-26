@@ -1,4 +1,4 @@
-/* Set global propareties */
+/* Set global properties */
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 * {
@@ -764,7 +764,7 @@ body.hidden {
   font-size: 15px;
 }
 
-/* strart newsletters */
+/* start newsletters */
 .news-letters {
   margin: 70px 0;
   background-color: #031d41;
@@ -1009,7 +1009,12 @@ footer .copyright {
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
+  position: relative;
 }
+
+
+
+
 
 .product .container .imgs .other-imgs img {
   width: 25%;
@@ -2744,4 +2749,22 @@ i.hidden-slide {
 
 .flash-toast .content-flash i {
   color: #006ce4;
+}
+
+
+#img-master {
+  position: absolute;
+  width: 0;
+  opacity: 1;
+  transition: .8s;
+  left: 0;
+  top: 0;
+}
+
+#img-master.move {
+  width: 25%;
+  opacity: 1;
+  z-index: 2;
+  border-radius: 10px;
+  margin-top: 2px;
 }

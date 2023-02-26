@@ -53,14 +53,15 @@ app.use((req, res, next) => {
 });
 
 
+
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 app.use('/api', require('./routes/api'));
 
 // define 404 page (not found)
-app.use((req, res) => {
-  res.status(404).render('404', { title: 404 });
-})
+// app.use((req, res) => {
+//   res.status(404).render('404', { title: 404 });
+// })
 
 
 module.exports = app

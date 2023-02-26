@@ -21,7 +21,8 @@ exports.homePage = async (req, res) => {
 
 exports.shopPage = async (req, res) => {
   try {
-    const result = await Product.find()
+    let result = await Product.find()
+    result = result.sort((a, b) => (a.name < b.name) ? 1 : -1)
     const data = sliceDataShop(result, 8)
     res.render('pages/shop', { products: data, title: 'Cera-Shop' })
   } catch (err) {
@@ -33,7 +34,8 @@ exports.shopPage = async (req, res) => {
 exports.singleProd = async (req, res) => {
   try {
     const singleProduct = await Product.findOne({ _id: req.params.id })
-    const result = await Product.find({ stoked: true, name: singleProduct.name })
+    let result = await Product.find({ stoked: true, name: singleProduct.name })
+    result = result.sort((a, b) => (a.price < b.price) ? 1 : -1)
     res.render('pages/product', { title: 'Product', product: singleProduct, products: result });
   } catch (err) {
     console.log('🚀 ~ file: pages.js:38 ~ exports.singleProd= ~ err:', err)

@@ -7,8 +7,11 @@
           <div class="container" id=<%=product._id %>>
             <div class="imgs">
               <img srcset="/<%=product.imgSrc %>" id="main-img" />
-              <div class="other-imgs">
-                <img srcset="/<%=product.imgSrc %>" onclick="document.getElementById('main-img').srcset=this.srcset" />
+              <div class="other-imgs relative">
+                <img id="first-img" srcset="/<%=product.imgSrc %>"
+                  onclick="document.getElementById('main-img').srcset=this.srcset" />
+                <img id="img-master" srcset="/<%=product.imgSrc%>" />
+
                 <%for (let i=0; i < product.imgs.length; i++) { %>
                   <img srcset="/<%=product.imgs[i]%>" onerror="this.style.display='none'"
                     onclick="document.getElementById('main-img').srcset=this.srcset" />
@@ -36,9 +39,9 @@
               <div class="product-details">
                 <h4>Product Details</h4>
                 <span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing, ducimus rerum
-                  fugiat corrupti amet hic porro? Perspiciatis iste expedita
-                  similique dolore! Nemo vero corporis quasi dicta aut hic odit?
+                  Lorem ipsum dolor sit amen consenter adipisicing, durius rerun
+                  fugit corrupts amen hic porno? Perspiciatis site expedite
+                  similitude dolors! Nebo vera corporal quasi dicta aut hic doit?
                 </span>
               </div>
             </div>
@@ -84,12 +87,12 @@
   <script>
     // observesLeft()
     observesTop()
-    //  addProductToCart(document.querySelector(".product .container").id,
-    //   document.getElementById("main-img"),
-    //   document.getElementById("price-product")
-    // );
-    // setAllproducts(products);
-    // setProdutBoxs(document.querySelector(".other-products .container"), products, 4, 8);
+    addProductToCart(document.querySelector(".product .container").id,
+      document.getElementById("main-img"),
+      document.getElementById("price-product")
+    );
+    // setAllProducts(products);
+    // setProductBox(document.querySelector(".other-products .container"), products, 4, 8);
     //on click on product
     // ProductsOnclick(products);
     //Add products to shop carte 

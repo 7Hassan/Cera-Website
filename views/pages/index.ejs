@@ -9,7 +9,7 @@
         <div class="main-sec-home" id="main">
           <div class="container">
             <h4>Trade-in-offer</h4>
-            <h2>Super value daels</h2>
+            <h2>Super value dales</h2>
             <h1>On all Products</h1>
             <p>Save more coupons & up to 70% off!</p>
             <button onclick="window.location.pathname='shop'">Shop Now</button>
@@ -23,7 +23,7 @@
             </div>
             <div>
               <img src="imgs/features/f2.png" alt="photo">
-              <h6>Online oreder</span>
+              <h6>Online order</span>
             </div>
             <div>
               <img src="imgs/features/f3.png" alt="photo">
@@ -78,7 +78,7 @@
           <p>Summer Collection New Modern design</p>
           <div class="container boxs">
             <% for (let i=0; i < newProd.length; i++) {%>
-              <a href="/shop#<%= newProd[i]._id  %> " style="display: block;">
+              <a href="/shop#<%= newProd[i]._id%> " style="display: block;">
                 <div class="product-box">
                   <img src="<%=newProd[i].imgSrc %>" alt="product image">
                   <div class="details"><span>Cera</span>
@@ -107,20 +107,11 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="js/app.js"></script>
   <script>
-    // showData();
     observesRight();
-    async function showData() {
-      products = await getAllData();
-      setProdutBoxs(document.querySelector(".feature .container"), products, 0, 8);
-      setProdutBoxs(document.querySelector(".arrivals .container"), products, 8, 12);
-    }
-
-    let flashContents = [...document.querySelectorAll('.text-flash')];
-
+    let flashContents = [...document.querySelectorAll('.text-flash')]
     flashContents.forEach((flashContent) => {
       if (flashContent.innerText != "") {
-        flashContent.offsetParent.classList.remove('hidden');
-
+        flashContent.offsetParent.classList.remove('hidden')
         setTimeout(() => {
           if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
 

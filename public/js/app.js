@@ -1,7 +1,7 @@
-
+/* eslint-disable no-unused-vars */
 
 // All Countries
-const countries_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+const countriesList = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor L\'Este', 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'];
 
 // Data in carte
 let carteData = [];
@@ -11,15 +11,15 @@ let validationEmail;
 
 
 // Get Elements in header
-let navA = [...document.querySelectorAll(".nav ul a")];
-let navIcon = document.querySelector(".shop-icon");
-let userIcon = document.querySelector(".user-icon i");
-let nav = document.getElementById("nav-bar");
-let navButtom = document.querySelector("#nav-buttom i");
-let xIcon = document.querySelector(".x-icon i");
-let holderDivsCart = document.querySelector(".holder-cart");
-let holderDivUser = document.querySelector(".user-div");
-let containerDivsCart = document.querySelector(".container-cart");
+let navA = [...document.querySelectorAll('.nav ul a')];
+let navIcon = document.querySelector('.shop-icon');
+let userIcon = document.querySelector('.user-icon i');
+let nav = document.getElementById('nav-bar');
+let navButtom = document.querySelector('#nav-buttom i');
+let xIcon = document.querySelector('.x-icon i');
+let holderDivsCart = document.querySelector('.holder-cart');
+let holderDivUser = document.querySelector('.user-div');
+let containerDivsCart = document.querySelector('.container-cart');
 
 
 
@@ -28,7 +28,7 @@ let containerDivsCart = document.querySelector(".container-cart");
 
 
 // Run Function
-if (window.location.pathname != "/payment" && !(window.location.pathname.includes('auth'))) {
+if (window.location.pathname != '/payment' && !(window.location.pathname.includes('auth'))) {
 
   addActiveBar();
   clickHaederMenu();
@@ -44,7 +44,7 @@ function addActiveBar() {
     if (window.location.pathname == a.attributes[0].value) {
       a.classList.add('active');
     }
-    a.addEventListener("click", () => {
+    a.addEventListener('click', () => {
       removeActiveBar();
     });
   });
@@ -52,25 +52,25 @@ function addActiveBar() {
   // Function to remove all active classes  form navbar elements
   function removeActiveBar() {
     navA.forEach((a) => {
-      a.classList.remove("active");
+      a.classList.remove('active');
     });
   }
   //add and remove active class from navbar icon
-  navIcon.addEventListener("click", () => {
-    if (userIcon.classList.contains("active")) {
-      userIcon.classList.remove("active");
-      holderDivUser.classList.remove("show");
+  navIcon.addEventListener('click', () => {
+    if (userIcon.classList.contains('active')) {
+      userIcon.classList.remove('active');
+      holderDivUser.classList.remove('show');
     }
-    navIcon.classList.toggle("active");
-    holderDivsCart.classList.toggle("show");
+    navIcon.classList.toggle('active');
+    holderDivsCart.classList.toggle('show');
   });
-  userIcon.addEventListener("click", () => {
-    if (navIcon.classList.contains("active")) {
-      navIcon.classList.remove("active");
-      holderDivsCart.classList.remove("show");
+  userIcon.addEventListener('click', () => {
+    if (navIcon.classList.contains('active')) {
+      navIcon.classList.remove('active');
+      holderDivsCart.classList.remove('show');
     }
-    userIcon.classList.toggle("active");
-    holderDivUser.classList.toggle("show");
+    userIcon.classList.toggle('active');
+    holderDivUser.classList.toggle('show');
   });
 }
 
@@ -78,17 +78,17 @@ function addActiveBar() {
 
 // Function to add and remove click class from heder menu buttom
 function clickHaederMenu() {
-  navButtom.addEventListener("click", () => {
-    document.querySelector(".over-layout").classList.add('click-nav');
-    document.querySelector(".x-icon").classList.add('show');
+  navButtom.addEventListener('click', () => {
+    document.querySelector('.over-layout').classList.add('click-nav');
+    document.querySelector('.x-icon').classList.add('show');
     document.body.classList.add('hidden')
-    nav.classList.add("click");
+    nav.classList.add('click');
   });
-  xIcon.addEventListener("click", () => {
-    document.querySelector(".over-layout").classList.remove('click-nav');
-    document.querySelector(".x-icon").classList.remove('show');
+  xIcon.addEventListener('click', () => {
+    document.querySelector('.over-layout').classList.remove('click-nav');
+    document.querySelector('.x-icon').classList.remove('show');
     document.body.classList.remove('hidden')
-    nav.classList.remove("click");
+    nav.classList.remove('click');
   });
 
 
@@ -98,48 +98,48 @@ function clickHaederMenu() {
 /*Local storage */
 // function to get data carte from local storage
 function getLocalStroageData() {
-  if (JSON.parse(localStorage.getItem("data")) != null) {
-    carteData = JSON.parse(localStorage.getItem("data"));
+  if (JSON.parse(localStorage.getItem('data')) != null) {
+    carteData = JSON.parse(localStorage.getItem('data'));
     setDataonload();
   }
 }
 
 // function to put data carte in local storage
 function setLocalStroageData() {
-  localStorage.setItem("data", JSON.stringify(carteData));
+  localStorage.setItem('data', JSON.stringify(carteData));
 }
 
 
 
 
 
-// set all producrs in shop page
-// function setAllproducts(products) {
+// set all produces in shop page
+// function setAllProducts(products) {
 //   let holder = document.querySelector(".holder-cont");
 //   let counter = 0;
 //   let countContainers = parseInt(products.length / 8);
 
 //   for (let i = 0; i < countContainers; i++) {
 //     holder.innerHTML += createSecProducts();
-//     setProdutBoxs(holder.children[i].children[1], products, counter, counter + 8);
+//     setProductBox(holder.children[i].children[1], products, counter, counter + 8);
 //     counter += 8;
 //   }
 //   if (products.length % 8 != 0) {
 //     if (products.length % 8 > 4) {
 //       holder.innerHTML += createSecProducts();
-//       setProdutBoxs(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
+//       setProductBox(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
 
 //     } else {
 //       holder.innerHTML += createEndSecProducts();
-//       setProdutBoxs(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
+//       setProductBox(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
 
 //     }
 //   }
 
 // }
 
-// Function to set products boxs
-// async function setProdutBoxs(element, products, min, max) {
+// Function to set products boxes
+// async function setProductBox(element, products, min, max) {
 //   for (let i = min; i < max; i++) {
 //     element.innerHTML += createProdutBox(products, i);
 //   }
@@ -155,36 +155,42 @@ function setLocalStroageData() {
 
 // push data in carteData and local stroage
 function addProductToCart(id, img, price) {
-  document.getElementById("cart-shop").addEventListener("click", () => {
+  document.getElementById('cart-shop').addEventListener('click', () => {
+
     let check = carteData.filter((prod) => prod.imgUrl == img.src);
     if (check == 0) {
       carteData.push({
         id: id,
         imgUrl: img.src,
         price: price.textContent,
-        count: document.getElementById("count-product").value,
+        count: document.getElementById('count-product').value,
       });
       setLocalStroageData();
       navIcon.dataset.content = carteData.length;
-      setDivCarte(
+      let positionDive = setDivCarte(
         img.src,
         price.textContent,
         carteData[carteData.length - 1].count
       );
-      totalPrice(document.querySelectorAll(".total"));
+      totalPrice(document.querySelectorAll('.total'));
+
+      movingImg(positionDive)
     }
   });
+
+
+
 }
 
 // function to calculate total price
 function totalPrice(elements) {
   let total = 0;
-  let products = JSON.parse(localStorage.getItem("data"));
+  let products = JSON.parse(localStorage.getItem('data'));
   for (let i = 0; i < products.length; i++) {
     let count = 0;
     let price = 0;
     count = +products[i].count;
-    price = +products[i].price.split("$")[1];
+    price = +products[i].price.split('$')[1];
     total += count * price;
   }
   elements.forEach((ele) => {
@@ -255,29 +261,31 @@ function createDivCarte(img, price, countInput) {
 // Function to set divs products in carte
 function setDivCarte(img, price, count) {
   checkOnCarte();
-  containerDivsCart.firstElementChild.textContent = "";
+  containerDivsCart.firstElementChild.textContent = '';
   let productIput = +count;
 
-  containerDivsCart.innerHTML += createDivCarte(img, price, productIput);
+  containerDivsCart.innerHTML += createDivCarte(img, price, productIput)
 
   for (let i = 1; i < containerDivsCart.children.length; i++) {
     removeProductCarte(containerDivsCart.children[i]);
     plusMinus(containerDivsCart.children[i], productIput);
   }
+  return containerDivsCart.lastElementChild.getBoundingClientRect()
+
 }
 
 function checkOnCarte() {
-  if (navIcon.dataset.content == "0") {
-    containerDivsCart.firstElementChild.textContent = "add products to cart";
-    document.getElementById("buy-button").classList.remove("show");
+  if (navIcon.dataset.content == '0') {
+    containerDivsCart.firstElementChild.textContent = 'add products to cart';
+    document.getElementById('buy-button').classList.remove('show');
   } else {
-    containerDivsCart.firstElementChild.textContent = "";
-    document.getElementById("buy-button").classList.add("show");
+    containerDivsCart.firstElementChild.textContent = '';
+    document.getElementById('buy-button').classList.add('show');
   }
 }
 
 function plusMinus(product, productCount) {
-  product.children[3].children[0].addEventListener("click", () => {
+  product.children[3].children[0].addEventListener('click', () => {
     if (productCount < 10) {
       productCount++;
     }
@@ -285,9 +293,9 @@ function plusMinus(product, productCount) {
     let index = locationInCarteData(product.children[0]);
     carteData[index].count = productCount;
     setLocalStroageData();
-    totalPrice(document.querySelectorAll(".total"));
+    totalPrice(document.querySelectorAll('.total'));
   });
-  product.children[3].children[1].addEventListener("click", () => {
+  product.children[3].children[1].addEventListener('click', () => {
     if (productCount > 1) {
       productCount--;
     }
@@ -295,13 +303,13 @@ function plusMinus(product, productCount) {
     let index = locationInCarteData(product.children[0]);
     carteData[index].count = productCount;
     setLocalStroageData();
-    totalPrice(document.querySelectorAll(".total"));
+    totalPrice(document.querySelectorAll('.total'));
   });
 }
 
 // function to remove div from carte on click
 function removeProductCarte(product) {
-  product.children[4].addEventListener("click", () => {
+  product.children[4].addEventListener('click', () => {
     let index = locationInCarteData(product.children[0]);
     product.remove();
     --navIcon.dataset.content;
@@ -311,7 +319,7 @@ function removeProductCarte(product) {
     setLocalStroageData();
     //check on carte div
     checkOnCarte();
-    totalPrice(document.querySelectorAll(".total"));
+    totalPrice(document.querySelectorAll('.total'));
   });
 }
 
@@ -324,7 +332,7 @@ function locationInCarteData(img) {
 function sideScroll(ele, direction, speed, distance, step) {
   scrollAmount = 0;
   var slideTimer = setInterval(() => {
-    direction == "left" ? (ele.scrollLeft -= step) : (ele.scrollLeft += step);
+    direction == 'left' ? (ele.scrollLeft -= step) : (ele.scrollLeft += step);
     scrollAmount += step;
     if (scrollAmount >= distance) {
       window.clearInterval(slideTimer);
@@ -345,30 +353,30 @@ function setDataonload() {
 /* Payment */
 // Function to on create popup overlay
 function popupOverlay(elements) {
-  let divOverlay = document.querySelector(".over-layout");
+  let divOverlay = document.querySelector('.over-layout');
   elements.forEach((ele) => {
-    ele.addEventListener("click", () => {
-      divOverlay.classList.add("show");
+    ele.addEventListener('click', () => {
+      divOverlay.classList.add('show');
       if (ele == elements[0]) {
-        document.querySelector(".credit-card").classList.remove("show");
+        document.querySelector('.credit-card').classList.remove('show');
       } else {
-        document.querySelector(".location").classList.remove("show");
+        document.querySelector('.location').classList.remove('show');
       }
     });
   });
-  divOverlay.addEventListener("click", () => {
-    divOverlay.classList.remove("show");
-    document.querySelector(".credit-card").classList.add("show");
-    document.querySelector(".location").classList.add("show");
+  divOverlay.addEventListener('click', () => {
+    divOverlay.classList.remove('show');
+    document.querySelector('.credit-card').classList.add('show');
+    document.querySelector('.location').classList.add('show');
   });
 }
 
-function cardeSpace() {
+function cardedSpace() {
   if (onlyNumbers(event)) {
-    let cardeInput = document.getElementById("carde-number").value;
+    let cardeInput = document.getElementById('carde-number').value;
     if (cardeInput.length == 4 || cardeInput.length == 9 || cardeInput.length == 14) {
-      document.getElementById("carde-number").value = cardeInput + " ";
-      document.getElementById("carde-number").max = 1;
+      document.getElementById('carde-number').value = cardeInput + ' ';
+      document.getElementById('carde-number').max = 1;
     }
   } else {
     return false
@@ -376,10 +384,10 @@ function cardeSpace() {
 }
 function addSlashes() {
   if (onlyNumbers(event)) {
-    let cardeInput = document.getElementById("carde-date").value;
+    let cardeInput = document.getElementById('carde-date').value;
     if (cardeInput.length == 2) {
-      document.getElementById("carde-date").value = cardeInput + "/";
-      document.getElementById("carde-date").max = 1;
+      document.getElementById('carde-date').value = cardeInput + '/';
+      document.getElementById('carde-date').max = 1;
     }
   } else {
     return false
@@ -398,14 +406,14 @@ function onlyNumbers(e) {
 
 function cardeSpace() {
   if (onlyNumbers(event)) {
-    let cardeInput = document.getElementById("carde-number").value;
+    let cardeInput = document.getElementById('carde-number').value;
     if (
       cardeInput.length == 4 ||
       cardeInput.length == 9 ||
       cardeInput.length == 14
     ) {
-      document.getElementById("carde-number").value = cardeInput + " ";
-      document.getElementById("carde-number").max = 1;
+      document.getElementById('carde-number').value = cardeInput + ' ';
+      document.getElementById('carde-number').max = 1;
     }
   } else {
     return false;
@@ -413,30 +421,30 @@ function cardeSpace() {
 }
 
 
-function checkCardeFirstNumbers(element, img) {
+function checkCaredFirstNumbers(element, img) {
   if (element.value[0] == 4) {
-    img.src = "https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/visa.svg";
+    img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/visa.svg';
   } else if (+element.value[0] + +element.value[1] <= 10) {
-    img.src = "https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/mc.svg";
+    img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/mc.svg';
 
   } else {
-    img.src = "https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/nocard.svg";
+    img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/nocard.svg';
   }
 }
 
 
-function checkCardeAllNumbers(ele) {
-  num = ele.value.split(" ").join("");
+function checkCaredAllNumbers(ele) {
+  num = ele.value.split(' ').join('');
 
   if (num.length < 16) {
-    document.getElementById("error-carde").classList.add("show");
+    document.getElementById('error-carde').classList.add('show');
   } else {
     if (luhnAlgorithmCheck(num)) {
-      document.getElementById("error-carde").classList.remove("show");
-      document.querySelector('.credit-card button').classList.remove("non-click");
+      document.getElementById('error-carde').classList.remove('show');
+      document.querySelector('.credit-card button').classList.remove('non-click');
       document.querySelector('.credit-card button').setAttribute('onclick', 'true');
     } else {
-      document.getElementById("error-carde").classList.add("show");
+      document.getElementById('error-carde').classList.add('show');
     }
   }
 
@@ -471,12 +479,12 @@ function luhnAlgorithmCheck(num) {
 
 //get data from onclicked product
 function getDataProduct(product) {
-  let nameProducts = [...document.querySelectorAll(".name-product")];
-  document.getElementById("main-img").src = product.imgUrl;
+  let nameProducts = [...document.querySelectorAll('.name-product')];
+  document.getElementById('main-img').src = product.imgUrl;
   nameProducts.forEach((namePro) => {
     namePro.textContent = product.name;
   });
-  document.getElementById("price-product").textContent = `$${product.price}`;
+  document.getElementById('price-product').textContent = `$${product.price}`;
 }
 
 
@@ -518,13 +526,13 @@ function passordFunction() {
 
   //Hide password
   seeEye.addEventListener('click', () => {
-    passInput.type = "password";
+    passInput.type = 'password';
     seeEye.style.display = 'none';
     hideEye.style.display = 'inline';
   });
   //see password
   hideEye.addEventListener('click', () => {
-    passInput.type = "text";
+    passInput.type = 'text';
     seeEye.style.display = 'inline';
     hideEye.style.display = 'none';
   });
@@ -570,17 +578,17 @@ function getCountries() {
   let countriesHolder = document.getElementById('countries');
   let searchInput = document.querySelector('.searchInput');
 
-  countries_list.map(country => countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)">${country}</li>`)
+  countriesList.map(country => countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)">${country}</li>`)
 
   searchInput.addEventListener('input', (event) => {
-    countriesHolder.innerHTML = "";
-    countries_list.filter((country) => {
+    countriesHolder.innerHTML = '';
+    countriesList.filter((country) => {
       if (country.toLowerCase().includes(event.target.value.toLowerCase())) {
         countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)"> ${country}</li>`
       }
     });
     if (countriesHolder.children.length === 0) {
-      countriesHolder.innerHTML = `<li style="cursor: context-menu; color:red;">! No results found</li>`;
+      countriesHolder.innerHTML = '<li style="cursor: context-menu; color:red;">! No results found</li>';
     }
   });
 }
@@ -612,21 +620,21 @@ function ValidateEmail(input) {
 
 async function checkEmail(ele) {
   validationEmail = false;
-  let errorEle = document.querySelector('.User-sinUp-email .errors');
+  let errorEle = document.querySelector('.User-gsinUp-email .errors');
 
   if (ValidateEmail(ele)) {
-    await axios.post('/auth/sinup/check', { 'emailValidation': ele.value })
+    await axios.post('/auth/signup/check', { 'emailValidation': ele.value })
       .then(res => res.data.res).then(res => {
         if (res) {
-          errorEle.innerHTML = ``;
+          errorEle.innerHTML = '';
           validationEmail = res;
         } else {
-          errorEle.innerHTML = `This email is already in use. Want to <a href="/auth/login">Log In</a>?.`;
+          errorEle.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.';
         }
       })
       .catch((error) => console.log(error));
   } else {
-    errorEle.innerHTML = "Please enter a valid Email.";
+    errorEle.innerHTML = 'Please enter a valid Email.';
   }
 }
 
@@ -641,19 +649,19 @@ function checkAllInputs() {
   let emailConfim = document.getElementById('checkboxInput');
 
   if (firstName.length === 0) {
-    errorEle[0].innerHTML = "First name is required.";
+    errorEle[0].innerHTML = 'First name is required.';
     return false;
   } else {
-    errorEle[0].innerHTML = "";
+    errorEle[0].innerHTML = '';
   }
   if (lastName.length === 0) {
-    errorEle[1].innerHTML = "Last name is required.";
+    errorEle[1].innerHTML = 'Last name is required.';
     return false;
   } else {
-    errorEle[1].innerHTML = "";
+    errorEle[1].innerHTML = '';
   }
   if (email.value.length === 0) {
-    errorEle[2].innerHTML = "Email is required.";
+    errorEle[2].innerHTML = 'Email is required.';
     return false;
   } else {
     if (!validationEmail) {
@@ -661,25 +669,25 @@ function checkAllInputs() {
     }
   }
   if (password.length === 0) {
-    errorEle[3].innerHTML = "Password is required";
+    errorEle[3].innerHTML = 'Password is required';
     return false;
   } else if (password.length < 8) {
-    errorEle[3].innerHTML = "Please enter 8 characters or more";
+    errorEle[3].innerHTML = 'Please enter 8 characters or more';
     return false;
   } else {
-    errorEle[3].innerHTML = "";
+    errorEle[3].innerHTML = '';
   }
-  if (country === "") {
-    errorEle[4].innerHTML = "Countey is required";
+  if (country === '') {
+    errorEle[4].innerHTML = 'Countey is required';
     return false;
   } else {
-    errorEle[4].innerHTML = "";
+    errorEle[4].innerHTML = '';
   }
   if (!emailConfim.checked) {
-    errorEle[5].innerHTML = "This field is required";
+    errorEle[5].innerHTML = 'This field is required';
     return false;
   } else {
-    errorEle[5].innerHTML = "";
+    errorEle[5].innerHTML = '';
   }
 }
 
@@ -695,4 +703,25 @@ async function countryLocation() {
       document.getElementById('countrySelected').value = res.data.country;
   }).catch((err) => console.log(err));
 }
+
+
+function movingImg(positionDive) {
+  console.log('🚀 ~ file: app.js:709 ~ movingImg ~ positionDive:', positionDive)
+
+  let moveImg = document.getElementById('img-master')
+  let positionParent = document.querySelector('.product .other-imgs').getBoundingClientRect()
+
+  moveImg.classList.add('move')
+  setTimeout(() => {
+
+    moveImg.style.top = `${positionDive.top - positionParent.top}px`
+    moveImg.style.left = `${positionDive.left - positionParent.left}px`
+    // moveImg.style.width = '70px'
+    moveImg.style.height = `${positionDive.height - 4}px`
+    holderDivsCart.classList.add('show')
+
+  }, 900)
+
+}
+
 
