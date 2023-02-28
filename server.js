@@ -1,57 +1,23 @@
-const app = require('./index')
+//! Error uncaught Exception
+process.on('uncaughtException', (err) => {
+  console.log('⛔ ' + err.name, err.message, err.stack)
+  process.exit(1)
+})
 
 
+const mongoose = require('mongoose')
+const app = require('./app')
+const dataLink = process.env.DATA_BASE_URL.replace('<DATABASENAME>', process.env.DATA_BASE_NAME).replace('<PASSWORD>', process.env.DATA_BASE_PASSWORD)
 
-
-
-
-// const fs = require('fs')
-// let data = ''
-// let obj = ``
-// dataSeed()
-
-
+//? connect with DataBase
+mongoose.connect(dataLink).then(() => console.log('✅ connect with DataBase'))
 //? Run server 
 const port = process.env.PORT
-app.listen(port, () => console.log(`app listening on port ${port}`))
+const server = app.listen(port, () => console.log(`✅ app listening on port ${port}`))
 
 
-
-
-
-// function dataSeed() {
-//   const path = './public/imgs/products'
-//   let files = fs.readdirSync(path, 'utf-8')
-//   for (let i = 0; i < files.length; i++) {
-//     if (files[i].includes('jpg') || files[i].includes('webp')) {
-//       let result = files.filter(file => file == (files[i].split('.')[0]))
-//       if (result.length != 0) {
-//         const imgs = fs.readdirSync(`${path}/${result[0]}`, 'utf-8')
-//         const imgData = []
-//         imgs.map((img) => imgData.push(`'imgs/products/${result[0]}/${img}'`))
-
-//         obj = `{
-//             stoked: ${true},
-//               imgSrc: 'imgs/products/${files[i]}',
-//                 imgs: [${imgData}],
-//                   name: 'T-Shirt',
-//                     stars: ${Math.round((Math.random() * 4) + 1)},
-//                       price: ${Math.round((Math.random() * 500) + 1)},
-//             },`
-//       } else {
-//         obj = `{
-//             stoked: ${true},
-//               imgSrc: 'imgs/products/${files[i]}',
-//                 imgs: [],
-//                   name: 'T-Shirt',
-//                     stars: ${Math.round((Math.random() * 4) + 1)},
-//                       price: ${Math.round((Math.random() * 500) + 1)},
-//             },`
-//       }
-//     }
-//     data += obj
-//   }
-//   fs.writeFileSync('./test.js', data, 'utf-8')
-
-
-// }
+//! Error with connection with mongo
+process.on('unhandledRejection', (err) => {
+  console.log('🚨 ' + err.name, err.message)
+  server.close(() => process.exit(1))
+})

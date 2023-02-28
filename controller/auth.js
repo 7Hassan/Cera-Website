@@ -1,6 +1,7 @@
-const bcrypt = require('bcryptjs');
-const User = require('../models/users');
-const { sendConfirmationEmail } = require('./nodemailer')
+const User = require('../models/users')
+const bcrypt = require('bcryptjs')
+const { sendConfirmationEmail } = require('./emailSender')
+const { catchError } = require('../Errors/catch')
 const validator = require('validator');
 const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -13,7 +14,7 @@ exports.registrationPage = (req, res) => {
   res.render('user/registration', { title: 'Log In', errors });
 };
 
-exports.createAccountPage = (req, res) => res.render('user/createAccount', { title: 'Sin Up' })
+exports.createAccountPage = (req, res) => res.render('user/createAccount', { title: 'Sign Up' })
 
 exports.verificationPage = (req, res) => {
 
@@ -42,34 +43,37 @@ exports.verificationPage = (req, res) => {
 
 
 /* Post */
-exports.signUp = (req, res) => {
-  const newUser = new User(req.body);
+exports.signUp = catchError(async (req, res) => {
+  const result = await User.create(req.body)
+  res.status(201).send('user created')
+})
 
-  // set active code
-  let token = '';
-  for (let i = 0; i < 25; i++) token += characters[Math.floor(Math.random() * characters.length)];
 
-  // hash password
-  bcrypt.genSalt(10, (er, salt) =>
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) throw err;
-      // set password hashed
-      newUser.password = hash;
-      newUser.save()
-        .then(user => {
-          req.session.user = {
-            userId: user._id,
-            emailConf: false,
-            img: '',
-            carteData: [],
-            emailActivationCode: token,
-          }
-          res.redirect('/auth/signup/verify');
+// // set active code
+// let token = '';
+// for (let i = 0; i < 25; i++) token += characters[Math.floor(Math.random() * characters.length)];
 
-          sendConfirmationEmail(user.email, req.session.user.emailActivationCode, user.firstName);
-        }).catch(error => console.log(error));
-    }))
-};
+// // hash password
+// bcrypt.genSalt(10, (er, salt) =>
+//   bcrypt.hash(user.password, salt, (err, hash) => {
+//     if (err) throw err;
+//     // set password hashed
+//     newUser.password = hash;
+//     newUser.save()
+//       .then(user => {
+//         req.session.user = {
+//           userId: user._id,
+//           emailConf: false,
+//           img: '',
+//           carteData: [],
+//           emailActivationCode: token,
+//         }
+//         res.redirect('/auth/signup/verify');
+
+//         sendConfirmationEmail(user.email, req.session.user.emailActivationCode, user.firstName);
+//       }).catch(error => console.log(error));
+//   }))
+// }
 
 
 

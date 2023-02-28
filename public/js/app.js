@@ -714,11 +714,11 @@ function movingImg(positionDive) {
   moveImg.classList.add('move')
   setTimeout(() => {
 
+    holderDivsCart.classList.add('show')
     moveImg.style.top = `${positionDive.top - positionParent.top}px`
     moveImg.style.left = `${positionDive.left - positionParent.left}px`
-    // moveImg.style.width = '70px'
     moveImg.style.height = `${positionDive.height - 4}px`
-    holderDivsCart.classList.add('show')
+    moveImg.style.width = '70px'
 
   }, 900)
 
