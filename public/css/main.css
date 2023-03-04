@@ -2129,6 +2129,24 @@ footer p a:hover {
 
 }
 
+.main-log .email-input form {
+  position: relative;
+}
+
+.main-log .email-input form .forget-password {
+  position: absolute;
+  right: 5px;
+  height: 20px;
+}
+
+.main-log .email-input form .forget-password a {
+  color: red;
+  font-size: 12px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 30px;
+}
+
 .main-log .User-login-email i,
 .main-log .User-login-pass div {
   position: absolute;

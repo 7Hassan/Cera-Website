@@ -678,7 +678,7 @@ function checkAllInputs() {
     errorEle[3].innerHTML = '';
   }
   if (country === '') {
-    errorEle[4].innerHTML = 'Countey is required';
+    errorEle[4].innerHTML = 'Country is required';
     return false;
   } else {
     errorEle[4].innerHTML = '';

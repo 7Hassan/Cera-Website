@@ -52,10 +52,12 @@ app.use((req, res, next) => {
 });
 
 
+
+
 //? use routing
 app.use('/', require('./routes/pages'));
-app.use('/auth', require('./routes/auth'));
 app.use('/api', require('./routes/api'));
+app.use('/auth', require('./routes/auth'));
 
 //! 404
 const AppError = require('./Errors/classError')
@@ -65,7 +67,9 @@ app.all('*', (req, res, next) => next(new AppError('We can\'t find this page', 4
 app.use(errorHandler)
 
 
+
 module.exports = app
+
 
 
 

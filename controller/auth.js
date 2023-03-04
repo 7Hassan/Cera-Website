@@ -1,23 +1,28 @@
 const User = require('../models/users')
-const bcrypt = require('bcryptjs')
-const { sendConfirmationEmail } = require('./emailSender')
+const jwt = require('jsonwebtoken')
+const { promisify } = require('util')
+const axios = require('axios')
+const crypto = require('crypto')
+const sendEmail = require('./email')
 const { catchError } = require('../Errors/catch')
+const AppError = require('../Errors/classError')
 const validator = require('validator');
+const { findOne } = require('../models/users')
 const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+function createJwtToken(id) {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
+}
 
 
-
-/* Get */
-exports.registrationPage = (req, res) => {
+exports.signPage = (req, res) => res.render('user/createAccount', { title: 'Sign Up' })
+exports.logPage = (req, res) => {
   let errors = { email: '', password: '' };
   res.render('user/registration', { title: 'Log In', errors });
 };
 
-exports.createAccountPage = (req, res) => res.render('user/createAccount', { title: 'Sign Up' })
 
-exports.verificationPage = (req, res) => {
-
+exports.verifyPage = (req, res) => {
   if (req.session.user && req.cookies.user_side) {
     if (req.session.user.emailConf) {
       req.flash('toast', 'You are Registered');
@@ -36,133 +41,114 @@ exports.verificationPage = (req, res) => {
     }
 
   } else {
-    req.flash('toast', 'You are Registered');
+    req.flash('toast', 'Please sign up');
     res.redirect('/auth/signup');
   }
 }
 
 
-/* Post */
-exports.signUp = catchError(async (req, res) => {
-  const result = await User.create(req.body)
-  res.status(201).send('user created')
-})
 
 
-// // set active code
-// let token = '';
-// for (let i = 0; i < 25; i++) token += characters[Math.floor(Math.random() * characters.length)];
 
-// // hash password
-// bcrypt.genSalt(10, (er, salt) =>
-//   bcrypt.hash(user.password, salt, (err, hash) => {
-//     if (err) throw err;
-//     // set password hashed
-//     newUser.password = hash;
-//     newUser.save()
-//       .then(user => {
+//! sign up
 //         req.session.user = {
 //           userId: user._id,
 //           emailConf: false,
-//           img: '',
+//           photo: '',
 //           carteData: [],
 //           emailActivationCode: token,
-//         }
-//         res.redirect('/auth/signup/verify');
-
-//         sendConfirmationEmail(user.email, req.session.user.emailActivationCode, user.firstName);
-//       }).catch(error => console.log(error));
-//   }))
-// }
 
 
 
 exports.changEmailVerify = (req, res) => {
-  const newEmail = req.body.newEamil;
-  User.findOne({ _id: req.session.user.userId }, (err, userExist) => {
-    if (err) return console.log(err);
-    if (!req.session.user.emailConf) {
-      if (validator.isEmail(newEmail)) {
-        User.findOne({ email: newEmail }, (error, user) => {
-          if (!user || error) {
-            User.updateOne({ _id: req.session.user.userId }, { email: newEmail }, (er) => {
-              if (er) return console.log(er)
-              req.flash('success', 'Email updated')
-              sendConfirmationEmail(newEmail, req.session.user.emailActivationCode, userExist.firstName);
-              res.redirect('/auth/signup/verify')
-            })
-          } else {
-            req.flash('errors', 'This email is already in use !')
-            res.redirect('/auth/signup/verify');
-          }
-        })
-      } else {
-        req.flash('errors', 'Please enter a valid email !')
-        res.redirect('/auth/signup/verify');
-      }
-    } else {
-      req.flash('toast', 'You are Registered')
-      res.redirect('/')
-    }
-  })
+  // const newEmail = req.body.newEamil;
+  // User.findOne({ _id: req.session.user.userId }, (err, userExist) => {
+  //   if (err) return console.log(err);
+  //   if (!req.session.user.emailConf) {
+  //     if (validator.isEmail(newEmail)) {
+  //       User.findOne({ email: newEmail }, (error, user) => {
+  //         if (!user || error) {
+  //           User.updateOne({ _id: req.session.user.userId }, { email: newEmail }, (er) => {
+  //             if (er) return console.log(er)
+  //             req.flash('success', 'Email updated')
+  //             sendEmail(newEmail, req.session.user.emailActivationCode, userExist.firstName);
+  //             res.redirect('/auth/signup/verify')
+  //           })
+  //         } else {
+  //           req.flash('errors', 'This email is already in use !')
+  //           res.redirect('/auth/signup/verify');
+  //         }
+  //       })
+  //     } else {
+  //       req.flash('errors', 'Please enter a valid email !')
+  //       res.redirect('/auth/signup/verify');
+  //     }
+  //   } else {
+  //     req.flash('toast', 'You are Registered')
+  //     res.redirect('/')
+  //   }
+  // })
+  if (req.body.redirect) {
+    res.send('log in')
+    console.log('🚀 ~ file: auth.js:111 ~ ', req.body)
+  } else {
+    res.send('new Email')
+  }
+
 }
 
 
 exports.confirmationEmail = (req, res, next) => {
-  if (req.session.user.emailActivationCode == req.params.emailActivationCode) {
-    req.session.user.emailConf = true;
-    console.log(req.session.user);
-    req.flash('success', 'Registration Successes');
-    res.redirect('/');
-    next();
+  // if (req.session.user.emailActivationCode == req.params.token) {
+  //   req.session.user.emailConf = true;
+  //   req.flash('success', 'Registration Successes');
+  //   res.redirect('/');
+  //   next();
+  // }
+  let url = req.protocol + '://' + req.get('host') + '/auth/signup/verify'
+  res.send(url)
+  redirectFun(url)
+}
 
-  }
+function redirectFun(url) {
+  axios.post(url, { 'redirect': true })
+    .then(res => res)
+    .catch(err => console.log(err))
 }
 
 
 
-exports.logIn = (req, res) => {
-  let errors = { email: '', password: '' };
-  const { userEmail, userPassword } = req.body;
-  User.findOne({ email: userEmail }, (err, user) => {
-    if (!user) {
-      errors.email = 'Oops! Email is incorrect.';
-      res.render('user/registration', { title: 'Log In', errors });
-
-    } else {
-      bcrypt.compare(userPassword, user.password).then((same) => {
-        if (same) {
-          req.session.userId = user._id;
-          res.redirect('/');
-        } else {
-          errors.password = 'Oops! Password is incorrect.';
-          res.render('user/registration', { title: 'Log In', errors });
-        }
-
-      });
-    }
-  })
-
-
-}
 
 
 
-// Check s
 
-exports.checkUser = (req, res, next) => {
-  if (req.session.user && req.cookies.user_side) {
-    if (req.session.user.emailConf) {
-      req.flash('toast', 'You are Registered');
-      res.redirect('/');
-    } else {
-      req.flash('toast', 'Please verify your email to proceed')
-      res.redirect('/auth/signup/verify');
-    }
-  } else {
-    next();
-  }
-}
+
+// exports.checkUser = catchError(async (req, res, next) => {
+// if (req.session.user && req.cookies.user_side) {
+//   if (req.session.user.emailConf) {
+//     req.flash('toast', 'You are Registered');
+//     res.redirect('/');
+//   } else {
+//     req.flash('toast', 'Please verify your email to proceed')
+//     res.redirect('/auth/signup/verify');
+//   }
+// } else {
+//   next();
+// }
+
+//   let token
+//   //? 1) if a token
+//   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
+//     token = req.headers.authorization.split(' ')[1]
+
+//   //? 2) verification token
+
+
+//   //? 3) if expire token
+
+//   next()
+
+// })
 
 
 exports.checkEmail = (req, res) => {
@@ -175,3 +161,151 @@ exports.checkEmail = (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exports.checkAuth = catchError(async (req, res, next) => {
+  //? check if token
+  let token
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
+    token = req.headers.authorization.split(' ')[1]
+  //? if valid token
+  if (token)
+    await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+      .then(async (decoded) => {
+        //? check if user exist & Password change
+        const user = await User.findOne({ _id: decoded.id })
+        if (user && !user.isChangedPass(decoded.iat))
+          return next(new AppError('You are registered.', 400))
+      }).catch(() => 0)
+
+  next()
+})
+
+
+exports.signUp = catchError(async (req, res, next) => {
+  const user = await User.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    country: req.body.country
+  })
+
+  const token = user.createToken('email')
+  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/verify/${token}`
+  const options = {
+    url: url,
+    email: user.email,
+    name: user.firstName,
+    subject: 'Verify your email address',
+    about: 'email'
+  }
+  try {
+    await sendEmail(options)
+    await user.save()
+    res.status(201).send('verify')
+
+  } catch (err) {
+    next(new AppError('Error in sending an Email. Try again later', 500))
+  }
+})
+
+
+exports.logIn = catchError(async (req, res, next) => {
+  // let errors = { email: '', password: '' };
+  // const { userEmail, userPassword } = req.body;
+  // User.findOne({ email: userEmail }, (err, user) => {
+  //   if (!user) {
+  //     errors.email = 'Oops! Email is incorrect.';
+  //     res.render('user/registration', { title: 'Log In', errors });
+
+  //   } else {
+  //     bcrypt.compare(userPassword, user.password).then((same) => {
+  //       if (same) {
+  //         req.session.userId = user._id;
+  //         res.redirect('/');
+  //       } else {
+  //         errors.password = 'Oops! Password is incorrect.';
+  //         res.render('user/registration', { title: 'Log In', errors });
+  //       }
+
+  //     });
+  //   }
+  // })
+  //? 1) if email & password are send
+  const { email, password } = req.body
+  if (!email || !password) return next(new AppError('required email and password.', 400))
+
+  //? 2) if user is exist & correct password
+  const user = await User.findOne({ email }).select('+password')
+  if (!user) return next(new AppError('Email is incorrect.', 401))
+  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect.', 401))
+
+  //? 3) create a token send a success response
+  const jwtToken = await createJwtToken(user._id)
+  res.status(200).send(jwtToken)
+})
+
+exports.forgetPage = (req, res, next) => {
+  res.send('forget password')
+}
+
+exports.forgetPass = catchError(async (req, res, next) => {
+  //? 1) check user by email
+  const user = await User.findOne({ email: req.body.email })
+  if (!user) return next(new AppError('Email is incorrect.', 401))
+
+  //? 2) generate a random token
+  const token = user.createToken('password')
+
+  //? 3) send a email
+  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/${token}`
+  const options = {
+    url: url,
+    email: user.email,
+    name: user.firstName,
+    subject: 'Reset your password',
+    about: 'password'
+  }
+  try {
+    await sendEmail(options)
+    await user.save()
+    res.status(201).send('Email sent')
+  } catch (err) {
+    next(new AppError('Error in sending an Email!, Try again later.', 500))
+  }
+})
+
+exports.resetPass = catchError(async (req, res, next) => {
+  const token = crypto.createHash('sha256').update(req.params.token).digest('hex')
+  const newPassword = req.body.newPassword
+
+  //? 1) Get a user based on token & expired date
+  const user = await User.findOne({ passwordToken: token, expPasswordToken: { $gt: Date.now() } }).select('+password')
+  if (!user) return next(new AppError('Page is not found or Email Date is expired', 404))
+
+  //? 2) Save a new password
+  user.password = newPassword
+  user.passwordToken = undefined
+  user.expPasswordToken = undefined
+  await user.save()
+
+  //? 4) log a user in & send a token
+  const jwtToken = await createJwtToken(user._id)
+  res.status(200).send(jwtToken)
+})
