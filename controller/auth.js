@@ -7,13 +7,16 @@ const sendEmail = require('./email')
 const { catchError } = require('../Errors/catch')
 const AppError = require('../Errors/classError')
 const validator = require('validator');
-const { findOne } = require('../models/users')
-const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+// const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function createJwtToken(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
 }
-
+const cookieOptions = {
+  expires: new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000), //? expire in 30 days
+  //? secure: true, for only https
+  httpOnly: true
+}
 
 exports.signPage = (req, res) => res.render('user/createAccount', { title: 'Sign Up' })
 exports.logPage = (req, res) => {
@@ -258,12 +261,18 @@ exports.logIn = catchError(async (req, res, next) => {
 
   //? 3) create a token send a success response
   const jwtToken = await createJwtToken(user._id)
-  res.status(200).send(jwtToken)
+  res.cookie('jwt', jwtToken, cookieOptions).status(200).send('jwtToken sent')
 })
 
-exports.forgetPage = (req, res, next) => {
-  res.send('forget password')
-}
+exports.forgetPage = catchError(async (req, res, next) => {
+  res.render('user/forget', {
+    title: 'Forget password',
+    errors: req.flash('errors'),
+    warning: req.flash('warning'),
+    success: req.flash('success'),
+    toast: req.flash('toast'),
+  });
+})
 
 exports.forgetPass = catchError(async (req, res, next) => {
   //? 1) check user by email
@@ -305,7 +314,7 @@ exports.resetPass = catchError(async (req, res, next) => {
   user.expPasswordToken = undefined
   await user.save()
 
-  //? 4) log a user in & send a token
+  //? 4) log in user & send a token
   const jwtToken = await createJwtToken(user._id)
-  res.status(200).send(jwtToken)
+  res.cookie('jwt', cookieOptions, jwtToken,).status(200).send('jwtToken sent')
 })

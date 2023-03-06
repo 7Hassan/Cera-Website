@@ -2533,19 +2533,15 @@ form>div {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  height: 0;
   overflow: hidden;
   transition: .3s;
   margin-top: 5px;
 }
 
-.verify-holder .update-email.show {
-  height: 81px;
-}
 
 .verify-holder .change-email .update-email input {
   padding: 14px 0px 14px 5px;
-  width: 200px;
+  width: 250px;
   border-radius: 6px;
   outline: none;
   font-size: 15px;
@@ -2598,12 +2594,6 @@ form>div {
   margin-bottom: 10px;
   font-size: 12px;
   font-weight: 600;
-}
-
-.verify-holder .help-verify .info-verify {
-  height: 0;
-  overflow: hidden;
-  transition: .3s;
 }
 
 .verify-holder .help-verify .info-verify div {

@@ -6,22 +6,42 @@ const session = require('express-session');
 const SessionStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-const app = express();
-app.use(morgan('tiny'));
+//! security
+require('dotenv').config({ path: './.env' }); //? configuration for dotenv
+const limitReq = require('express-rate-limit')
+const helmet = require('helmet')
+const mongoSanitize = require('express-mongo-sanitize')
+const xssClean = require('xss-clean')
+const hpp = require('hpp')
 
-//? configuration for dotenv
-require('dotenv').config({ path: './.env' });
+
+const app = express();
+
+//TODO: Global middle wares
+
+//? set security http header
+// app.use(helmet())
 
 //? Read files in 'public' folder
 app.use(express.static(`${__dirname}/public`));
 
 //? EJS
+
 app.set('view engine', 'ejs');
 
 //? body- parser
+app.use(bodyParser.json()); //? reading a data from body to req.body
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
 
+//? clean Data sent & prevent from attacks
+//! Data sanitization against NoSQL query injection => email : {  "$gt": "" }
+app.use(mongoSanitize()) //? remove all $ from input
+
+//! Data sanitization against XSS attacks
+app.use(xssClean()) //? convert any insert html code in input <div>County </div>  =>   &lt;div>County &lt;/div
+
+//! prevent parameter pollution
+app.use(hpp())
 //? Cookies
 app.use(cookieParser());
 
@@ -52,7 +72,16 @@ app.use((req, res, next) => {
 });
 
 
+//? limit many requests to prevent hucks
+const limiter = limitReq({
+  max: 100, //? maximum requests
+  windowMs: 60 * 60 * 1000, //? in 1 Hour
+  messages: 'Too many requests. Please try later'
+})
+app.use('/auth', limiter) //! to prevent many requests attacks on this url
 
+//? for information about requests
+app.use(morgan('tiny'));
 
 //? use routing
 app.use('/', require('./routes/pages'));
@@ -69,7 +98,6 @@ app.use(errorHandler)
 
 
 module.exports = app
-
 
 
 

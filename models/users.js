@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
 
 //? Hashing a password
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password') || this.isNew) return next()
+  if (!this.isModified('password')) return next()
   this.password = await bcrypt.hash(this.password, 10)
   this.date = Date.now() - 1000
   next()
@@ -78,7 +78,7 @@ userSchema.methods.createToken = function (validation) {
   const token = crypto.randomBytes(32).toString('hex') //? create a token
   if (validation == 'password') {
     this.passwordToken = crypto.createHash('sha256').update(token).digest('hex') //? Hash a token & save
-    this.expPasswordToken = Date.now() + 2 * 60 * 1000 //? date now + 2 minutes
+    this.expPasswordToken = Date.now() + 30 * 60 * 1000 //? date now + 30 minutes
   }
   if (validation == 'email') {
     this.emailToken = crypto.createHash('sha256').update(token).digest('hex') //? Hash a token & save
