@@ -1,17 +1,16 @@
 const User = require('../models/users')
+const Cart = require('../models/cart')
 const jwt = require('jsonwebtoken')
 const { promisify } = require('util')
 const axios = require('axios')
 const crypto = require('crypto')
 const sendEmail = require('./email')
-const { catchError } = require('../Errors/catch')
+const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
 const validator = require('validator');
-// const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const { countries, zones } = require("moment-timezone/data/meta/latest.json");
 
-function createJwtToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
-}
+
 const cookieOptions = {
   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000), //? expire in 30 days
   //? secure: true, for only https
@@ -25,29 +24,25 @@ exports.logPage = (req, res) => {
 };
 
 
-exports.verifyPage = (req, res) => {
-  if (req.session.user && req.cookies.user_side) {
-    if (req.session.user.emailConf) {
-      req.flash('toast', 'You are Registered');
-      res.redirect('/');
-    } else {
-      User.find({ _id: req.session.user.userId }, (err, user) => {
-        res.render('user/verification', {
-          title: 'Verify your email',
-          email: user[0].email,
-          errors: req.flash('errors'),
-          warning: req.flash('warning'),
-          success: req.flash('success'),
-          toast: req.flash('toast'),
-        });
-      });
-    }
+exports.verifyPage = catchError(async (req, res) => {
 
-  } else {
-    req.flash('toast', 'Please sign up');
-    res.redirect('/auth/signup');
-  }
-}
+  const user = await User.findOne({ _id })
+
+  res.render('user/verification', {
+    title: 'Verify your email',
+    email: user[0].email,
+    errors: req.flash('errors'),
+    warning: req.flash('warning'),
+    success: req.flash('success'),
+    toast: req.flash('toast'),
+  });
+
+
+
+})
+
+
+
 
 
 
@@ -154,11 +149,18 @@ function redirectFun(url) {
 // })
 
 
-exports.checkEmail = (req, res) => {
-  const { emailValidation } = req.body;
-  User.findOne({ email: emailValidation }, (err, emailReq) =>
-    (!emailReq) ? res.status(200).json({ res: true }) : res.status(200).json({ res: false }));
-};
+exports.checkEmail = catchError(async (req, res, next) => {
+  const email = req.body.email
+  const user = await User.findOne({ email })
+  if (user) res.status(200).send(false)
+  else res.status(201).send(true)
+})
+
+
+
+
+
+
 
 
 
@@ -201,6 +203,7 @@ exports.checkAuth = catchError(async (req, res, next) => {
 
 
 exports.signUp = catchError(async (req, res, next) => {
+  //? create a user
   const user = await User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -208,8 +211,13 @@ exports.signUp = catchError(async (req, res, next) => {
     password: req.body.password,
     country: req.body.country
   })
+  res.json({ redirect: '/auth/signup/verify' });
+  //? create empty cart 
+  await user.createCart(Cart)
+  await user.save()
 
-  const token = user.createToken('email')
+  //? sending an Email
+  const token = await user.createToken('email')
   const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/verify/${token}`
   const options = {
     url: url,
@@ -219,10 +227,7 @@ exports.signUp = catchError(async (req, res, next) => {
     about: 'email'
   }
   try {
-    await sendEmail(options)
-    await user.save()
-    res.status(201).send('verify')
-
+    sendEmail(options)
   } catch (err) {
     next(new AppError('Error in sending an Email. Try again later', 500))
   }
@@ -318,3 +323,36 @@ exports.resetPass = catchError(async (req, res, next) => {
   const jwtToken = await createJwtToken(user._id)
   res.cookie('jwt', cookieOptions, jwtToken,).status(200).send('jwtToken sent')
 })
+
+exports.getCountry = catchError(async (req, res, next) => {
+  const cityToCountry = {};
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  Object.keys(zones).forEach(z => {
+    const cityArr = z.split("/");
+    const city = cityArr[cityArr.length - 1];
+    cityToCountry[city] = countries[zones[z].countries[0]].name;
+  })
+  const city = timeZone.split("/")[1];
+  const country = cityToCountry[city];
+  res.status(200).send(country)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+//? create a jwt token
+function createJwtToken(id) {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
+}
+
+
+
+

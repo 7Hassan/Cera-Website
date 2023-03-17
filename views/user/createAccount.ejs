@@ -22,27 +22,30 @@
             <span>or </span>
           </div>
           <div class="email-input">
-            <form action="" method="post">
+            <form action="" id="signup-form">
               <div class="User-sinUp-name">
                 <div>
                   <span class="errors"></span>
-                  <input type="text" name="firstName" id="firstName" placeholder="First name" minlength="3"
-                    maxlength="15">
+                  <input class="input" type="text" name="firstName" id="firstName" placeholder="First name"
+                    onblur="checkBlurInput(this)">
                 </div>
                 <div>
                   <span class="errors"></span>
-                  <input type="text" name="lastName" id="lastName" placeholder="Last name" minlength="3">
+                  <input class="input" type="text" name="lastName" id="lastName" placeholder="Last name"
+                    onblur="checkBlurInput(this)">
                 </div>
 
               </div>
-              <div class="User-sinUp-email">
+              <div class="User-signUp-email">
                 <span class="errors"></span>
-                <input type="text" name="email" id="email" placeholder="Email" onblur="checkEmail(this)">
+                <div class="email-loading"></div>
+                <input class="input" type="text" name="email" id="email" placeholder="Email"
+                  onblur="checkEmail(this.value)" oninput="validationEmail(this.value)">
               </div>
               <div class="User-sinUp-pass">
                 <span class="errors"></span>
-                <input type="password" maxlength="16" name="password" class="password-input" id="password"
-                  placeholder="Password">
+                <input class="input password-input" type="password" name="password" id="password" placeholder="Password"
+                  onblur="checkBlurInput(this)">
 
                 <div class="icon-eyes">
                   <i class="fa-sharp fa-solid fa-eye-slash"></i>
@@ -50,9 +53,9 @@
                 </div>
               </div>
               <div class="User-sinUp-country">
-                <span class="errors"></span>
                 <div class="layout" onclick="document.querySelector('.options').classList.toggle('hidden')">
-                  <input type="text" id="countrySelected" placeholder="Country" name="Country" value=""
+                  <span class="errors"></span>
+                  <input class="input countryInput" type="text" id="country" placeholder="Country" name="country"
                     readonly="readonly">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img">
                     <path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round"
@@ -68,8 +71,7 @@
                       <input type="search" class="searchInput">
 
                     </div>
-                    <ul id="countries">
-                    </ul>
+                    <ul id="countries"></ul>
                   </div>
                 </div>
 
@@ -77,10 +79,11 @@
               </div>
               <div class="checkbox">
                 <span class="errors"></span>
-                <input type="checkbox" id="checkboxInput" value="true">
+                <input class="input" type="checkbox" id="checkboxInput" checked onchange="checkBlurInput(this)"
+                  value="checked">
                 <label for=""><small><strong> Send a validation for Email.</strong></small> </label>
               </div>
-              <button class="normal" onclick="sendData(event)">Create my account</button>
+              <button class="normal">Create my account</button>
             </form>
           </div>
           <div class=" log-in-text">
@@ -93,9 +96,13 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../js/app.js"></script>
   <script>
+    window.addEventListener('load', function () {
+
+    })
     countryLocation()
-    passordFunction()
+    passwordFunction()
     getCountries()
+    signUp()
   </script>
 
   </html>

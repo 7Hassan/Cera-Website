@@ -49,7 +49,7 @@ function emailHtml(options) {
   Verify Email</button></a>
   <br><br><br>
   <p>Thanks for your time,<br>The Cera Team</p>
-  <p style="color:red; font-size:10px"> This message is available for 30 minutes only</p></div>`
+  <p style="color:red; font-size:10px"> This message is available for 24 hours only</p></div>`
 }
 
 
@@ -78,7 +78,7 @@ function passwordHtml(options) {
   Reset password</button></a>
 <br><br><br>
 <p>Thanks for your time,<br>The Cera Team</p>
-<p style="color:red; font-size:10px"> This message is available for 2 minutes only</p></div>`
+<p style="color:red; font-size:10px"> This message is available for 30 minutes only</p></div>`
 }
 
 module.exports = sendEmail

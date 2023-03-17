@@ -4,6 +4,10 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     require: true,
   },
+  new: {
+    type: Boolean,
+    default: false,
+  },
   imgSrc: {
     type: String,
     require: true,

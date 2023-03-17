@@ -8,6 +8,7 @@
   font-family: "Spartan", sans-serif;
 }
 
+
 .product-show-top {
   animation: slideTop .5s ease-in-out both;
 }
@@ -2775,4 +2776,26 @@ i.hidden-slide {
   z-index: 2;
   border-radius: 10px;
   margin-top: 2px;
+}
+
+.email-loading {
+  position: absolute;
+  right: 15px;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  box-shadow: inset 1px 0px 0px 0px rgb(24 104 55);
+  animation: spin 1.5s linear infinite;
+  display: none;
+}
+
+.email-loading.show {
+  display: block;
+}
+
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }

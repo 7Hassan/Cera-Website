@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
     minlength: [1, 'Country is required'],
     required: [true, 'Country is required']
   },
+  cart: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'carts',
+  },
   date: {
     type: Date,
     default: Date.now(),
@@ -56,7 +60,7 @@ const userSchema = new mongoose.Schema({
 
 //? Hashing a password
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next()
+  if (!this.isModified('password')) return next() //? password is not change
   this.password = await bcrypt.hash(this.password, 10)
   this.date = Date.now() - 1000
   next()
@@ -86,6 +90,17 @@ userSchema.methods.createToken = function (validation) {
   }
 
   return token
+}
+
+//? show a cart which linked with this user pre any find
+userSchema.pre(/^find/, async function () {
+  this.select("-__v").populate({ path: 'cart', select: "-__v" })
+})
+
+//? create a cart
+userSchema.methods.createCart = async function (Cart) {
+  const cart = await Cart.create({})
+  this.cart = cart._id;
 }
 
 

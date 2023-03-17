@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
 
+
+
+
 // All Countries
 const countriesList = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor L\'Este', 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'];
 
 // Data in carte
-let carteData = [];
+let carteData = []
 
 // check email
-let validationEmail;
-
+let checker = false
 
 // Get Elements in header
 let navA = [...document.querySelectorAll('.nav ul a')];
@@ -313,7 +315,7 @@ function removeProductCarte(product) {
     let index = locationInCarteData(product.children[0]);
     product.remove();
     --navIcon.dataset.content;
-    // delet from array of carte shop
+    // delete from array of carte shop
     carteData.splice(index, 1);
     //update local storage
     setLocalStroageData();
@@ -519,7 +521,7 @@ function getDataProduct(product) {
 //         `;
 // }
 /* see and hide passord function */
-function passordFunction() {
+function passwordFunction() {
   let passInput = document.querySelector('.password-input');
   let seeEye = document.querySelector('.fa-eye');
   let hideEye = document.querySelector('.fa-eye-slash');
@@ -577,143 +579,35 @@ function observesRight() {
 function getCountries() {
   let countriesHolder = document.getElementById('countries');
   let searchInput = document.querySelector('.searchInput');
-
-  countriesList.map(country => countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)">${country}</li>`)
-
+  countriesList.map(country => countriesHolder.innerHTML += `<li  onclick="clickListCountries(this)">${country}</li>`)
   searchInput.addEventListener('input', (event) => {
     countriesHolder.innerHTML = '';
-    countriesList.filter((country) => {
-      if (country.toLowerCase().includes(event.target.value.toLowerCase())) {
-        countriesHolder.innerHTML += `<li  onclick="clickListcountries(this)"> ${country}</li>`
-      }
-    });
-    if (countriesHolder.children.length === 0) {
-      countriesHolder.innerHTML = '<li style="cursor: context-menu; color:red;">! No results found</li>';
-    }
-  });
+    const countries = countriesList.filter((country) => country.toLowerCase().includes(event.target.value.toLowerCase()))
+    if (countries.length == 0) return countriesHolder.innerHTML = '<li style="cursor: context-menu; color:red;">! No results found</li>';
+    countries.map((country) => countriesHolder.innerHTML += `<li  onclick="clickListCountries(this)"> ${country}</li>`)
+  })
 }
 
-function clickListcountries(ele) {
-  let countryselect = document.getElementById('countrySelected');
+
+function clickListCountries(ele) {
+  let countryInput = document.querySelector('.countryInput');
   let eleSelected = document.querySelector('#countries .selected');
   if (eleSelected) eleSelected.classList.remove('selected');
   ele.classList.add('selected');
-
-  countryselect.value = ele.textContent;
-
-  countryselect.style.color = 'black';
+  countryInput.value = ele.textContent;
+  countryInput.style.color = 'black';
   document.querySelector('.options').classList.toggle('hidden');
 }
 
 
 
 
-function ValidateEmail(input) {
-  var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  if (input.value.match(validRegex))
-    return true;
-  else
-    return false;
-}
-
-
-
-async function checkEmail(ele) {
-  validationEmail = false;
-  let errorEle = document.querySelector('.User-gsinUp-email .errors');
-
-  if (ValidateEmail(ele)) {
-    await axios.post('/auth/signup/check', { 'emailValidation': ele.value })
-      .then(res => res.data.res).then(res => {
-        if (res) {
-          errorEle.innerHTML = '';
-          validationEmail = res;
-        } else {
-          errorEle.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.';
-        }
-      })
-      .catch((error) => console.log(error));
-  } else {
-    errorEle.innerHTML = 'Please enter a valid Email.';
-  }
-}
-
-
-function checkAllInputs() {
-  let errorEle = [...document.querySelectorAll('.errors')];
-  let firstName = document.getElementById('firstName').value;
-  let lastName = document.getElementById('lastName').value;
-  let email = document.getElementById('email');
-  let password = document.getElementById('password').value;
-  let country = document.getElementById('countrySelected').value;
-  let emailConfim = document.getElementById('checkboxInput');
-
-  if (firstName.length === 0) {
-    errorEle[0].innerHTML = 'First name is required.';
-    return false;
-  } else {
-    errorEle[0].innerHTML = '';
-  }
-  if (lastName.length === 0) {
-    errorEle[1].innerHTML = 'Last name is required.';
-    return false;
-  } else {
-    errorEle[1].innerHTML = '';
-  }
-  if (email.value.length === 0) {
-    errorEle[2].innerHTML = 'Email is required.';
-    return false;
-  } else {
-    if (!validationEmail) {
-      return false
-    }
-  }
-  if (password.length === 0) {
-    errorEle[3].innerHTML = 'Password is required';
-    return false;
-  } else if (password.length < 8) {
-    errorEle[3].innerHTML = 'Please enter 8 characters or more';
-    return false;
-  } else {
-    errorEle[3].innerHTML = '';
-  }
-  if (country === '') {
-    errorEle[4].innerHTML = 'Country is required';
-    return false;
-  } else {
-    errorEle[4].innerHTML = '';
-  }
-  if (!emailConfim.checked) {
-    errorEle[5].innerHTML = 'This field is required';
-    return false;
-  } else {
-    errorEle[5].innerHTML = '';
-  }
-}
-
-
-async function sendData(event) {
-  if (checkAllInputs() == false) event.preventDefault();
-}
-
-
-async function countryLocation() {
-  await axios.get('http://ip-api.com/json/?fields=61439').then(res => {
-    if (res.status == 200)
-      document.getElementById('countrySelected').value = res.data.country;
-  }).catch((err) => console.log(err));
-}
-
-
 function movingImg(positionDive) {
-  console.log('🚀 ~ file: app.js:709 ~ movingImg ~ positionDive:', positionDive)
-
   let moveImg = document.getElementById('img-master')
   let positionParent = document.querySelector('.product .other-imgs').getBoundingClientRect()
 
   moveImg.classList.add('move')
   setTimeout(() => {
-
     holderDivsCart.classList.add('show')
     moveImg.style.top = `${positionDive.top - positionParent.top}px`
     moveImg.style.left = `${positionDive.left - positionParent.left}px`
@@ -725,3 +619,89 @@ function movingImg(positionDive) {
 }
 
 
+//TODO: Authentication
+//? sign up
+const checkBlurInput = (ele) => customizeInput(ele)
+
+
+
+function validationEmail(email) {
+  const error = document.querySelector('.User-signUp-email .errors')
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const valid = emailRegex.test(email)
+  if (!valid) error.innerHTML = 'Please enter a valid Email.'
+  // else error.innerHTML = ''
+  return valid
+}
+
+async function checkEmail(email) {
+  let errorEle = document.querySelector('.User-signUp-email .errors');
+  let loadingEle = document.querySelector('.User-signUp-email .email-loading');
+  if (!validationEmail(email)) return validationEmail(email)
+  loadingEle.classList.add('show')
+  const res = await axios.post('/auth/signup/check', { email })
+  loadingEle.classList.remove('show')
+  if (!res.data) errorEle.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.'
+  else errorEle.innerHTML = ''
+
+  checker = res.data
+}
+
+function customizeInput(ele) {
+  let error = ele.parentElement.firstElementChild
+  if ((ele.value == "") || (ele.type == 'checkbox' && !ele.checked)) return error.innerHTML = "required"
+  if (ele.name == 'password' && ele.value.length < 8) return error.innerHTML = "less than 8 characters"
+  if (ele.value.length < 3) return error.innerHTML = "too short"
+  if (ele.value.length > 15) return error.innerHTML = "too long"
+  error.innerHTML = ""
+  return true
+}
+
+async function countryLocation() {
+  const res = await axios.get('/auth/country')
+  if (res.status === 200) document.querySelector('.countryInput').value = res.data
+}
+
+function signUp() {
+  const form = document.getElementById('signup-form');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const email = document.getElementById('email')
+    const password = document.getElementById('password');
+    const country = document.getElementById('country');
+    const checkBox = document.getElementById('checkboxInput');
+    const errors = []
+
+    errors.push(customizeInput(firstName))
+    errors.push(customizeInput(lastName))
+    if (email.value == "") email.parentElement.firstElementChild.innerHTML = "required"
+    errors.push(customizeInput(password))
+    errors.push(customizeInput(country))
+    errors.push(customizeInput(checkBox))
+    errors.push(checker)
+
+
+    if (errors.findIndex(err => err != true) == -1)
+      sendSignupData({
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        password: password.value,
+        country: country.value
+      })
+  })
+}
+
+
+
+async function sendSignupData(signupData) {
+  try {
+    const res = await axios.post('/auth/signup', signupData)
+    if (res.data.redirect) window.location.href = res.data.redirect;
+  } catch (err) {
+    console.error(err)
+  }
+}
