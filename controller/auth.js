@@ -17,28 +17,48 @@ const cookieOptions = {
   httpOnly: true
 }
 
-exports.signPage = (req, res) => res.render('user/createAccount', { title: 'Sign Up' })
-exports.logPage = (req, res) => {
-  let errors = { email: '', password: '' };
-  res.render('user/registration', { title: 'Log In', errors });
-};
+exports.signPage = catchError(async (req, res) => {
+  res.render('user/createAccount', {
+    title: 'Sign up',
+    country: getCountry(),
+    errors: req.flash('errors'),
+    warning: req.flash('warning'),
+    success: req.flash('success'),
+    toast: req.flash('toast'),
+  })
+})
+
+exports.logPage = catchError(async (req, res) => {
+  res.render('user/registration', {
+    title: 'Log In',
+    errors: req.flash('errors'),
+    warning: req.flash('warning'),
+    success: req.flash('success'),
+    toast: req.flash('toast'),
+  })
+})
 
 
 exports.verifyPage = catchError(async (req, res) => {
-
-  const user = await User.findOne({ _id })
-
+  // const user = await User.findOne({ _id })
   res.render('user/verification', {
     title: 'Verify your email',
-    email: user[0].email,
+    email: "email",
+    errors: req.flash('errors'),
+    warning: req.flash('warning'),
+    success: req.flash('success'),
+    toast: req.flash('toast'),
+  })
+})
+
+exports.forgetPage = catchError(async (req, res) => {
+  res.render('user/forget', {
+    title: 'Forget password',
     errors: req.flash('errors'),
     warning: req.flash('warning'),
     success: req.flash('success'),
     toast: req.flash('toast'),
   });
-
-
-
 })
 
 
@@ -46,15 +66,6 @@ exports.verifyPage = catchError(async (req, res) => {
 
 
 
-
-
-//! sign up
-//         req.session.user = {
-//           userId: user._id,
-//           emailConf: false,
-//           photo: '',
-//           carteData: [],
-//           emailActivationCode: token,
 
 
 
@@ -184,23 +195,20 @@ exports.checkEmail = catchError(async (req, res, next) => {
 
 
 exports.checkAuth = catchError(async (req, res, next) => {
-  //? check if token
-  let token
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
-    token = req.headers.authorization.split(' ')[1]
-  //? if valid token
+  let token, user, time
+  if (req.headers.cookie && req.headers.cookie.includes('jwt')) token = req.headers.cookie.split('jwt=')[1]
   if (token)
     await promisify(jwt.verify)(token, process.env.JWT_SECRET)
       .then(async (decoded) => {
-        //? check if user exist & Password change
-        const user = await User.findOne({ _id: decoded.id })
-        if (user && !user.isChangedPass(decoded.iat))
-          return next(new AppError('You are registered.', 400))
-      }).catch(() => 0)
-
+        time = decoded.iat
+        user = await User.findOne({ _id: decoded.id })
+      }).catch((err) => 0)
+  if (user && !user.isChangedPass(time)) {
+    req.flash('warning', 'You are register')
+    return res.status(403).redirect('/')
+  }
   next()
 })
-
 
 exports.signUp = catchError(async (req, res, next) => {
   //? create a user
@@ -235,49 +243,22 @@ exports.signUp = catchError(async (req, res, next) => {
 
 
 exports.logIn = catchError(async (req, res, next) => {
-  // let errors = { email: '', password: '' };
-  // const { userEmail, userPassword } = req.body;
-  // User.findOne({ email: userEmail }, (err, user) => {
-  //   if (!user) {
-  //     errors.email = 'Oops! Email is incorrect.';
-  //     res.render('user/registration', { title: 'Log In', errors });
-
-  //   } else {
-  //     bcrypt.compare(userPassword, user.password).then((same) => {
-  //       if (same) {
-  //         req.session.userId = user._id;
-  //         res.redirect('/');
-  //       } else {
-  //         errors.password = 'Oops! Password is incorrect.';
-  //         res.render('user/registration', { title: 'Log In', errors });
-  //       }
-
-  //     });
-  //   }
-  // })
   //? 1) if email & password are send
   const { email, password } = req.body
-  if (!email || !password) return next(new AppError('required email and password.', 400))
+  if (!email || !password) return next(new AppError('Email and Password are required', 400))
 
   //? 2) if user is exist & correct password
   const user = await User.findOne({ email }).select('+password')
-  if (!user) return next(new AppError('Email is incorrect.', 401))
-  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect.', 401))
+  if (!user) return next(new AppError('Email is incorrect', 401))
+  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect', 401))
 
   //? 3) create a token send a success response
   const jwtToken = await createJwtToken(user._id)
-  res.cookie('jwt', jwtToken, cookieOptions).status(200).send('jwtToken sent')
+  req.flash('success', 'Welcome ' + user.firstName)
+  res.cookie('jwt', jwtToken, cookieOptions).status(200).redirect('/')
 })
 
-exports.forgetPage = catchError(async (req, res, next) => {
-  res.render('user/forget', {
-    title: 'Forget password',
-    errors: req.flash('errors'),
-    warning: req.flash('warning'),
-    success: req.flash('success'),
-    toast: req.flash('toast'),
-  });
-})
+
 
 exports.forgetPass = catchError(async (req, res, next) => {
   //? 1) check user by email
@@ -321,10 +302,10 @@ exports.resetPass = catchError(async (req, res, next) => {
 
   //? 4) log in user & send a token
   const jwtToken = await createJwtToken(user._id)
-  res.cookie('jwt', cookieOptions, jwtToken,).status(200).send('jwtToken sent')
+  res.cookie('jwt', cookieOptions, jwtToken,).status(200).redirect("/")
 })
 
-exports.getCountry = catchError(async (req, res, next) => {
+function getCountry() {
   const cityToCountry = {};
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   Object.keys(zones).forEach(z => {
@@ -333,9 +314,9 @@ exports.getCountry = catchError(async (req, res, next) => {
     cityToCountry[city] = countries[zones[z].countries[0]].name;
   })
   const city = timeZone.split("/")[1];
-  const country = cityToCountry[city];
-  res.status(200).send(country)
-})
+  return cityToCountry[city];
+
+}
 
 
 

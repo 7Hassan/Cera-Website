@@ -657,11 +657,6 @@ function customizeInput(ele) {
   return true
 }
 
-async function countryLocation() {
-  const res = await axios.get('/auth/country')
-  if (res.status === 200) document.querySelector('.countryInput').value = res.data
-}
-
 function signUp() {
   const form = document.getElementById('signup-form');
   form.addEventListener('submit', (event) => {
@@ -705,3 +700,15 @@ async function sendSignupData(signupData) {
     console.error(err)
   }
 }
+
+// function flashMessage() {
+let flashContents = [...document.querySelectorAll('.text-flash')]
+flashContents.forEach((flashContent) => {
+  if (flashContent.innerText != "") {
+    flashContent.offsetParent.classList.remove('hidden')
+    setTimeout(() => {
+      if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
+    }, 4000);
+  }
+})
+// }

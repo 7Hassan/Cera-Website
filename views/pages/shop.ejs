@@ -2,94 +2,98 @@
 
   <body>
     <%- include('../partials/header.ejs') %>
+      <%- include('../partials/flashMsg.ejs') -%>
 
-      <div class="main-sec-shop holder-image">
-        <div class="container boxs">
+        <div class="main-sec-shop holder-image">
+          <div class="container boxs">
 
-          <h2>Fashion Design</h2>
-        </div>
-      </div>
-      <div class="mian-shop products-holder">
-        <div class="product01 all-products">
-
-          <h2>Products</h2>
-
-          <p>Summer Collection New Modern design</p>
-          <div class="holder-cont">
-            <% for (let i=0; i < products.length; i++) {%>
-              <div class="button-products">
-                <button class="left-slide" onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 2000)">
-                  <i class="fa-solid fa-angles-left"></i>
-                </button>
-                <div class="container boxs">
-                  <% for (let j=0; j < products[i].length; j++) {%>
-                    <%if (products[i][j].stoked==true) {%>
-                      <div class="product-box" id=<%=products[i][j]._id %>
-                        onclick="window.location.pathname='/shop/<%=products[i][j]._id %>'">
-                          <img src="<%=products[i][j].imgSrc %>" alt="product image">
-                          <div class="details"><span>Cera</span>
-                            <h5>Cartoon Astronaut <%= products[i][j].name %>
-                            </h5>
-                            <div class="stars">
-                              <% for (let k=0; k < products[i][j].stars; k++) {%>
-                                <i class="fa-solid fa-star"></i>
-                                <% } %>
-                            </div>
-                            <h4>$<%= products[i][j].price %>
-                            </h4>
-                          </div>
-                          <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-                      </div>
-                      <% } else { %>
-                        <div class="product-box" style="opacity:.5 !important; pointer-events: none;">
-                          <img src="../<%=products[i][j].imgSrc %>" alt="product image">
-                          <div style="color:red; font-weight:600;">It will be soon</div>
-                          <div class="details"><span>Cera</span>
-                            <h5>Cartoon Astronaut <%= products[i][j].name %>
-                            </h5>
-                            <div class="stars">
-                              <% for (let k=0; k < products[i][j].stars; k++) {%>
-                                <i class="fa-solid fa-star"></i>
-                                <% } %>
-                            </div>
-                            <h4>$<%= products[i][j].price %>
-                            </h4>
-                          </div>
-                          <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-                        </div>
-                        <%}}%>
-                </div>
-                <button class="right-slide"
-                  onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 2000)">
-                  <i class="fa-solid fa-angles-right"></i>
-                </button>
-              </div>
-              <% }%>
+            <h2>Fashion Design</h2>
           </div>
-
         </div>
-      </div>
-      <%- include('../partials/footer.ejs') -%>
-        <div class="over-layout"></div>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="js/app.js"></script>
-        <script>
-          observesTop();
-          // showData();
-          async function showData() {
-            products = await getAllData();
-            setAllProducts(products);
-            // setProductBox(document.querySelector(".other-products .container"), products, 4, 8);
-            //on click on product
-            // ProductsOnclick(products);
-            //Add products to shop carte
-            // addProductToCart(
-            //   document.getElementById("main-img"),
-            //   document.getElementById("price-product")
-            // );
-            // totalPrice(document.querySelectorAll(".total"));
-          }
-        </script>
+        <div class="mian-shop products-holder">
+          <div class="product01 all-products">
+
+            <h2>Products</h2>
+
+            <p>Summer Collection New Modern design</p>
+            <div class="holder-cont">
+              <% for (let i=0; i < products.length; i++) {%>
+                <div class="button-products">
+                  <button class="left-slide"
+                    onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 2000)">
+                    <i class="fa-solid fa-angles-left"></i>
+                  </button>
+                  <div class="container boxs">
+                    <% for (let j=0; j < products[i].length; j++) {%>
+                      <%if (products[i][j].stoked==true) {%>
+                        <div class="product-box" id=<%=products[i][j]._id %>
+                          onclick="window.location.pathname='/shop/<%=products[i][j]._id %>'">
+                            <img src="<%=products[i][j].imgSrc %>" alt="product image">
+                            <div class="details"><span>Cera</span>
+                              <h5>Cartoon Astronaut <%= products[i][j].name %>
+                              </h5>
+                              <div class="stars">
+                                <% for (let k=0; k < products[i][j].stars; k++) {%>
+                                  <i class="fa-solid fa-star"></i>
+                                  <% } %>
+                              </div>
+                              <h4>$<%= products[i][j].price %>
+                              </h4>
+                            </div>
+                            <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                        </div>
+                        <% } else { %>
+                          <div class="product-box" style="opacity:.5 !important; pointer-events: none;">
+                            <img src="../<%=products[i][j].imgSrc %>" alt="product image">
+                            <div style="color:red; font-weight:600;">It will be soon</div>
+                            <div class="details"><span>Cera</span>
+                              <h5>Cartoon Astronaut <%= products[i][j].name %>
+                              </h5>
+                              <div class="stars">
+                                <% for (let k=0; k < products[i][j].stars; k++) {%>
+                                  <i class="fa-solid fa-star"></i>
+                                  <% } %>
+                              </div>
+                              <h4>$<%= products[i][j].price %>
+                              </h4>
+                            </div>
+                            <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+                          </div>
+                          <%}}%>
+                  </div>
+                  <button class="right-slide"
+                    onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 2000)">
+                    <i class="fa-solid fa-angles-right"></i>
+                  </button>
+                </div>
+                <% }%>
+            </div>
+
+          </div>
+        </div>
+        <%- include('../partials/footer.ejs') -%>
+          <div class="over-layout"></div>
+          <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+          <script src="js/app.js">
+            
+          </script>
+          <script>
+            observesTop();
+            // showData();
+            async function showData() {
+              products = await getAllData();
+              setAllProducts(products);
+              // setProductBox(document.querySelector(".other-products .container"), products, 4, 8);
+              //on click on product
+              // ProductsOnclick(products);
+              //Add products to shop carte
+              // addProductToCart(
+              //   document.getElementById("main-img"),
+              //   document.getElementById("price-product")
+              // );
+              // totalPrice(document.querySelectorAll(".total"));
+            }
+          </script>
   </body>
 
 

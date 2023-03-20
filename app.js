@@ -1,11 +1,13 @@
 const express = require('express');
+const path = require('path')
 const morgan = require('morgan')
 // const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const SessionStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
+const flash = require('connect-flash')
+
 //! security
 require('dotenv').config({ path: './.env' }); //? configuration for dotenv
 const limitReq = require('express-rate-limit')
@@ -18,16 +20,12 @@ const hpp = require('hpp')
 const app = express();
 
 //TODO: Global middle wares
-
 //? set security http header
 // app.use(helmet())
 
 //? Read files in 'public' folder
-app.use(express.static(`${__dirname}/public`));
-
-//? EJS
-
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs') //? EJS
+app.use(express.static(path.join(__dirname, 'public'))) //? css & js
 
 //? body- parser
 app.use(bodyParser.json()); //? reading a data from body to req.body
@@ -74,7 +72,7 @@ app.use((req, res, next) => {
 
 //? limit many requests to prevent hucks
 const limiter = limitReq({
-  max: 100, //? maximum requests
+  max: 200, //? maximum requests
   windowMs: 60 * 60 * 1000, //? in 1 Hour
   messages: 'Too many requests. Please try later'
 })

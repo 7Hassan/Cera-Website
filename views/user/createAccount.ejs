@@ -1,107 +1,108 @@
 <%- include('../partials/head.ejs') %>
 
   <body>
-    <div class="layout sin-up">
-      <div class="img-log">
-        <img src="../imgs/logo.png" alt="">
-        <a href="/auth/login">Log In</a>
-      </div>
-      <div class="main-log">
-        <div class="head">
-          Sin Up to Cera
+    <%- include('../partials/flashMsg.ejs') -%>
+
+      <div class="layout sin-up">
+        <div class="img-log">
+          <img src="../imgs/logo.png" alt="">
+          <a href="/auth/login">Log In</a>
         </div>
-        <div class="log">
-          <div class="accounts">
-
-            <div class="apple-log">
-              <button><i class="fa-brands fa-apple"></i> Continue with Apple</button>
-            </div>
-            <div class="google-log">
-              <button>Continue with Google</button>
-            </div>
-            <span>or </span>
+        <div class="main-log">
+          <div class="head">
+            Sin Up to Cera
           </div>
-          <div class="email-input">
-            <form action="" id="signup-form">
-              <div class="User-sinUp-name">
-                <div>
-                  <span class="errors"></span>
-                  <input class="input" type="text" name="firstName" id="firstName" placeholder="First name"
-                    onblur="checkBlurInput(this)">
-                </div>
-                <div>
-                  <span class="errors"></span>
-                  <input class="input" type="text" name="lastName" id="lastName" placeholder="Last name"
-                    onblur="checkBlurInput(this)">
-                </div>
+          <div class="log">
+            <div class="accounts">
 
+              <div class="apple-log">
+                <button><i class="fa-brands fa-apple"></i> Continue with Apple</button>
               </div>
-              <div class="User-signUp-email">
-                <span class="errors"></span>
-                <div class="email-loading"></div>
-                <input class="input" type="text" name="email" id="email" placeholder="Email"
-                  onblur="checkEmail(this.value)" oninput="validationEmail(this.value)">
+              <div class="google-log">
+                <button>Continue with Google</button>
               </div>
-              <div class="User-sinUp-pass">
-                <span class="errors"></span>
-                <input class="input password-input" type="password" name="password" id="password" placeholder="Password"
-                  onblur="checkBlurInput(this)">
-
-                <div class="icon-eyes">
-                  <i class="fa-sharp fa-solid fa-eye-slash"></i>
-                  <i class="fa-solid fa-eye" style="display:none ;"></i>
-                </div>
-              </div>
-              <div class="User-sinUp-country">
-                <div class="layout" onclick="document.querySelector('.options').classList.toggle('hidden')">
-                  <span class="errors"></span>
-                  <input class="input countryInput" type="text" id="country" placeholder="Country" name="country"
-                    readonly="readonly">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img">
-                    <path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round"
-                      stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M18 10l-6 5-6-5"></path>
-                  </svg>
-                </div>
-                <div class="options hidden">
+              <span>or </span>
+            </div>
+            <div class="email-input">
+              <form action="" id="signup-form">
+                <div class="User-sinUp-name">
                   <div>
-                    <div class="search">
-                      <div>
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                      </div>
-                      <input type="search" class="searchInput">
+                    <span class="errors"></span>
+                    <input class="input" type="text" name="firstName" id="firstName" placeholder="First name"
+                      onblur="checkBlurInput(this)">
+                  </div>
+                  <div>
+                    <span class="errors"></span>
+                    <input class="input" type="text" name="lastName" id="lastName" placeholder="Last name"
+                      onblur="checkBlurInput(this)">
+                  </div>
 
-                    </div>
-                    <ul id="countries"></ul>
+                </div>
+                <div class="User-signUp-email">
+                  <span class="errors"></span>
+                  <div class="email-loading"></div>
+                  <input class="input" type="text" name="email" id="email" placeholder="Email"
+                    onblur="checkEmail(this.value)" oninput="validationEmail(this.value)">
+                </div>
+                <div class="User-sinUp-pass">
+                  <span class="errors"></span>
+                  <input class="input password-input" type="password" name="password" id="password"
+                    placeholder="Password" onblur="checkBlurInput(this)">
+
+                  <div class="icon-eyes">
+                    <i class="fa-sharp fa-solid fa-eye-slash"></i>
+                    <i class="fa-solid fa-eye" style="display:none ;"></i>
                   </div>
                 </div>
+                <div class="User-sinUp-country">
+                  <div class="layout" onclick="document.querySelector('.options').classList.toggle('hidden')">
+                    <span class="errors"></span>
+                    <input class="input countryInput" type="text" id="country" value=<%=country %> placeholder="Country"
+                    name="country"
+                    readonly="readonly">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24"
+                      role="img">
+                      <path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"
+                        d="M18 10l-6 5-6-5"></path>
+                    </svg>
+                  </div>
+                  <div class="options hidden">
+                    <div>
+                      <div class="search">
+                        <div>
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="search" class="searchInput">
+
+                      </div>
+                      <ul id="countries"></ul>
+                    </div>
+                  </div>
 
 
-              </div>
-              <div class="checkbox">
-                <span class="errors"></span>
-                <input class="input" type="checkbox" id="checkboxInput" checked onchange="checkBlurInput(this)"
-                  value="checked">
-                <label for=""><small><strong> Send a validation for Email.</strong></small> </label>
-              </div>
-              <button class="normal">Create my account</button>
-            </form>
-          </div>
-          <div class=" log-in-text">
-            Already have an account?<a href="/auth/login"> Log In</a>
+                </div>
+                <div class="checkbox">
+                  <span class="errors"></span>
+                  <input class="input" type="checkbox" id="checkboxInput" checked onchange="checkBlurInput(this)"
+                    value="checked">
+                  <label for=""><small><strong> Send a validation for Email.</strong></small> </label>
+                </div>
+                <button class="normal">Create my account</button>
+              </form>
+            </div>
+            <div class=" log-in-text">
+              Already have an account?<a href="/auth/login"> Log In</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../js/app.js"></script>
   <script>
-    window.addEventListener('load', function () {
-
-    })
     countryLocation()
     passwordFunction()
-    getCountries()
     signUp()
   </script>
 

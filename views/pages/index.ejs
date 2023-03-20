@@ -102,22 +102,11 @@
         </div>
         </div>
         <%- include('../partials/footer.ejs') %>
-
   </body>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="js/app.js"></script>
   <script>
-    observesRight();
-    let flashContents = [...document.querySelectorAll('.text-flash')]
-    flashContents.forEach((flashContent) => {
-      if (flashContent.innerText != "") {
-        flashContent.offsetParent.classList.remove('hidden')
-        setTimeout(() => {
-          if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
-
-        }, 4000);
-      }
-    })
+    observesRight()
   </script>
 
 

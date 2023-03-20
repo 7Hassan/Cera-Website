@@ -1,63 +1,63 @@
 <%- include('../partials/head.ejs') %>
 
   <body>
-    <div class="layout">
-      <div class="img-log">
-        <img src="../imgs/logo.png" alt="">
-      </div>
-      <div class="main-log">
-        <div class="head">
-          Log in to Cera
-        </div>
-        <div class="log">
-          <div class="email-input">
-            <form action="" method="post">
-              <div class="User-login-email">
-                <span class="errors">
-                  <%= errors.email %>
-                </span>
-                <i class="fa-solid fa-user"></i>
-                <input required type="email" name="userEmail" id="userEmail" placeholder="Username or Email">
+    <%- include('../partials/flashMsg.ejs') -%>
 
-              </div>
-              <div class="User-login-pass">
-                <span class="errors">
-                  <%= errors.password %>
-                </span>
-                <div>
-                  <i class="fa-sharp fa-solid fa-eye-slash"></i>
-                  <i class="fa-solid fa-eye" style="display:none ;"></i>
+
+      <div class="layout">
+        <div class="img-log">
+          <img src="../imgs/logo.png" alt="">
+        </div>
+        <div class="main-log">
+          <div class="head">
+            Log in to Cera
+          </div>
+          <div class="log">
+            <div class="email-input">
+              <form action="" method="post">
+                <div class="User-login-email">
+                  <span class="errors"></span>
+                  <i class="fa-solid fa-user"></i>
+                  <input type="email" name="email" id="userEmail" placeholder="Username or Email">
+
                 </div>
+                <div class="User-login-pass">
+                  <span class="errors"></span>
+                  <div>
+                    <i class="fa-sharp fa-solid fa-eye-slash"></i>
+                    <i class="fa-solid fa-eye" style="display:none ;"></i>
+                  </div>
 
-                <input required type="password" name="userPassword" class="password-input" id="userPassword"
-                  placeholder="Password">
+                  <input type="password" name="password" class="password-input" id="userPassword"
+                    placeholder="Password">
 
+                </div>
+                <div class="forget-password"><a href="/auth/forgetPassword"> Forget password </a></div>
+                <button class="normal">Continue with Email</button>
+              </form>
+              <span class="or-span">or</span>
+            </div>
+            <div class="accounts">
+              <div class="google-log">
+                <button>Continue with Google</button>
               </div>
-              <div class="forget-password"><a href="/auth/forgetPassword"> Forget password </a></div>
-              <button class="normal">Continue with Email</button>
-            </form>
-            <span class="or-span">or</span>
-          </div>
-          <div class="accounts">
-            <div class="google-log">
-              <button>Continue with Google</button>
+              <div class="apple-log">
+                <button><i class="fa-brands fa-apple"></i> Continue with Apple</button>
+              </div>
+              <span>Don't have an Upwork account? </span>
             </div>
-            <div class="apple-log">
-              <button><i class="fa-brands fa-apple"></i> Continue with Apple</button>
+            <div class="sin-up">
+              <a href="/auth/signup"><button>Sign Up</button></a>
             </div>
-            <span>Don't have an Upwork account? </span>
-          </div>
-          <div class="sin-up">
-            <a href="/auth/signup"><button>Sign Up</button></a>
           </div>
         </div>
-      </div>
 
-    </div>
-    <script src="../js/app.js"></script>
-    <script>
-      passordFunction();
-    </script>
+      </div>
+      <script src="../js/app.js"></script>
+      <script>
+        passwordFunction();
+
+      </script>
 
   </body>
 

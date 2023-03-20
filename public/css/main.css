@@ -2137,15 +2137,15 @@ footer p a:hover {
 .main-log .email-input form .forget-password {
   position: absolute;
   right: 5px;
-  height: 20px;
+  bottom: 40px;
 }
 
 .main-log .email-input form .forget-password a {
   color: red;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
   display: block;
-  margin-bottom: 30px;
+  text-decoration: underline;
 }
 
 .main-log .User-login-email i,

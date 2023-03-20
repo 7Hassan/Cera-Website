@@ -2,46 +2,47 @@
 
   <body>
     <%- include('../partials/header.ejs') -%>
+      <%- include('../partials/flashMsg.ejs') -%>
 
-      <div class="main-sec-contact holder-image">
-        <div class="container">
-          <h2>Contact Us</h2>
-        </div>
-      </div>
-      <div class="contact">
-        <div class="container">
-          <div class="form">
-            <form action="" method="post">
-              <div>
-                <label for="">Full Name:</label>
-                <input name="userName" type="text" required placeholder="Your Name" />
-              </div>
-              <div>
-                <label for="">Email:</label>
-                <input name="userEmail" type="email" required placeholder="Your Email" />
-              </div>
-              <div>
-                <label for="">Address:</label>
-                <input name="userAddress" type="text" required placeholder="Your Address" />
-              </div>
-              <div>
-                <label for="">Your Message:</label>
-                <textarea name="userMessage" id="" cols="30" rows="10" required></textarea>
-              </div>
-              <button class="normal" id="send-message"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</button>
-            </form>
-          </div>
-          <div class="map">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13444.921622112415!2d-1.243683804582191!3d51.750261601084915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48713380adc41faf%3A0xc820dba8cb547402!2z2KPZg9iz2YHZiNix2K_YjCDYp9mE2YXZhdmE2YPYqSDYp9mE2YXYqtit2K_YqQ!5e0!3m2!1sar!2seg!4v1665180073567!5m2!1sar!2seg"
-              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+        <div class="main-sec-contact holder-image">
+          <div class="container">
+            <h2>Contact Us</h2>
           </div>
         </div>
-      </div>
-      <%- include('../partials/footer.ejs') -%>
-        <div class="over-layout"></div>
+        <div class="contact">
+          <div class="container">
+            <div class="form">
+              <form action="" method="post">
+                <div>
+                  <label for="">Full Name:</label>
+                  <input name="userName" type="text" required placeholder="Your Name" />
+                </div>
+                <div>
+                  <label for="">Email:</label>
+                  <input name="userEmail" type="email" required placeholder="Your Email" />
+                </div>
+                <div>
+                  <label for="">Address:</label>
+                  <input name="userAddress" type="text" required placeholder="Your Address" />
+                </div>
+                <div>
+                  <label for="">Your Message:</label>
+                  <textarea name="userMessage" id="" cols="30" rows="10" required></textarea>
+                </div>
+                <button class="normal" id="send-message"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</button>
+              </form>
+            </div>
+            <div class="map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13444.921622112415!2d-1.243683804582191!3d51.750261601084915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48713380adc41faf%3A0xc820dba8cb547402!2z2KPZg9iz2YHZiNix2K_YjCDYp9mE2YXZhdmE2YPYqSDYp9mE2YXYqtit2K_YqQ!5e0!3m2!1sar!2seg!4v1665180073567!5m2!1sar!2seg"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+            </div>
+          </div>
+        </div>
+        <%- include('../partials/footer.ejs') -%>
+          <div class="over-layout"></div>
   </body>
   <script src="js/app.js"></script>
 
