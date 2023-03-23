@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 
 
-
-
 // All Countries
 const countriesList = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor L\'Este', 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'];
 
@@ -14,88 +12,39 @@ let checker = false
 
 // Get Elements in header
 let navA = [...document.querySelectorAll('.nav ul a')];
-let navIcon = document.querySelector('.shop-icon');
-let userIcon = document.querySelector('.user-icon i');
+let cartIcon = document.querySelector('.shop-icon');
+let userIcon = document.querySelector('.user-icon .fa-user');
 let nav = document.getElementById('nav-bar');
-let navButtom = document.querySelector('#nav-buttom i');
-let xIcon = document.querySelector('.x-icon i');
-let holderDivsCart = document.querySelector('.holder-cart');
-let holderDivUser = document.querySelector('.user-div');
-let containerDivsCart = document.querySelector('.container-cart');
+let productsCart = document.querySelector('.holder-cart');
+let holderDivUser = document.querySelector('.user-div')
+let containerDivCart = document.querySelector('.container-cart');
 
 
 
 
 
 
+flashMessage()
 
-// Run Function
-if (window.location.pathname != '/payment' && !(window.location.pathname.includes('auth'))) {
-
-  addActiveBar();
-  clickHaederMenu();
-  getLocalStroageData();
+if (navA.length !== 0) {
+  addActiveBar()
+  // getLocalStroageData();
   // totalPrice(document.querySelectorAll(".total"));
 }
 
 
-// Function to add active class  to navbar elements
+// add and remove active class to navbar elements
 function addActiveBar() {
-  //add active class  to navbar a elements
   navA.forEach((a) => {
-    if (window.location.pathname == a.attributes[0].value) {
-      a.classList.add('active');
-    }
-    a.addEventListener('click', () => {
-      removeActiveBar();
-    });
-  });
-
-  // Function to remove all active classes  form navbar elements
-  function removeActiveBar() {
-    navA.forEach((a) => {
-      a.classList.remove('active');
-    });
-  }
-  //add and remove active class from navbar icon
-  navIcon.addEventListener('click', () => {
-    if (userIcon.classList.contains('active')) {
-      userIcon.classList.remove('active');
-      holderDivUser.classList.remove('show');
-    }
-    navIcon.classList.toggle('active');
-    holderDivsCart.classList.toggle('show');
-  });
-  userIcon.addEventListener('click', () => {
-    if (navIcon.classList.contains('active')) {
-      navIcon.classList.remove('active');
-      holderDivsCart.classList.remove('show');
-    }
-    userIcon.classList.toggle('active');
-    holderDivUser.classList.toggle('show');
-  });
+    if (window.location.pathname == a.attributes[0].value) a.classList.add('active')
+    a.addEventListener('click', () => navA.forEach((a) => a.classList.remove('active')))
+  })
 }
 
 
 
-// Function to add and remove click class from heder menu buttom
-function clickHaederMenu() {
-  navButtom.addEventListener('click', () => {
-    document.querySelector('.over-layout').classList.add('click-nav');
-    document.querySelector('.x-icon').classList.add('show');
-    document.body.classList.add('hidden')
-    nav.classList.add('click');
-  });
-  xIcon.addEventListener('click', () => {
-    document.querySelector('.over-layout').classList.remove('click-nav');
-    document.querySelector('.x-icon').classList.remove('show');
-    document.body.classList.remove('hidden')
-    nav.classList.remove('click');
-  });
 
 
-
-}
 
 /*Local storage */
 // function to get data carte from local storage
@@ -168,7 +117,7 @@ function addProductToCart(id, img, price) {
         count: document.getElementById('count-product').value,
       });
       setLocalStroageData();
-      navIcon.dataset.content = carteData.length;
+      cartIcon.dataset.content = carteData.length;
       let positionDive = setDivCarte(
         img.src,
         price.textContent,
@@ -263,25 +212,25 @@ function createDivCarte(img, price, countInput) {
 // Function to set divs products in carte
 function setDivCarte(img, price, count) {
   checkOnCarte();
-  containerDivsCart.firstElementChild.textContent = '';
+  containerDivCart.firstElementChild.textContent = '';
   let productIput = +count;
 
-  containerDivsCart.innerHTML += createDivCarte(img, price, productIput)
+  containerDivCart.innerHTML += createDivCarte(img, price, productIput)
 
-  for (let i = 1; i < containerDivsCart.children.length; i++) {
-    removeProductCarte(containerDivsCart.children[i]);
-    plusMinus(containerDivsCart.children[i], productIput);
+  for (let i = 1; i < containerDivCart.children.length; i++) {
+    removeProductCarte(containerDivCart.children[i]);
+    plusMinus(containerDivCart.children[i], productIput);
   }
-  return containerDivsCart.lastElementChild.getBoundingClientRect()
+  return containerDivCart.lastElementChild.getBoundingClientRect()
 
 }
 
 function checkOnCarte() {
-  if (navIcon.dataset.content == '0') {
-    containerDivsCart.firstElementChild.textContent = 'add products to cart';
+  if (cartIcon.dataset.content == '0') {
+    containerDivCart.firstElementChild.textContent = 'add products to cart';
     document.getElementById('buy-button').classList.remove('show');
   } else {
-    containerDivsCart.firstElementChild.textContent = '';
+    containerDivCart.firstElementChild.textContent = '';
     document.getElementById('buy-button').classList.add('show');
   }
 }
@@ -314,7 +263,7 @@ function removeProductCarte(product) {
   product.children[4].addEventListener('click', () => {
     let index = locationInCarteData(product.children[0]);
     product.remove();
-    --navIcon.dataset.content;
+    --cartIcon.dataset.content;
     // delete from array of carte shop
     carteData.splice(index, 1);
     //update local storage
@@ -346,7 +295,7 @@ function sideScroll(ele, direction, speed, distance, step) {
 
 
 function setDataonload() {
-  navIcon.dataset.content = carteData.length;
+  cartIcon.dataset.content = carteData.length;
   for (let i = 0; i < carteData.length; i++) {
     setDivCarte(carteData[i].imgUrl, carteData[i].price, carteData[i].count);
   }
@@ -555,25 +504,21 @@ function observesTop() {
 }
 
 function observesLeft() {
-  let divs = document.querySelectorAll('.other-imgs img');
+  let divEle = document.querySelectorAll('.other-imgs img');
   const option = {};
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(ele => ele.target.classList.toggle('product-show-left', ele.isIntersecting));
-  }, option);
-  divs.forEach(div => {
-    observer.observe(div);
-  })
+    entries.forEach(ele => ele.target.classList.toggle('product-show-left', ele.isIntersecting))
+  }, option)
+  divEle.forEach(div => observer.observe(div))
 }
 
 function observesRight() {
-  let divs = document.querySelectorAll('.product-box');
   const option = {};
+  let divEle = document.querySelectorAll('.product-box');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(ele => ele.target.classList.toggle('product-show-right', ele.isIntersecting));
+    entries.forEach(ele => ele.target.classList.toggle('product-show-right', ele.isIntersecting))
   }, option);
-  divs.forEach(div => {
-    observer.observe(div);
-  })
+  divEle.forEach(div => observer.observe(div))
 }
 
 function getCountries() {
@@ -602,73 +547,35 @@ function clickListCountries(ele) {
 
 
 
-function movingImg(positionDive) {
-  let moveImg = document.getElementById('img-master')
-  let positionParent = document.querySelector('.product .other-imgs').getBoundingClientRect()
+// function movingImg(positionDive) {
+//   let moveImg = document.getElementById('img-master')
+//   let positionParent = document.querySelector('.product .other-imgs').getBoundingClientRect()
 
-  moveImg.classList.add('move')
-  setTimeout(() => {
-    holderDivsCart.classList.add('show')
-    moveImg.style.top = `${positionDive.top - positionParent.top}px`
-    moveImg.style.left = `${positionDive.left - positionParent.left}px`
-    moveImg.style.height = `${positionDive.height - 4}px`
-    moveImg.style.width = '70px'
-
-  }, 900)
-
-}
+//   moveImg.classList.add('move')
+//   setTimeout(() => {
+//     productsCart.classList.add('show')
+//     moveImg.style.top = `${positionDive.top - positionParent.top}px`
+//     moveImg.style.left = `${positionDive.left - positionParent.left}px`
+//     moveImg.style.height = `${positionDive.height - 4}px`
+//     moveImg.style.width = '70px'
+//   }, 900)
+// }
 
 
-//TODO: Authentication
-//? sign up
-const checkBlurInput = (ele) => customizeInput(ele)
-
-
-
-function validationEmail(email) {
-  const error = document.querySelector('.User-signUp-email .errors')
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  const valid = emailRegex.test(email)
-  if (!valid) error.innerHTML = 'Please enter a valid Email.'
-  // else error.innerHTML = ''
-  return valid
-}
-
-async function checkEmail(email) {
-  let errorEle = document.querySelector('.User-signUp-email .errors');
-  let loadingEle = document.querySelector('.User-signUp-email .email-loading');
-  if (!validationEmail(email)) return validationEmail(email)
-  loadingEle.classList.add('show')
-  const res = await axios.post('/auth/signup/check', { email })
-  loadingEle.classList.remove('show')
-  if (!res.data) errorEle.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.'
-  else errorEle.innerHTML = ''
-
-  checker = res.data
-}
-
-function customizeInput(ele) {
-  let error = ele.parentElement.firstElementChild
-  if ((ele.value == "") || (ele.type == 'checkbox' && !ele.checked)) return error.innerHTML = "required"
-  if (ele.name == 'password' && ele.value.length < 8) return error.innerHTML = "less than 8 characters"
-  if (ele.value.length < 3) return error.innerHTML = "too short"
-  if (ele.value.length > 15) return error.innerHTML = "too long"
-  error.innerHTML = ""
-  return true
-}
-
+//TODO: sign up
 function signUp() {
-  const form = document.getElementById('signup-form');
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+  const form = document.getElementById('signup-form')
+  const button = document.querySelector('#signup-form button')
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
 
+    const errors = []
     const firstName = document.getElementById('firstName');
     const lastName = document.getElementById('lastName');
     const email = document.getElementById('email')
     const password = document.getElementById('password');
     const country = document.getElementById('country');
     const checkBox = document.getElementById('checkboxInput');
-    const errors = []
 
     errors.push(customizeInput(firstName))
     errors.push(customizeInput(lastName))
@@ -678,37 +585,97 @@ function signUp() {
     errors.push(customizeInput(checkBox))
     errors.push(checker)
 
+    if (errors.findIndex(err => err != true) == -1) signUpAction(button)
+  })
+}
 
-    if (errors.findIndex(err => err != true) == -1)
-      sendSignupData({
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        password: password.value,
-        country: country.value
-      })
+//TODO: Log in
+function logIn() {
+  const form = document.getElementById('signup-form')
+  const button = document.querySelector('#signup-form button')
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const errors = []
+    const email = document.getElementById('email')
+    const password = document.getElementById('password')
+
+    errors.push(checkLogIn(email))
+    errors.push(checkLogIn(password))
+
+    if (errors.findIndex(err => err != true) == -1) logInAction(button)
+  })
+}
+
+//TODO: Update user Data
+function updateUserData() {
+  const form = document.querySelector('.form-user-data')
+  const button = document.querySelector('.form-user-data button')
+  const emailAddress = document.getElementById('email').value
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const errors = []
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const email = document.getElementById('email')
+
+    errors.push(customizeInput(firstName))
+    errors.push(customizeInput(lastName))
+    if (email.value == "") {
+      email.parentElement.firstElementChild.innerHTML = "required"
+      errors.push('required')
+    }
+    if (email.value !== emailAddress) checkEmail(email.value)
+
+
+    if (errors.findIndex(err => err != true) == -1) {
+
+    }
+  })
+}
+
+async function updateAction(button) {
+  const data = { firstName: firstName.value, lastName: lastName.value, email: email.value }
+  loadingForm(button)
+  console.log('🚀 ~ data:', data)
+  const res = await post('/auth/login', data)
+  removeLoadingForm(button)
+  const path = res.data.redirect
+  if (path) return window.location.href = path
+  const emailErr = document.getElementById('email').parentElement.firstElementChild
+  const passwordErr = document.getElementById('password').parentElement.firstElementChild
+  const message = res.data
+  if (message.includes('Email')) return emailErr.innerHTML = message
+  if (message.includes('Password')) return passwordErr.innerHTML = message
+  errorHandling('try again later')
+}
+
+
+
+
+
+
+
+
+
+
+
+function flashMessage() {
+  let flashContents = [...document.querySelectorAll('.text-flash')]
+  flashContents.forEach((flashContent) => {
+    if (flashContent.innerText != "") {
+      flashContent.offsetParent.classList.remove('hidden')
+      setTimeout(() => {
+        if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
+      }, 4000);
+    }
   })
 }
 
 
 
-async function sendSignupData(signupData) {
-  try {
-    const res = await axios.post('/auth/signup', signupData)
-    if (res.data.redirect) window.location.href = res.data.redirect;
-  } catch (err) {
-    console.error(err)
-  }
-}
 
-// function flashMessage() {
-let flashContents = [...document.querySelectorAll('.text-flash')]
-flashContents.forEach((flashContent) => {
-  if (flashContent.innerText != "") {
-    flashContent.offsetParent.classList.remove('hidden')
-    setTimeout(() => {
-      if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
-    }, 4000);
-  }
-})
-// }
+
+
+

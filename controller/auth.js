@@ -1,6 +1,7 @@
 const User = require('../models/users')
 const Cart = require('../models/cart')
 const jwt = require('jsonwebtoken')
+const base64url = require('base64url')
 const { promisify } = require('util')
 const axios = require('axios')
 const crypto = require('crypto')
@@ -8,19 +9,12 @@ const sendEmail = require('./email')
 const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
 const validator = require('validator');
-const { countries, zones } = require("moment-timezone/data/meta/latest.json");
+const helper = require('./helperFunc')
 
-
-const cookieOptions = {
-  expires: new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000), //? expire in 30 days
-  //? secure: true, for only https
-  httpOnly: true
-}
-
-exports.signPage = catchError(async (req, res) => {
+exports.signPage = catchError(async (req, res, next) => {
   res.render('user/createAccount', {
+    country: helper.getCountry(),
     title: 'Sign up',
-    country: getCountry(),
     errors: req.flash('errors'),
     warning: req.flash('warning'),
     success: req.flash('success'),
@@ -28,7 +22,7 @@ exports.signPage = catchError(async (req, res) => {
   })
 })
 
-exports.logPage = catchError(async (req, res) => {
+exports.logPage = catchError(async (req, res, next) => {
   res.render('user/registration', {
     title: 'Log In',
     errors: req.flash('errors'),
@@ -39,7 +33,7 @@ exports.logPage = catchError(async (req, res) => {
 })
 
 
-exports.verifyPage = catchError(async (req, res) => {
+exports.verifyPage = catchError(async (req, res, next) => {
   // const user = await User.findOne({ _id })
   res.render('user/verification', {
     title: 'Verify your email',
@@ -51,7 +45,7 @@ exports.verifyPage = catchError(async (req, res) => {
   })
 })
 
-exports.forgetPage = catchError(async (req, res) => {
+exports.forgetPage = catchError(async (req, res, next) => {
   res.render('user/forget', {
     title: 'Forget password',
     errors: req.flash('errors'),
@@ -162,6 +156,7 @@ function redirectFun(url) {
 
 exports.checkEmail = catchError(async (req, res, next) => {
   const email = req.body.email
+  console.log('🚀 ~ email:', email)
   const user = await User.findOne({ email })
   if (user) res.status(200).send(false)
   else res.status(201).send(true)
@@ -194,21 +189,34 @@ exports.checkEmail = catchError(async (req, res, next) => {
 
 
 
-exports.checkAuth = catchError(async (req, res, next) => {
-  let token, user, time
-  if (req.headers.cookie && req.headers.cookie.includes('jwt')) token = req.headers.cookie.split('jwt=')[1]
-  if (token)
-    await promisify(jwt.verify)(token, process.env.JWT_SECRET)
-      .then(async (decoded) => {
-        time = decoded.iat
-        user = await User.findOne({ _id: decoded.id })
-      }).catch((err) => 0)
+exports.isUser = async (req, res, next) => {
+  const { user, time } = await helper.textJwtToken(req, res)
+  if (user && !user.isChangedPass(time)) {
+    res.locals.user = user
+    return next()
+  }
+  req.flash('toast', 'Please log in first')
+  res.status(300).redirect('/')
+}
+
+exports.isLogIn = async (req, res, next) => {
+  const { user, time } = await helper.textJwtToken(req, res, next)
+  if (user && !user.isChangedPass(time)) {
+    res.locals.user = user
+    return next()
+  }
+  res.locals.user = ''
+  next()
+}
+
+exports.checkAuth = async (req, res, next) => {
+  const { user, time } = await helper.textJwtToken(req, res, next)
   if (user && !user.isChangedPass(time)) {
     req.flash('warning', 'You are register')
     return res.status(403).redirect('/')
   }
   next()
-})
+}
 
 exports.signUp = catchError(async (req, res, next) => {
   //? create a user
@@ -219,12 +227,10 @@ exports.signUp = catchError(async (req, res, next) => {
     password: req.body.password,
     country: req.body.country
   })
-  res.json({ redirect: '/auth/signup/verify' });
-  //? create empty cart 
+  res.status(200).json({ redirect: '/auth/signup/verify' });
   await user.createCart(Cart)
   await user.save()
 
-  //? sending an Email
   const token = await user.createToken('email')
   const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/verify/${token}`
   const options = {
@@ -245,17 +251,30 @@ exports.signUp = catchError(async (req, res, next) => {
 exports.logIn = catchError(async (req, res, next) => {
   //? 1) if email & password are send
   const { email, password } = req.body
-  if (!email || !password) return next(new AppError('Email and Password are required', 400))
+  if (!email) return next(new AppError('Email required', 200))
+  if (!password) return next(new AppError('Password required', 200))
 
   //? 2) if user is exist & correct password
   const user = await User.findOne({ email }).select('+password')
-  if (!user) return next(new AppError('Email is incorrect', 401))
-  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect', 401))
+  if (!user) return next(new AppError('Email is incorrect', 200))
+  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect', 200))
 
   //? 3) create a token send a success response
-  const jwtToken = await createJwtToken(user._id)
+  const jwtToken = await helper.createJwtToken(user._id)
   req.flash('success', 'Welcome ' + user.firstName)
-  res.cookie('jwt', jwtToken, cookieOptions).status(200).redirect('/')
+  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/' })
+})
+
+exports.logOut = catchError(async (req, res, next) => {
+  if (req.body.data == 'logOut') {
+    res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
+    req.flash('success', 'Log out')
+    res.status(200).json({ redirect: '/' })
+  } else next(new AppError('not found', '404'))
+})
+
+exports.updateUserData = catchError(async (req, res, next) => {
+  console.log(req.body)
 })
 
 
@@ -301,22 +320,10 @@ exports.resetPass = catchError(async (req, res, next) => {
   await user.save()
 
   //? 4) log in user & send a token
-  const jwtToken = await createJwtToken(user._id)
-  res.cookie('jwt', cookieOptions, jwtToken,).status(200).redirect("/")
+  const jwtToken = await helper.createJwtToken(user._id)
+  res.cookie('jwt', helper.cookieOptions, jwtToken,).status(200).redirect("/")
 })
 
-function getCountry() {
-  const cityToCountry = {};
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  Object.keys(zones).forEach(z => {
-    const cityArr = z.split("/");
-    const city = cityArr[cityArr.length - 1];
-    cityToCountry[city] = countries[zones[z].countries[0]].name;
-  })
-  const city = timeZone.split("/")[1];
-  return cityToCountry[city];
-
-}
 
 
 
@@ -329,10 +336,10 @@ function getCountry() {
 
 
 
-//? create a jwt token
-function createJwtToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
-}
+
+
+
+
 
 
 

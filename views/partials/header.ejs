@@ -3,66 +3,94 @@
     <div class="logo">
       <a href="#"><img src="/imgs/logo.png" alt="logo" /></a>
     </div>
-    <div class="text">
-      <i id="carte" data-content="0" class="fa-solid fa-cart-shopping shop-icon"></i>
-      <div class="user-icon">
-        <i class="fa-solid fa-user"></i>
-      </div>
-      <div id="nav-buttom">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-    </div>
-    <div class="holder-cart">
-      <div class="holde-total">
-        <div class="total-carte">
-          Total:
-          <span class="total"></span>
+    <%if (user) {%>
+      <div class="text">
+        <i id="carte" data-content="0" class="fa-solid fa-cart-shopping shop-icon" onclick="cartIconClicker(this)"></i>
+        <div class="user-icon">
+          <img class="fa-user" src=<%=user.img %> alt="" onclick="userIconClicker(this)">
+        </div>
+        <div id="nav-buttom">
+          <i class="fa-solid fa-bars" onclick="showNav()"></i>
         </div>
       </div>
-
-      <div class="container-cart">
-        <h6 style="text-align: center">add products to cart</h6>
-      </div>
-      <div>
-        <a href="/payment">
-          <button id="buy-button" class="normal" style="background-color: #088178">
-            Buy
-          </button></a>
-      </div>
-    </div>
-    <div class="user-div">
-      <div class="user-img">
-        <img src="/imgs/features/f1.png" alt="">
-      </div>
-      <div class="user-name">
-        Hassan Hossam
-      </div>
-
-
-      <div class="log-out">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <button>Log out</button>
-      </div>
-    </div>
-    <div class="nav" id="nav-bar">
-
-      <div class="user">
-        <div class="x-icon">
-          <i class="fa-solid fa-x"></i>
+      <div class="holder-cart">
+        <div class="holde-total">
+          <div class="total-carte">
+            Total:
+            <span class="total"></span>
+          </div>
         </div>
-        <div class="img-user">
-          <img src="" alt="">
+
+        <div class="container-cart">
+          <h6 style="text-align: center">add products to cart</h6>
         </div>
-        <div>Hello, <a href="#">Hassan</a></div>
+        <div>
+          <a href="/payment">
+            <button id="buy-button" class="normal" style="background-color: #088178">
+              Buy
+            </button></a>
+        </div>
       </div>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/shop">Shop</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </div>
+      <div class="user-div">
+        <div class="user-img">
+          <img src=<%=user.img %> alt="">
+        </div>
+        <div class="user-name">
+          <%= user.firstName %>
+        </div>
+        <div class="setting" onclick="window.location.href='/me'">
+          <i class="fa-solid fa-gear"></i>
+          <span>Setting</span>
+        </div>
+
+        <div class="log-out" onclick="logOut(this)">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <button class="log-out">Log out</button>
+        </div>
+      </div>
+      <% } else { %>
+        <div class="auth">
+          <div class="log-in">
+            <a href="/auth/login">Log In</a>
+          </div>
+          <div class="sig-up">
+            <button class="normal">
+              <a href='/auth/signup'>Sign Up</a>
+            </button>
+          </div>
+          <div id="nav-buttom">
+            <i class="fa-solid fa-bars" onclick="showNav()"></i>
+          </div>
+        </div>
+        <%}%>
+
+          <div class="nav" id="nav-bar">
+
+            <div class="user">
+              <div class="x-icon">
+                <i class="fa-solid fa-x" onclick="hideNav()"></i>
+              </div>
+              <% if(user){%>
+                <div class="img-user">
+                  <img src=<%=user.img %> alt="">
+                </div>
+                <div>Hello <a href="#">
+                    <%= user.firstName %>
+                  </a></div>
+                <% }else{ %>
+                  <div class="crea">
+                    <img src="/imgs/logo.png" alt="logo">
+                  </div>
+                  <% } %>
+            </div>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/shop">Shop</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
   </div>
   <div class="over-layout"></div>
 </div>

@@ -24,30 +24,30 @@
               <span>or </span>
             </div>
             <div class="email-input">
-              <form action="" id="signup-form">
+              <form id="signup-form">
                 <div class="User-sinUp-name">
                   <div>
                     <span class="errors"></span>
-                    <input class="input" type="text" name="firstName" id="firstName" placeholder="First name"
-                      onblur="checkBlurInput(this)">
+                    <input autocomplete="" class="input" type="text" name="firstName" id="firstName"
+                      placeholder="First name" oninput="customizeInput(this)" onblur="customizeInput(this)">
                   </div>
                   <div>
                     <span class="errors"></span>
-                    <input class="input" type="text" name="lastName" id="lastName" placeholder="Last name"
-                      onblur="checkBlurInput(this)">
+                    <input autocomplete="" class="input" type="text" name="lastName" id="lastName"
+                      placeholder="Last name" oninput="customizeInput(this)" onblur="customizeInput(this)">
                   </div>
 
                 </div>
-                <div class="User-signUp-email">
+                <div class="User-signUp-email checkerEmail">
                   <span class="errors"></span>
-                  <div class="email-loading"></div>
-                  <input class="input" type="text" name="email" id="email" placeholder="Email"
-                    onblur="checkEmail(this.value)" oninput="validationEmail(this.value)">
+                  <div class="loading"></div>
+                  <input autocomplete="" class="input" type="text" name="email" id="email" placeholder="Email"
+                    onblur="checkEmail(this.value)">
                 </div>
                 <div class="User-sinUp-pass">
                   <span class="errors"></span>
-                  <input class="input password-input" type="password" name="password" id="password"
-                    placeholder="Password" onblur="checkBlurInput(this)">
+                  <input autocomplete="" class="input password-input" type="password" name="password" id="password"
+                    placeholder="Password" oninput="customizeInput(this)" onblur="customizeInput(this)">
 
                   <div class="icon-eyes">
                     <i class="fa-sharp fa-solid fa-eye-slash"></i>
@@ -57,15 +57,20 @@
                 <div class="User-sinUp-country">
                   <div class="layout" onclick="document.querySelector('.options').classList.toggle('hidden')">
                     <span class="errors"></span>
-                    <input class="input countryInput" type="text" id="country" value=<%=country %> placeholder="Country"
-                    name="country"
-                    readonly="readonly">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24"
-                      role="img">
-                      <path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)"
-                        stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"
-                        d="M18 10l-6 5-6-5"></path>
-                    </svg>
+                    <% if(country) {%>
+                      <input class="input countryInput" type="text" id="country" value=<%=country%>
+                      placeholder="Country"
+                      name="country" readonly="readonly">
+                      <%}else{%>
+                        <input class="input countryInput" type="text" id="country" value="" placeholder="Country"
+                          name="country" readonly="readonly">
+                        <% } %>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24"
+                            role="img">
+                            <path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)"
+                              stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"
+                              d="M18 10l-6 5-6-5"></path>
+                          </svg>
                   </div>
                   <div class="options hidden">
                     <div>
@@ -84,7 +89,7 @@
                 </div>
                 <div class="checkbox">
                   <span class="errors"></span>
-                  <input class="input" type="checkbox" id="checkboxInput" checked onchange="checkBlurInput(this)"
+                  <input class="input" type="checkbox" id="checkboxInput" checked onchange="customizeInput(this)"
                     value="checked">
                   <label for=""><small><strong> Send a validation for Email.</strong></small> </label>
                 </div>
@@ -97,13 +102,12 @@
           </div>
         </div>
       </div>
+      <%- include('../partials/scripting.ejs') %>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="../js/app.js"></script>
   <script>
-    countryLocation()
     passwordFunction()
     signUp()
+    getCountries()
   </script>
 
   </html>

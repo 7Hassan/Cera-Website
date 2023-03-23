@@ -5,18 +5,21 @@ const errorHandler = (err, req, res, next) => {
   err.message = err.message || 'Error'
 
   if (err.name == 'ValidationError' || err.name == 'MongoServerError') return validationMongoErr(err, req, res)
-
-  req.flash('errors', err.message)
+  if (err.statusCode === 404) return res.render('pages/404', { title: '404' })
+  
+  // req.flash('errors', err.message)
   res.status(err.statusCode).send(err.message)
 }
 module.exports = errorHandler
+
+
 
 //! mongo errors
 function validationMongoErr(err, req, res) {
   if (err.name == 'MongoServerError') {
     req.flash('errors', 'Email is used')
-    return res.status(400).redirect(req.originalUrl)
+    return res.status(400).json({ redirect: '/auth/login' })
   }
   req.flash('errors', err.errors[Object.keys(err.errors)[0]].message)
-  res.status(400).redirect(req.originalUrl)
+  res.status(400).json({ redirect: '/auth/login' })
 }

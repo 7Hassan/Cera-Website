@@ -40,8 +40,9 @@ app.use(xssClean()) //? convert any insert html code in input <div>County </div>
 
 //! prevent parameter pollution
 app.use(hpp())
+
 //? Cookies
-app.use(cookieParser());
+app.use(cookieParser()); //? to access a cookie requests
 
 //? Store Session in data base
 const sessionLink = process.env.DATA_BASE_URL.replace('<DATABASENAME>', process.env.DATA_BASE_NAME).replace('<PASSWORD>', process.env.DATA_BASE_PASSWORD)
@@ -52,13 +53,14 @@ const STORE = new SessionStore({
 
 //? set Session
 app.use(session({
-  key: 'user_side',
+  key: 'client.side',
   secret: 'hassan-hossam',
   saveUninitialized: true,
   resave: true,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 100 }, //! 30 Days
   store: STORE,
 }));
+
 
 //? flash express
 app.use(flash());

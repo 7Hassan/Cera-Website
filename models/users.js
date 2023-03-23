@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin', 'member'],
     default: 'user'
   },
+  img: {
+    type: String,
+    default: 'imgs/users/profile.webp'
+  },
   country: {
     type: String,
     minlength: [1, 'Country is required'],

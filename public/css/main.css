@@ -199,12 +199,36 @@ body.hidden {
 }
 
 
-#header .container .text {
+#header .container .text,
+#header .container .auth {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 30px;
+}
 
+#header .container .auth {
+  position: absolute;
+  right: 10px;
+  gap: 20px;
+
+}
+
+#header .container .auth .sig-up button {
+  padding: 15px 20px !important;
+  border-radius: 8px;
+  background-color: var(--main-color);
+}
+
+#header .container .auth .sig-up button a {
+  color: white;
+
+}
+
+#header .container .auth .log-in a {
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
 }
 
 .nav {
@@ -234,7 +258,8 @@ body.hidden {
   transition: 0.3s;
 }
 
-#header .text i {
+#header .text i,
+#header .auth i {
   font-size: 20px;
   transition: font-size 0.3s;
   width: 20px;
@@ -329,11 +354,23 @@ body.hidden {
   padding: 15px;
 }
 
+.user-div .log-out {
+  display: flex;
+  align-items: center;
+}
+
 .user-div .user-img {
   display: flex;
   justify-content: center;
   padding: 5px 0;
 
+}
+
+.fa-user {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .user-div .user-img img {
@@ -359,14 +396,17 @@ body.hidden {
 
 .user-div .log-out button {
   text-align: left;
-  margin-left: 25px;
   border: none;
   font-size: 17px;
   background-color: transparent;
   cursor: pointer;
 }
+.user-div div i{
+  margin-right: 25px;
 
-.user-div .log-out:hover {
+}
+.user-div .log-out:hover ,
+.user-div .setting:hover{
   background-color: #f2f7f2;
   cursor: pointer;
 }
@@ -882,6 +922,9 @@ footer .copyright {
   position: relative;
 }
 
+/* #nav-buttom i{
+  font-size: 30px;
+} */
 #nav-buttom span {
   position: absolute;
   left: 0;
@@ -1688,8 +1731,7 @@ footer .contact {
   gap: 15px;
 }
 
-#nav-bar .user .img-user {
-  background-color: red;
+#nav-bar .user .img-user img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -2778,7 +2820,7 @@ i.hidden-slide {
   margin-top: 2px;
 }
 
-.email-loading {
+.loading {
   position: absolute;
   right: 15px;
   height: 14px;
@@ -2789,7 +2831,7 @@ i.hidden-slide {
   display: none;
 }
 
-.email-loading.show {
+.loading.show {
   display: block;
 }
 
@@ -2798,4 +2840,19 @@ i.hidden-slide {
   100% {
     transform: rotate(360deg);
   }
+}
+
+button .loading {
+  box-shadow: inset 1px 0px 0px 0px white !important;
+  right: unset !important;
+}
+
+button.clicked {
+  pointer-events: none;
+  /* cursor: not-allowed !important; */
+
+}
+
+button.clicked:hover {
+  background-color: #14a800 !important;
 }
