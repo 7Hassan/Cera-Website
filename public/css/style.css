@@ -1403,9 +1403,25 @@ body {
   transform: translateY(-2px);
 }
 
+form div {
+  position: relative;
+}
 
 
 form span.errors {
   font-size: 13px;
   top: 5px;
-} 
+  right: 0;
+}
+
+button .loading {
+  right: unset !important;
+  left: 9px;
+}
+
+.loading {
+  box-shadow: inset 2px 0px 0px 0px rgb(24 104 55) !important;
+  animation: spin 1s linear infinite !important;
+}
+
+

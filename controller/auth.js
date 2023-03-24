@@ -188,10 +188,11 @@ exports.checkEmail = catchError(async (req, res, next) => {
 
 
 
-
+//TODO: check if user
 exports.isUser = async (req, res, next) => {
   const { user, time } = await helper.textJwtToken(req, res)
   if (user && !user.isChangedPass(time)) {
+    req.user = user
     res.locals.user = user
     return next()
   }
@@ -251,13 +252,14 @@ exports.signUp = catchError(async (req, res, next) => {
 exports.logIn = catchError(async (req, res, next) => {
   //? 1) if email & password are send
   const { email, password } = req.body
-  if (!email) return next(new AppError('Email required', 200))
-  if (!password) return next(new AppError('Password required', 200))
+  if (!email) return next(new AppError('Email required', 401))
+  if (!password) return next(new AppError('Password required', 401))
+  if (password.length < 8) return next(new AppError('Password is incorrect', 401))
 
   //? 2) if user is exist & correct password
   const user = await User.findOne({ email }).select('+password')
-  if (!user) return next(new AppError('Email is incorrect', 200))
-  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect', 200))
+  if (!user) return next(new AppError('Email is incorrect', 401))
+  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect', 401))
 
   //? 3) create a token send a success response
   const jwtToken = await helper.createJwtToken(user._id)
@@ -270,13 +272,55 @@ exports.logOut = catchError(async (req, res, next) => {
     res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
     req.flash('success', 'Log out')
     res.status(200).json({ redirect: '/' })
-  } else next(new AppError('not found', '404'))
+  } else next(new AppError('not found', 404))
 })
 
 exports.updateUserData = catchError(async (req, res, next) => {
-  console.log(req.body)
+  //1) get data
+  const { firstName, lastName, email } = req.body
+  //2) check data
+  if (!firstName) return next(new AppError('First name required', 401))
+  if (!lastName) return next(new AppError('Last name required', 401))
+  if (!email) return next(new AppError('Email required', 401))
+  if (firstName.length < 3) return next(new AppError('First name is Too short', 401))
+  if (lastName.length < 3) return next(new AppError('Last name is Too short', 401))
+  if (firstName.length > 16) return next(new AppError('First name is Too long', 401))
+  if (lastName.length > 16) return next(new AppError('Last name is Too long', 401))
+  if (!email) return next(new AppError('Email required', 401))
+  //3) get user
+  const user = await User.findById(req.user.id)
+  //4) update password
+  if (user.firstName !== firstName) user.firstName = firstName
+  if (user.lastName !== lastName) user.lastName = lastName
+  if (user.email !== email) {
+    user.email = email
+    user.emailConfig = false
+  }
+  await user.save()
+  req.flash('success', 'Data updated')
+  res.status(200).json({ redirect: '/' })
 })
 
+exports.updatePassword = catchError(async (req, res, next) => {
+  //1) get data
+  const { currentPass, newPass, confirmPass } = req.body
+  //2) check data
+  if (!currentPass) return next(new AppError('Current password required', 401))
+  if (!newPass) return next(new AppError('New password required', 401))
+  if (!confirmPass) return next(new AppError('Confirm password required', 401))
+  if (confirmPass !== newPass) return next(new AppError('Confirm password isn\'t match', 401))
+  if (currentPass.length < 8) return next(new AppError('Current password Incorrect', 401))
+  if (currentPass.length < 8) return next(new AppError('New password is less than 8 character', 401))
+  //3) check if current password is correct
+  const user = await User.findById(req.user.id).select('+password')
+  if (!(await user.isCorrectPass(currentPass, user.password))) return next(new AppError('Current Password is incorrect', 401))
+  //4) update password
+  user.password = newPass
+  const newUser = await user.save()
+  const jwtToken = await helper.createJwtToken(newUser._id)
+  req.flash('success', 'Password updated')
+  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/' })
+})
 
 
 exports.forgetPass = catchError(async (req, res, next) => {

@@ -7,8 +7,7 @@ const countriesList = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
 // Data in carte
 let carteData = []
 
-// check email
-let checker = false
+
 
 // Get Elements in header
 let navA = [...document.querySelectorAll('.nav ul a')];
@@ -560,104 +559,6 @@ function clickListCountries(ele) {
 //     moveImg.style.width = '70px'
 //   }, 900)
 // }
-
-
-//TODO: sign up
-function signUp() {
-  const form = document.getElementById('signup-form')
-  const button = document.querySelector('#signup-form button')
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-
-    const errors = []
-    const firstName = document.getElementById('firstName');
-    const lastName = document.getElementById('lastName');
-    const email = document.getElementById('email')
-    const password = document.getElementById('password');
-    const country = document.getElementById('country');
-    const checkBox = document.getElementById('checkboxInput');
-
-    errors.push(customizeInput(firstName))
-    errors.push(customizeInput(lastName))
-    if (email.value == "") email.parentElement.firstElementChild.innerHTML = "required"
-    errors.push(customizeInput(password))
-    errors.push(customizeInput(country))
-    errors.push(customizeInput(checkBox))
-    errors.push(checker)
-
-    if (errors.findIndex(err => err != true) == -1) signUpAction(button)
-  })
-}
-
-//TODO: Log in
-function logIn() {
-  const form = document.getElementById('signup-form')
-  const button = document.querySelector('#signup-form button')
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const errors = []
-    const email = document.getElementById('email')
-    const password = document.getElementById('password')
-
-    errors.push(checkLogIn(email))
-    errors.push(checkLogIn(password))
-
-    if (errors.findIndex(err => err != true) == -1) logInAction(button)
-  })
-}
-
-//TODO: Update user Data
-function updateUserData() {
-  const form = document.querySelector('.form-user-data')
-  const button = document.querySelector('.form-user-data button')
-  const emailAddress = document.getElementById('email').value
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-
-    const errors = []
-    const firstName = document.getElementById('firstName');
-    const lastName = document.getElementById('lastName');
-    const email = document.getElementById('email')
-
-    errors.push(customizeInput(firstName))
-    errors.push(customizeInput(lastName))
-    if (email.value == "") {
-      email.parentElement.firstElementChild.innerHTML = "required"
-      errors.push('required')
-    }
-    if (email.value !== emailAddress) checkEmail(email.value)
-
-
-    if (errors.findIndex(err => err != true) == -1) {
-
-    }
-  })
-}
-
-async function updateAction(button) {
-  const data = { firstName: firstName.value, lastName: lastName.value, email: email.value }
-  loadingForm(button)
-  console.log('🚀 ~ data:', data)
-  const res = await post('/auth/login', data)
-  removeLoadingForm(button)
-  const path = res.data.redirect
-  if (path) return window.location.href = path
-  const emailErr = document.getElementById('email').parentElement.firstElementChild
-  const passwordErr = document.getElementById('password').parentElement.firstElementChild
-  const message = res.data
-  if (message.includes('Email')) return emailErr.innerHTML = message
-  if (message.includes('Password')) return passwordErr.innerHTML = message
-  errorHandling('try again later')
-}
-
-
-
-
-
-
-
-
 
 
 

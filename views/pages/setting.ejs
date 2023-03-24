@@ -1,85 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../partials/head.ejs') -%>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </head>
 
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/css/main.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="icon" href="/imgs/Logo/logo.png">
-  <title>
-    <%= title %>
-  </title>
-</head>
-
-<body>
-  <nav class="user-view__menu">
-    <ul class="side-nav">
-      <li class="side-nav--active">
-        <a href="#">
-          <svg>
-            <use xlink:href="img/icons.svg#icon-settings"></use>
-          </svg>
-          Settings
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg>
-            <use xlink:href="img/icons.svg#icon-briefcase"></use>
-          </svg>
-          My bookings
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg>
-            <use xlink:href="img/icons.svg#icon-star"></use>
-          </svg>
-          My reviews
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg>
-            <use xlink:href="img/icons.svg#icon-credit-card"></use>
-          </svg>
-          Billing
-        </a>
-      </li>
-    </ul>
-
-    <% if(user.role=='admin' ){ %>
-      <div class="admin-nav">
-        <h5 class="admin-nav__heading">Admin</h5>
+  <body>
+    <%- include('../partials/flashMsg.ejs') -%>
+      <nav class="user-view__menu">
         <ul class="side-nav">
-          <li>
+          <li class="side-nav--active">
             <a href="#">
               <svg>
-                <use xlink:href="img/icons.svg#icon-map"></use>
+                <use xlink:href="img/icons.svg#icon-settings"></use>
               </svg>
-              Manage tours
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <svg>
-                <use xlink:href="img/icons.svg#icon-users"></use>
-              </svg>
-              Manage users
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <svg>
-                <use xlink:href="img/icons.svg#icon-star"></use>
-              </svg>
-              Manage reviews
+              Settings
             </a>
           </li>
           <li>
@@ -87,75 +21,134 @@
               <svg>
                 <use xlink:href="img/icons.svg#icon-briefcase"></use>
               </svg>
+              My bookings
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <svg>
+                <use xlink:href="img/icons.svg#icon-star"></use>
+              </svg>
+              My reviews
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <svg>
+                <use xlink:href="img/icons.svg#icon-credit-card"></use>
+              </svg>
+              Billing
             </a>
           </li>
         </ul>
+
+        <% if(user.role=='admin' ){ %>
+          <div class="admin-nav">
+            <h5 class="admin-nav__heading">Admin</h5>
+            <ul class="side-nav">
+              <li>
+                <a href="#">
+                  <svg>
+                    <use xlink:href="img/icons.svg#icon-map"></use>
+                  </svg>
+                  Manage tours
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg>
+                    <use xlink:href="img/icons.svg#icon-users"></use>
+                  </svg>
+                  Manage users
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg>
+                    <use xlink:href="img/icons.svg#icon-star"></use>
+                  </svg>
+                  Manage reviews
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg>
+                    <use xlink:href="img/icons.svg#icon-briefcase"></use>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <% } %>
+      </nav>
+
+      <div class="user-view__content">
+        <div class="user-view__form-container">
+          <h2 class="heading-secondary ma-bt-md">Your account settings</h2>
+          <form class="form form-user-data">
+            <div class="form__group">
+              <span class="errors"></span>
+              <label class="form__label" for="firstName">First name</label>
+              <input autocomplete id="firstName" class="form__input" type="text" value=<%=user.firstName %>
+              oninput="customizeInput(this)" onblur="customizeInput(this)">
+            </div>
+            <div class="form__group">
+              <span class="errors"></span>
+              <div class="loading"></div>
+              <label class="form__label" for="lastName">Last name</label>
+              <input autocomplete id="lastName" class="form__input" type="text" value=<%=user.lastName %>
+              oninput="customizeInput(this)" onblur="customizeInput(this)">
+            </div>
+
+            <div class="form__group ma-bt-md checkerEmail">
+              <span class="errors"></span>
+              <span class="loading"></span>
+              <label class="form__label" for="email">Email</label>
+              <input autocomplete id="email" class="form__input" type="text" value=<%=user.email %>
+              >
+            </div>
+            <div class="form__group form__photo-upload">
+              <img class="form__user-photo" src=<%=user.img %> alt="User photo">
+              <a class="btn-text" href="#">Choose new photo</a>
+            </div>
+            <div class="form__group right">
+              <button class="btn btn--small btn--green">Save settings</button>
+            </div>
+          </form>
+        </div>
+        <hr class="line">
+        <div class="user-view__form-container">
+          <h2 class="heading-secondary ma-bt-md">Password change</h2>
+          <form class="form form-user-settings">
+            <div class="form__group">
+              <span class="errors"></span>
+              <label class="form__label" for="password-current">Current password</label>
+              <input autocomplete id="password-current" class="form__input" type="password" placeholder="••••••••"
+                oninput="checkUpdatePass(this)" onblur="checkUpdatePass(this)">
+            </div>
+            <div class="form__group">
+              <span class="errors"></span>
+              <label class="form__label" for="password">New password</label>
+              <input autocomplete id="password" class="form__input" type="password" placeholder="••••••••"
+                oninput="checkUpdatePass(this)" onblur="checkUpdatePass(this)">
+            </div>
+            <div class="form__group ma-bt-lg">
+              <span class="errors"></span>
+              <label class="form__label" for="password-confirm">Confirm password</label>
+              <input autocomplete id="password-confirm" class="form__input" type="password" placeholder="••••••••"
+                oninput="checkUpdatePass(this)" onblur="checkUpdatePass(this)">
+            </div>
+            <div class="form__group right">
+              <button class="btn btn--small btn--green">Save password</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <% } %>
-  </nav>
+      <%- include('../partials/scripting.ejs') %>
+        <script>
+          updateUserData()
+          updatePassword()
+        </script>
+  </body>
 
-  <div class="user-view__content">
-    <div class="user-view__form-container">
-      <h2 class="heading-secondary ma-bt-md">Your account settings</h2>
-      <form class="form form-user-data">
-        <div class="form__group">
-          <span class="errors"></span>
-          <label class="form__label" for="firstName">First name</label>
-          <input autocomplete id="firstName" class="form__input" type="text" value=<%=user.firstName %>
-          oninput="customizeInput(this)" onblur="customizeInput(this)">
-        </div>
-        <div class="form__group">
-          <span class="errors"></span>
-          <div class="loading"></div>
-          <label class="form__label" for="lastName">Last name</label>
-          <input autocomplete id="lastName" class="form__input" type="text" value=<%=user.lastName %>
-          oninput="customizeInput(this)" onblur="customizeInput(this)">
-        </div>
-
-        <div class="form__group ma-bt-md checkerEmail">
-          <span class="errors"></span>
-          <span class="loading"></span>
-          <label class="form__label" for="email">Email</label>
-          <input autocomplete id="email" class="form__input" type="text" value=<%=user.email %>
-          >
-        </div>
-        <div class="form__group form__photo-upload">
-          <img class="form__user-photo" src=<%=user.img %> alt="User photo">
-          <a class="btn-text" href="#">Choose new photo</a>
-        </div>
-        <div class="form__group right">
-          <button class="btn btn--small btn--green">Save settings</button>
-        </div>
-      </form>
-    </div>
-    <hr class="line">
-    <div class="user-view__form-container">
-      <h2 class="heading-secondary ma-bt-md">Password change</h2>
-      <form class="form form-user-settings">
-        <div class="form__group">
-          <label class="form__label" for="password-current">Current password</label>
-          <input autocomplete id="password-current" class="form__input" type="password" placeholder="••••••••"
-            minlength="8">
-        </div>
-        <div class="form__group">
-          <label class="form__label" for="password">New password</label>
-          <input autocomplete id="password" class="form__input" type="password" placeholder="••••••••" minlength="8">
-        </div>
-        <div class="form__group ma-bt-lg">
-          <label class="form__label" for="password-confirm">Confirm password</label>
-          <input autocomplete id="password-confirm" class="form__input" type="password" placeholder="••••••••"
-            minlength="8">
-        </div>
-        <div class="form__group right">
-          <button class="btn btn--small btn--green">Save password</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <%- include('../partials/scripting.ejs') %>
-    <script>
-      updateUserData()
-    </script>
-</body>
-
-</html>
+  </html>

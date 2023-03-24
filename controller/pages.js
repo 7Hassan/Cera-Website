@@ -6,6 +6,7 @@ exports.paymentPage = (req, res) => res.render('pages/payment', pageObject('Paym
 exports.contactPage = (req, res) => res.render('pages/contact', pageObject('Contact Us', req))
 exports.blogPage = (req, res) => res.render('pages/blog', pageObject('Blog', req))
 exports.notFoundPage = (req, res) => res.status(404).render('pages/404', pageObject('404', req))
+exports.settingPage = (req, res, next) => res.render('pages/setting', pageObject('Cera | Account', req))
 
 exports.homePage = catchError(async (req, res, next) => {
   res.render('pages/index', {
@@ -44,15 +45,7 @@ exports.singleProd = catchError(async (req, res, next) => {
   });
 })
 
-exports.settingPage = (req, res, next) => {
-  res.render('pages/setting', {
-    title: 'Setting',
-    errors: req.flash('errors'),
-    warning: req.flash('warning'),
-    success: req.flash('success'),
-    toast: req.flash('toast'),
-  })
-}
+
 
 //! To slice data to show it in a shop page
 function sliceDataShop(data, length) {
