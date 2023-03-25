@@ -1,3 +1,7 @@
+// WebSocket
+const sendSocketMessage = (data) => socket.send(data)
+const closeSocket = (code) => socket.close(code, "Bye!")
+
 async function get(url) {
   try {
     return await axios.get(url)

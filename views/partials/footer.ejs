@@ -7,12 +7,23 @@
         <span>special offers.</span>
       </p>
     </div>
-    <div class="input-email">
-      <input type="email" name="inputEmail" id="" placeholder="Your email address" />
-      <button class="normal" onclick="window.location.pathname='/auth/signup'">
-        SignUp
-      </button>
-    </div>
+    <% if(user){%>
+      <% if(!user.emailConfig){%>
+        <div class="input-email">
+          <input type="email" name="inputEmail" readonly placeholder="Your email address" value=<%=user.email %> />
+          <button class="normal" onclick="window.location.pathname='/auth/signup/verify'">
+            Verify
+          </button>
+        </div>
+
+        <%} }else{ %>
+          <div class="input-email">
+            <input type="email" name="inputEmail" id="" placeholder="Your email address" />
+            <button class="normal" onclick="window.location.pathname='/auth/signup'">
+              SignUp
+            </button>
+          </div>
+          <% } %>
   </div>
 </div>
 <footer>

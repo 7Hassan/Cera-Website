@@ -1,6 +1,6 @@
 const Product = require('../models/products');
 const catchError = require('../Errors/catch')
-
+const helper = require('./helperFunc')
 exports.aboutPage = (req, res) => res.render('pages/about', pageObject('About Us', req))
 exports.paymentPage = (req, res) => res.render('pages/payment', pageObject('Payment', req))
 exports.contactPage = (req, res) => res.render('pages/contact', pageObject('Contact Us', req))
@@ -63,3 +63,13 @@ function pageObject(title, req) {
     toast: req.flash('toast'),
   }
 }
+
+exports.userData = catchError(async (req, res, next) => {
+  const { user, time } = await helper.testJwtToken(req, res, next)
+  if (user && !user.isChangedPass(time)) {
+    res.locals.user = user
+    return next()
+  }
+  res.locals.user = ''
+  next()
+})

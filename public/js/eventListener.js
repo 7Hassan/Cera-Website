@@ -1,6 +1,12 @@
 
+// webSocket
+socket.addEventListener('open', (event) => console.log("✅ connected with webSocket server"))
+socket.addEventListener('message', (event) => (event.data == 'emailConfirmed') ? location.reload(true) : 0)
+socket.addEventListener('close', (event) => console.log('🚫 Disconnected from WebSocket server'))
+
+
 function cartIconClicker(ele) {
-  if (userIcon.classList.contains('active')) {
+  if (userIcon && userIcon.classList.contains('active')) {
     userIcon.classList.remove('active')
     holderDivUser.classList.remove('show')
   }
@@ -9,9 +15,9 @@ function cartIconClicker(ele) {
 }
 
 function userIconClicker(ele) {
-  if (cartIcon.classList.contains('active')) {
-    cartIcon.classList.remove('active');
-    productsCart.classList.remove('show');
+  if (cartIcon && cartIcon.classList.contains('active')) {
+    cartIcon.classList.remove('active')
+    productsCart.classList.remove('show')
   }
   ele.classList.toggle('active');
   holderDivUser.classList.toggle('show');
@@ -40,7 +46,19 @@ async function logOut(ele) {
     else window.alert('try again later')
   } catch (err) {
     console.log(err)
-    
+
   }
   removeLoadingForm(ele)
+}
+
+function changeEmailInput(event) {
+  [...document.querySelectorAll('.change-email i')].forEach(ele => ele.classList.toggle('hidden-slide'));
+  document.querySelector('.update-email').classList.toggle('hidden')
+  event.preventDefault()
+}
+
+function moreInformation(event) {
+  [...document.querySelectorAll('.help-verify i')].forEach(ele => ele.classList.toggle('hidden-slide'));
+  document.querySelector('.info-verify ').classList.toggle('hidden')
+  event.preventDefault()
 }

@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require('express')
+const WebSocket = require('ws');
 const path = require('path')
 const morgan = require('morgan')
 // const expressValidator = require('express-validator');
@@ -54,7 +55,7 @@ const STORE = new SessionStore({
 //? set Session
 app.use(session({
   key: 'client.side',
-  secret: 'hassan-hossam',
+  secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: true,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 100 }, //! 30 Days
@@ -82,6 +83,14 @@ app.use('/auth', limiter) //! to prevent many requests attacks on this url
 
 //? for information about requests
 app.use(morgan('tiny'));
+
+
+// WebSocket Server 
+wss = new WebSocket.Server({ port: 8080 })
+wss.on('connection', function connection(ws) {
+  console.log('✅ WebSocket connected')
+  ws.on('message', function incoming(message) { console.log('📨 ', message) }) // incoming 
+})
 
 //? use routing
 app.use('/', require('./routes/pages'));

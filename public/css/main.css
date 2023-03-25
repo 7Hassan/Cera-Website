@@ -214,10 +214,11 @@ body.hidden {
 
 }
 
-#header .container .auth .sig-up button {
+#header .container button.special {
   padding: 15px 20px !important;
   border-radius: 8px;
   background-color: var(--main-color);
+  color: white;
 }
 
 #header .container .auth .sig-up button a {
@@ -401,12 +402,14 @@ body.hidden {
   background-color: transparent;
   cursor: pointer;
 }
-.user-div div i{
+
+.user-div div i {
   margin-right: 25px;
 
 }
-.user-div .log-out:hover ,
-.user-div .setting:hover{
+
+.user-div .log-out:hover,
+.user-div .setting:hover {
   background-color: #f2f7f2;
   cursor: pointer;
 }
@@ -637,7 +640,6 @@ body.hidden {
   border-radius: 25px;
   cursor: pointer;
   box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
-  margin: 15px 0;
   transition: 0.3s ease;
   position: relative;
   margin: 20px 0;
@@ -693,6 +695,7 @@ body.hidden {
   position: absolute;
   bottom: 20px;
   right: 10px;
+  z-index: 10;
 }
 
 /* Start banner */
@@ -2477,12 +2480,23 @@ form>div {
   right: 10px;
 }
 
+.div-input .loading {
+  right: 0 !important;
+  bottom: 9px !important;
+}
+
+.div-input .errors {
+  right: 20px !important;
+
+}
+
 .errors {
   position: absolute;
   right: 9px;
   top: -12px;
   color: red;
-  font-size: 9px;
+  font-weight: 700;
+  font-size: 10px;
 }
 
 .errors a {
@@ -2571,6 +2585,7 @@ form>div {
 }
 
 .verify-holder .update-email {
+  height: 100px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
@@ -2581,6 +2596,25 @@ form>div {
   margin-top: 5px;
 }
 
+.verify-holder .update-email .div-input {
+  position: relative;
+  margin-top: 10px;
+  width: 285px;
+}
+
+.verify-holder .update-email.hidden {
+  height: 0;
+}
+
+.verify-holder .info-verify.hidden {
+  height: 0;
+}
+
+.verify-holder .info-verify {
+  height: 165px;
+  transition: .3s;
+  overflow: hidden;
+}
 
 .verify-holder .change-email .update-email input {
   padding: 14px 0px 14px 5px;
@@ -2643,9 +2677,7 @@ form>div {
   margin-bottom: 25px;
 }
 
-.verify-holder .help-verify .info-verify.show {
-  height: 165px;
-}
+
 
 .verify-holder .help-verify div p {
   font-size: 8px !important;

@@ -5,11 +5,11 @@ const base64url = require('base64url')
 const { promisify } = require('util')
 const axios = require('axios')
 const crypto = require('crypto')
-const sendEmail = require('./email')
 const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
 const validator = require('validator');
 const helper = require('./helperFunc')
+
 
 exports.signPage = catchError(async (req, res, next) => {
   res.render('user/createAccount', {
@@ -34,10 +34,9 @@ exports.logPage = catchError(async (req, res, next) => {
 
 
 exports.verifyPage = catchError(async (req, res, next) => {
-  // const user = await User.findOne({ _id })
   res.render('user/verification', {
     title: 'Verify your email',
-    email: "email",
+    email: req.user.email,
     errors: req.flash('errors'),
     warning: req.flash('warning'),
     success: req.flash('success'),
@@ -63,61 +62,25 @@ exports.forgetPage = catchError(async (req, res, next) => {
 
 
 
-exports.changEmailVerify = (req, res) => {
-  // const newEmail = req.body.newEamil;
-  // User.findOne({ _id: req.session.user.userId }, (err, userExist) => {
-  //   if (err) return console.log(err);
-  //   if (!req.session.user.emailConf) {
-  //     if (validator.isEmail(newEmail)) {
-  //       User.findOne({ email: newEmail }, (error, user) => {
-  //         if (!user || error) {
-  //           User.updateOne({ _id: req.session.user.userId }, { email: newEmail }, (er) => {
-  //             if (er) return console.log(er)
-  //             req.flash('success', 'Email updated')
-  //             sendEmail(newEmail, req.session.user.emailActivationCode, userExist.firstName);
-  //             res.redirect('/auth/signup/verify')
-  //           })
-  //         } else {
-  //           req.flash('errors', 'This email is already in use !')
-  //           res.redirect('/auth/signup/verify');
-  //         }
-  //       })
-  //     } else {
-  //       req.flash('errors', 'Please enter a valid email !')
-  //       res.redirect('/auth/signup/verify');
-  //     }
-  //   } else {
-  //     req.flash('toast', 'You are Registered')
-  //     res.redirect('/')
-  //   }
-  // })
-  if (req.body.redirect) {
-    res.send('log in')
-    console.log('🚀 ~ file: auth.js:111 ~ ', req.body)
-  } else {
-    res.send('new Email')
+exports.changEmailVerify = catchError(async (req, res, next) => {
+  const { email } = req.body
+  if (!email) return next(new AppError('Email required', 401))
+  if (email == req.user.email) return next(new AppError('Email is used', 401))
+  const user = await User.findOne({ email: req.user.email })
+  user.email = email
+  const token = await user.createToken('email')
+  await user.save()
+  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/${token}`
+  const options = {
+    url: url,
+    email: user.email,
+    name: user.firstName,
+    subject: 'Verify your email address',
+    about: 'email'
   }
-
-}
-
-
-exports.confirmationEmail = (req, res, next) => {
-  // if (req.session.user.emailActivationCode == req.params.token) {
-  //   req.session.user.emailConf = true;
-  //   req.flash('success', 'Registration Successes');
-  //   res.redirect('/');
-  //   next();
-  // }
-  let url = req.protocol + '://' + req.get('host') + '/auth/signup/verify'
-  res.send(url)
-  redirectFun(url)
-}
-
-function redirectFun(url) {
-  axios.post(url, { 'redirect': true })
-    .then(res => res)
-    .catch(err => console.log(err))
-}
+  await helper.senderEmail(options, next)
+  res.status(200).json({ redirect: '/auth/signup/verify' })
+})
 
 
 
@@ -126,37 +89,12 @@ function redirectFun(url) {
 
 
 
-// exports.checkUser = catchError(async (req, res, next) => {
-// if (req.session.user && req.cookies.user_side) {
-//   if (req.session.user.emailConf) {
-//     req.flash('toast', 'You are Registered');
-//     res.redirect('/');
-//   } else {
-//     req.flash('toast', 'Please verify your email to proceed')
-//     res.redirect('/auth/signup/verify');
-//   }
-// } else {
-//   next();
-// }
-
-//   let token
-//   //? 1) if a token
-//   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
-//     token = req.headers.authorization.split(' ')[1]
-
-//   //? 2) verification token
 
 
-//   //? 3) if expire token
-
-//   next()
-
-// })
 
 
 exports.checkEmail = catchError(async (req, res, next) => {
   const email = req.body.email
-  console.log('🚀 ~ email:', email)
   const user = await User.findOne({ email })
   if (user) res.status(200).send(false)
   else res.status(201).send(true)
@@ -190,28 +128,37 @@ exports.checkEmail = catchError(async (req, res, next) => {
 
 //TODO: check if user
 exports.isUser = async (req, res, next) => {
-  const { user, time } = await helper.textJwtToken(req, res)
+  const { user, time } = await helper.testJwtToken(req, res)
   if (user && !user.isChangedPass(time)) {
     req.user = user
     res.locals.user = user
-    return next()
+    if (user.emailConfig) next()
+    else {
+      req.flash('warning', 'Confirm your Email to get access')
+      res.status(300).redirect('/')
+    }
+  } else {
+    req.flash('toast', 'Please log in first')
+    res.status(300).redirect('/')
   }
-  req.flash('toast', 'Please log in first')
+}
+
+
+exports.isEmailConfig = async (req, res, next) => {
+  const { user, time } = await helper.testJwtToken(req, res)
+  if (user && !user.isChangedPass(time)) {
+    req.user = user
+    if (!user.emailConfig) return next()
+  }
+  req.flash('toast', 'Your Email is confirmed')
   res.status(300).redirect('/')
 }
 
-exports.isLogIn = async (req, res, next) => {
-  const { user, time } = await helper.textJwtToken(req, res, next)
-  if (user && !user.isChangedPass(time)) {
-    res.locals.user = user
-    return next()
-  }
-  res.locals.user = ''
-  next()
-}
+
+
 
 exports.checkAuth = async (req, res, next) => {
-  const { user, time } = await helper.textJwtToken(req, res, next)
+  const { user, time } = await helper.testJwtToken(req, res, next)
   if (user && !user.isChangedPass(time)) {
     req.flash('warning', 'You are register')
     return res.status(403).redirect('/')
@@ -228,11 +175,10 @@ exports.signUp = catchError(async (req, res, next) => {
     password: req.body.password,
     country: req.body.country
   })
-  res.status(200).json({ redirect: '/auth/signup/verify' });
   await user.createCart(Cart)
+  const token = await user.createToken('email')
   await user.save()
 
-  const token = await user.createToken('email')
   const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/verify/${token}`
   const options = {
     url: url,
@@ -241,12 +187,27 @@ exports.signUp = catchError(async (req, res, next) => {
     subject: 'Verify your email address',
     about: 'email'
   }
-  try {
-    sendEmail(options)
-  } catch (err) {
-    next(new AppError('Error in sending an Email. Try again later', 500))
-  }
+  await helper.senderEmail(options, next)
+  const jwtToken = await helper.createJwtToken(user._id)
+  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/auth/signup/verify' })
+
 })
+
+exports.verify = async (req, res, next) => {
+  const token = crypto.createHash('sha256').update(req.params.token).digest('hex')
+  const user = await User.findOne({ emailToken: token, expEmailToken: { $gt: Date.now() } })
+  if (!user) return next(new AppError('Email Date is expired', 404))
+  user.emailConfig = true
+  user.emailToken = undefined
+  user.expEmailToken = undefined
+  await user.save()
+  req.flash('success', 'verification Email')
+  res.status(200).redirect('/')
+  helper.sendSocket('emailConfirmed')
+}
+
+
+
 
 
 exports.logIn = catchError(async (req, res, next) => {
@@ -268,11 +229,11 @@ exports.logIn = catchError(async (req, res, next) => {
 })
 
 exports.logOut = catchError(async (req, res, next) => {
-  if (req.body.data == 'logOut') {
+  if (req.body.data == 'logOut' && req.cookies.jwt) {
     res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
     req.flash('success', 'Log out')
     res.status(200).json({ redirect: '/' })
-  } else next(new AppError('not found', 404))
+  } else next(new AppError('You aren\'t register', 401))
 })
 
 exports.updateUserData = catchError(async (req, res, next) => {
@@ -316,8 +277,8 @@ exports.updatePassword = catchError(async (req, res, next) => {
   if (!(await user.isCorrectPass(currentPass, user.password))) return next(new AppError('Current Password is incorrect', 401))
   //4) update password
   user.password = newPass
-  const newUser = await user.save()
-  const jwtToken = await helper.createJwtToken(newUser._id)
+  const jwtToken = await helper.createJwtToken(user._id)
+  await user.save()
   req.flash('success', 'Password updated')
   res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/' })
 })
@@ -340,13 +301,9 @@ exports.forgetPass = catchError(async (req, res, next) => {
     subject: 'Reset your password',
     about: 'password'
   }
-  try {
-    await sendEmail(options)
-    await user.save()
-    res.status(201).send('Email sent')
-  } catch (err) {
-    next(new AppError('Error in sending an Email!, Try again later.', 500))
-  }
+  await helper.senderEmail(options, next)
+  await user.save()
+  res.status(201).send('Email sent')
 })
 
 exports.resetPass = catchError(async (req, res, next) => {
@@ -361,12 +318,13 @@ exports.resetPass = catchError(async (req, res, next) => {
   user.password = newPassword
   user.passwordToken = undefined
   user.expPasswordToken = undefined
+  const jwtToken = await helper.createJwtToken(user._id)
   await user.save()
 
   //? 4) log in user & send a token
-  const jwtToken = await helper.createJwtToken(user._id)
   res.cookie('jwt', helper.cookieOptions, jwtToken,).status(200).redirect("/")
 })
+
 
 
 

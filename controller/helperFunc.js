@@ -3,12 +3,15 @@ const Cart = require('../models/cart')
 const jwt = require('jsonwebtoken')
 const base64url = require('base64url')
 const { promisify } = require('util')
+const sendEmail = require('./email')
 const axios = require('axios')
 const crypto = require('crypto')
 const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
 const validator = require('validator');
 const { countries, zones } = require("moment-timezone/data/meta/latest.json");
+const WebSocket = require('ws');
+
 
 exports.cookieOptions = {
   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000), //? expire in 30 days
@@ -32,18 +35,27 @@ exports.getCountry = () => {
   return cityToCountry[city];
 }
 
-exports.textJwtToken = async (req, res, next) => {
+exports.testJwtToken = async (req, res, next) => {
   let cookie, user, time
-  if (req.headers.cookie && req.headers.cookie.includes('jwt')) cookie = req.headers.cookie.split('jwt=')[1]
-
+  if (req.cookies) cookie = req.cookies.jwt
   if (cookie) {
     if (cookie.split('.').length !== 3) return { user, time }
     await promisify(jwt.verify)(cookie, process.env.JWT_SECRET)
       .then(async (decoded) => {
         time = decoded.iat
         user = await User.findOne({ _id: decoded.id })
-      }).catch((err) => next(new AppError('Error in processing Token', 500)))
+      }).catch((err) => 0)
   }
   return { user, time }
 }
 
+exports.sendSocket = (data) => wss.clients.forEach((client) => (client.readyState === WebSocket.OPEN) ? client.send(data) : 0)
+
+
+exports.senderEmail = (options, next) => {
+  try {
+    sendEmail(options)
+  } catch (err) {
+    next(new AppError('Error in sending an Email. Try again later', 500))
+  }
+}

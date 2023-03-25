@@ -3,7 +3,7 @@ const Router = express.Router()
 const func = require('../controller/pages')
 const protect = require('../controller/auth')
 
-Router.use(protect.isLogIn)
+Router.use(func.userData)
 Router.route('/').get(func.homePage)
 Router.route('/me').get(protect.isUser, func.settingPage)
 Router.route('/shop').get(func.shopPage)

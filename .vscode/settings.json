@@ -16,7 +16,8 @@
     ".eslintrc.json": true,
     "rest.http": true,
     "nodemailer.js": true,
-    "config": true
+    "config": true,
+    ".env": true
   },
   "explorerExclude.backup": {},
   "cSpell.words": [

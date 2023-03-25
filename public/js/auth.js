@@ -1,6 +1,20 @@
 // check email
 let checker = false
 
+//TODO: Check email exist
+async function checkEmail(email) {
+  const error = document.querySelector('.checkerEmail .errors')
+  const loadingEle = document.querySelector('.checkerEmail .loading')
+  if (!validationEmail(email)) return error.innerHTML = 'Enter a valid Email'
+  error.innerHTML = ''
+  loadingEle.classList.add('show')
+  const res = await patch('/auth/signup/check', { email })
+  loadingEle.classList.remove('show')
+  if (!res.data) error.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.'
+  else error.innerHTML = ''
+  checker = res.data
+}
+
 //TODO: sign up
 function signUp() {
   const form = document.getElementById('signup-form')
@@ -73,7 +87,7 @@ function updateUserData() {
 
     errors.push(customizeInput(firstName))
     errors.push(customizeInput(lastName))
-    if (email.value == "") {
+    if (!email.value) {
       email.parentElement.firstElementChild.innerHTML = "required"
       errors.push('required')
     }
@@ -114,16 +128,30 @@ function updatePassword() {
   })
 }
 
-//TODO: Check email exist
-async function checkEmail(email) {
-  const error = document.querySelector('.checkerEmail .errors')
-  const loadingEle = document.querySelector('.checkerEmail .loading')
-  if (!validationEmail(email)) return error.innerHTML = 'Enter a valid Email'
-  error.innerHTML = ''
-  loadingEle.classList.add('show')
-  const res = await patch('/auth/signup/check', { email })
-  loadingEle.classList.remove('show')
-  if (!res.data) error.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.'
-  else error.innerHTML = ''
-  checker = res.data
+//TODO: Update Email 
+function updateEmail() {
+  const form = document.querySelector('#updateEmail')
+  const button = document.querySelector('#updateEmail button')
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const errors = []
+    const email = document.getElementById('email')
+
+    if (!email.value) {
+      email.parentElement.firstElementChild.innerHTML = 'required'
+      errors.push('required')
+    }
+    errors.push(checker)
+    console.log('🚀 ~ errors:', errors)
+
+    if (errors.findIndex(err => err != true) == -1) {
+      const data = { email: email.value }
+      postData(button, data, '/auth/signup/verify')
+    }
+
+  })
 }
+
+
+

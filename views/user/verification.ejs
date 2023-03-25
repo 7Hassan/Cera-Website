@@ -151,12 +151,14 @@
             <div>
               <i class="fa-solid fa-chevron-up hidden-slide"></i>
               <i class="fa-solid fa-chevron-down"></i>
-              <a id="change-email" href="" onclick="event.preventDefault();"> Change email</a>
+              <a id="change-email" href onclick="changeEmailInput(event)"> Change email</a>
             </div>
-            <form action="" method="POST">
+            <form id="updateEmail">
               <div class="update-email ">
-                <div>
-                  <input type="text" placeholder="Email" name="newEamil" id="newEamil">
+                <div class="div-input checkerEmail">
+                  <span class="errors"></span>
+                  <div class="loading"></div>
+                  <input type="text" placeholder="Email" name="email" id="email" onblur="checkEmail(this.value)">
                 </div>
                 <div class="sin-up">
                   <button>Update & Resend</button>
@@ -169,9 +171,9 @@
             <div>
               <i class="fa-solid fa-chevron-up hidden-slide"></i>
               <i class="fa-solid fa-chevron-down"></i>
-              <a href="" id="help-verify"> I need help verifying my email</a>
+              <a id="help-verify" href onclick="moreInformation(event)"> I need help verifying my email</a>
             </div>
-            <div class="info-verify">
+            <div class="info-verify hidden">
               <div>
                 Why do we ask for email confirmation?
                 <p>
@@ -204,42 +206,10 @@
         </div>
 
     </div>
-    <script src="/js/app.js"></script>
-    <script>
-      let emailSec = document.querySelector('.update-email');
-      let infoSec = document.querySelector('.info-verify ');
-
-
-      document.getElementById('change-email').addEventListener('click', (e) => {
-        e.preventDefault();
-        [...document.querySelectorAll('.change-email i')].forEach(ele => ele.classList.toggle('hidden-slide'));
-        emailSec.classList.toggle('show');
-      })
-      document.getElementById('help-verify').addEventListener('click', (e) => {
-        e.preventDefault();
-        [...document.querySelectorAll('.help-verify i')].forEach(ele => ele.classList.toggle('hidden-slide'));
-        infoSec.classList.toggle('show');
-      })
-
-      let flashContents = [...document.querySelectorAll('.text-flash')];
-
-      flashContents.forEach((flashContent) => {
-        if (flashContent.innerText != "") {
-          flashContent.offsetParent.classList.remove('hidden');
-
-          setTimeout(() => {
-            if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
-
-          }, 5000);
-        }
-      })
-
-
-
-
-
-    </script>
-
+    <%- include('../partials/scripting.ejs') %>
+      <script>
+        updateEmail()
+      </script>
   </body>
 
   </html>
