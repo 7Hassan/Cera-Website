@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
   },
   img: {
     type: String,
-    default: '/imgs/users/profile.webp'
+    default: 'default.webp'
   },
   country: {
     type: String,

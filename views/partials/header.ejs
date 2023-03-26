@@ -18,7 +18,7 @@
             </a>
             <% } %>
               <div class="user-icon">
-                <img class="fa-user" src=<%=user.img %> alt="" onclick="userIconClicker(this)">
+                <img class="fa-user" src=/imgs/users/<%=user.img %> alt="" onclick="userIconClicker(this)">
               </div>
               <div id="nav-buttom">
                 <i class="fa-solid fa-bars" onclick="showNav()"></i>
@@ -46,7 +46,7 @@
         <% } %>
           <div class="user-div">
             <div class="user-img">
-              <img src=<%=user.img %> alt="">
+              <img src=/imgs/users/<%=user.img %> alt="">
             </div>
             <div class="user-name">
               <%= user.firstName %>
@@ -87,7 +87,7 @@
                   </div>
                   <% if(user){%>
                     <div class="img-user">
-                      <img src=<%=user.img %> alt="">
+                      <img src=/imgs/users/<%=user.img %> alt="">
                     </div>
                     <div>Hello <a href="#">
                         <%= user.firstName %>

@@ -72,61 +72,7 @@ function logIn() {
   })
 }
 
-//TODO: Update user Data
-function updateUserData() {
-  const form = document.querySelector('.form-user-data')
-  const button = document.querySelector('.form-user-data button')
-  const emailAddress = document.getElementById('email').value
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
 
-    const errors = []
-    const firstName = document.getElementById('firstName');
-    const lastName = document.getElementById('lastName');
-    const email = document.getElementById('email')
-
-    errors.push(customizeInput(firstName))
-    errors.push(customizeInput(lastName))
-    if (!email.value) {
-      email.parentElement.firstElementChild.innerHTML = "required"
-      errors.push('required')
-    }
-    if (email.value !== emailAddress) {
-      await checkEmail(email.value)
-      errors.push(checker)
-    }
-    if (errors.findIndex(err => err != true) == -1) {
-      const data = { firstName: firstName.value, lastName: lastName.value, email: email.value }
-      postData(button, data, '/auth/updateUser')
-    }
-  })
-}
-
-//TODO: Update Password 
-function updatePassword() {
-  const form = document.querySelector('.form-user-settings')
-  const button = document.querySelector('.form-user-settings button')
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-
-    const errors = []
-    const currentPass = document.getElementById('password-current')
-    const newPass = document.getElementById('password')
-    const confirmPass = document.getElementById('password-confirm')
-
-    errors.push(checkUpdatePass(currentPass))
-    errors.push(checkUpdatePass(newPass))
-    errors.push(checkUpdatePass(confirmPass))
-    if (newPass.value !== confirmPass.value) {
-      confirmPass.parentElement.firstElementChild.innerHTML = 'Confirm password isn\'t match'
-      errors.push(false)
-    }
-    if (errors.findIndex(err => err != true) == -1) {
-      const data = { currentPass: currentPass.value, newPass: newPass.value, confirmPass: confirmPass.value }
-      postData(button, data, '/auth/updatePass')
-    }
-  })
-}
 
 //TODO: Update Email 
 function updateEmail() {
