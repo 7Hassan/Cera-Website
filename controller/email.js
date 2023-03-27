@@ -1,30 +1,33 @@
 const nodemailer = require('nodemailer')
-const transport = nodemailer.createTransport(
-  {
-    service: 'gmail',
-    secure: false,
-    host: 'smtp.gmail.com',
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
+const ejs = require('ejs')
+const htmlToText = require('html-to-text')
+console.log('🚀 ~ htmlToText:', htmlToText)
+// const transport = nodemailer.createTransport(
+//   {
+//     service: 'gmail',
+//     secure: false,
+//     host: 'smtp.gmail.com',
+//     auth: {
+//       user: process.env.EMAIL_USERNAME,
+//       pass: process.env.EMAIL_PASSWORD,
+//     },
 
-  });
+//   });
 
-const sendEmail = async (options) => {
-  let message
-  if (options.about == 'email') message = emailHtml(options)
-  else message = passwordHtml(options)
+// const sendEmail = async (options) => {
+//   let message
+//   if (options.about == 'email') message = emailHtml(options)
+//   else message = passwordHtml(options)
 
-  await transport.sendMail(
-    {
-      from: 'cera.shp@gmail.com',
-      to: options.email,
-      subject: options.subject,
-      text: 'texting',
-      html: message,
-    })
-}
+//   await transport.sendMail(
+//     {
+//       from: 'cera.shp@gmail.com',
+//       to: options.email,
+//       subject: options.subject,
+//       text: 'texting',
+//       html: message,
+//     })
+// }
 
 
 
@@ -81,8 +84,57 @@ function passwordHtml(options) {
 <p style="color:red; font-size:10px"> This message is available for 30 minutes only</p></div>`
 }
 
-module.exports = sendEmail
+// module.exports = sendEmail
 
 
 
 
+
+
+module.exports = class Email {
+  constructor(user, url) {
+    this.name = user.firstName,
+      this.url = url,
+      this.to = user.email,
+      this.from = process.env.EMAIL_USERNAME
+  }
+  Transport() {
+    return nodemailer.createTransport(
+      {
+        service: 'gmail',
+        secure: false,
+        host: process.env.EMAIL_HOST,
+        auth: {
+          user: process.env.EMAIL_USERNAME,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      })
+  }
+  async send(template, subject) {
+    //1) render template
+    const html = await ejs.renderFile(`${__dirname}/../views/emails/${template}.ejs`, {
+      name: this.name,
+      url: this.url,
+      subject
+    })
+    //2) email options
+    const options = {
+      from: this.from,
+      to: this.to,
+      subject,
+      html,
+      text: html,
+    }
+    //3) send email
+    await this.Transport().sendMail(options)
+  }
+  async welcome() {
+    await this.send('welcome', 'Welcome to Cera Shop')
+  }
+  async verify() {
+    await this.send('verify', 'Verify Email Address')
+  }
+  async verify() {
+    await this.send('verify', 'Verify Email Address')
+  }
+}

@@ -9,7 +9,7 @@ Router.route('/').get(func.homePage)
 Router.route('/shop').get(func.shopPage)
 Router.route('/shop/:id').get(func.singleProd);
 Router.route('/about').get(func.aboutPage)
-Router.route('/payment').get(func.paymentPage)
+Router.route('/payment').get(func.isUser, func.paymentPage)
 Router.route('/contact').get(func.contactPage)
 Router.route('/blog').get(func.blogPage)
 Router.route('/me').get(func.isUser, func.settingPage)
@@ -19,3 +19,5 @@ Router.route('/me/updatePass').post(func.isUser, func.updatePassword)
 // Router.route('/*').get(func.notFoundPage)
 
 module.exports = Router
+
+

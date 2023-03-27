@@ -3,7 +3,7 @@ const Product = require('../models/products')
 const catchError = require('../Errors/catch')
 const helper = require('./helperFunc')
 const AppError = require('../Errors/classError')
-
+const Email = require('./email')
 
 exports.aboutPage = (req, res) => res.render('pages/about', helper.pageObject('About Us', req))
 exports.paymentPage = (req, res) => res.render('pages/payment', helper.pageObject('Payment', req))
@@ -22,6 +22,7 @@ exports.homePage = catchError(async (req, res, next) => {
     success: req.flash('success'),
     toast: req.flash('toast'),
   })
+
 })
 
 exports.shopPage = catchError(async (req, res, next) => {
@@ -48,12 +49,6 @@ exports.singleProd = catchError(async (req, res, next) => {
     toast: req.flash('toast'),
   });
 })
-
-
-
-
-
-
 
 exports.userData = catchError(async (req, res, next) => {
   const { user, time } = await helper.testJwtToken(req, res, next)
@@ -85,7 +80,7 @@ exports.upload = helper.upload.single('userImg')
 exports.resizeImg = catchError(async (req, res, next) => {
   if (!req.file) return next()
   req.file.filename = `user-img-${req.user.id}-${Date.now()}.jpeg`
-  helper.sharpImg(req)
+  await helper.sharpImg(req)
   next()
 })
 

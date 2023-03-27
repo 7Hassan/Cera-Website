@@ -583,9 +583,10 @@ function updateUserData() {
     event.preventDefault()
 
     const errors = []
-    const firstName = document.getElementById('firstName');
-    const lastName = document.getElementById('lastName');
+    const firstName = document.getElementById('firstName')
+    const lastName = document.getElementById('lastName')
     const email = document.getElementById('email')
+    const userImg = document.getElementById('image-input')
 
     errors.push(customizeInput(firstName))
     errors.push(customizeInput(lastName))
@@ -598,8 +599,12 @@ function updateUserData() {
       errors.push(checker)
     }
     if (errors.findIndex(err => err != true) == -1) {
-      const data = { firstName: firstName.value, lastName: lastName.value, email: email.value }
-      postData(button, data, '/me/updateUser')
+      const form = new FormData()
+      form.append('firstName', firstName.value)
+      form.append('lastName', lastName.value)
+      form.append('email', email.value)
+      form.append('userImg', userImg.files[0])
+      postData(button, form, '/me/updateUser')
     }
   })
 }

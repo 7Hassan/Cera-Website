@@ -3,7 +3,7 @@ const Cart = require('../models/cart')
 const jwt = require('jsonwebtoken')
 const base64url = require('base64url')
 const { promisify } = require('util')
-const sendEmail = require('./email')
+const Email = require('./email')
 const axios = require('axios')
 const crypto = require('crypto')
 const catchError = require('../Errors/catch')
@@ -52,9 +52,9 @@ exports.testJwtToken = async (req, res, next) => {
 
 exports.sendSocket = (data) => wss.clients.forEach((client) => (client.readyState === WebSocket.OPEN) ? client.send(data) : 0)
 
-exports.senderEmail = (options, next) => {
+exports.senderEmail = (user, next) => {
   try {
-    sendEmail(options)
+    new Email(user, url).welcome()
   } catch (err) {
     next(new AppError('Error in sending an Email. Try again later', 500))
   }
@@ -77,6 +77,7 @@ const multerFilter = (req, file, cb) => {
   else cb(new AppError('Please upload only images', 400), false)
 }
 exports.upload = multer({ storage: multerStorage, fileFilter: multerFilter })
+
 exports.sharpImg = (req) => sharp(req.file.buffer)
   .resize(500, 500) // size
   .toFormat('jpeg') // to .jpeg

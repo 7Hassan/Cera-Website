@@ -62,3 +62,9 @@ function moreInformation(event) {
   document.querySelector('.info-verify ').classList.toggle('hidden')
   event.preventDefault()
 }
+
+function showImg(ele) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => document.querySelector('.form__user-photo').src = reader.result)
+  reader.readAsDataURL(ele.files[0]);
+}

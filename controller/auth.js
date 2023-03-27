@@ -7,6 +7,7 @@ const axios = require('axios')
 const crypto = require('crypto')
 const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
+const Email = require('./email')
 const validator = require('validator');
 const helper = require('./helperFunc')
 
@@ -70,15 +71,8 @@ exports.changEmailVerify = catchError(async (req, res, next) => {
   user.email = email
   const token = await user.createToken('email')
   await user.save()
-  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/${token}`
-  const options = {
-    url: url,
-    email: user.email,
-    name: user.firstName,
-    subject: 'Verify your email address',
-    about: 'email'
-  }
-  await helper.senderEmail(options, next)
+  const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
+  await new Email(user, url).verify()
   res.status(200).json({ redirect: '/auth/signup/verify' })
 })
 
@@ -162,19 +156,10 @@ exports.signUp = catchError(async (req, res, next) => {
   await user.createCart(Cart)
   const token = await user.createToken('email')
   await user.save()
-
-  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/verify/${token}`
-  const options = {
-    url: url,
-    email: user.email,
-    name: user.firstName,
-    subject: 'Verify your email address',
-    about: 'email'
-  }
-  await helper.senderEmail(options, next)
+  const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
+  await new Email(user, url).verify()
   const jwtToken = await helper.createJwtToken(user._id)
   res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/auth/signup/verify' })
-
 })
 
 exports.verify = async (req, res, next) => {
@@ -188,6 +173,8 @@ exports.verify = async (req, res, next) => {
   req.flash('success', 'verification Email')
   res.status(200).redirect('/')
   helper.sendSocket('emailConfirmed')
+  const url = `${req.protocol}://${req.get('host')}`
+  await new Email(req.user, url).welcome()
 }
 
 

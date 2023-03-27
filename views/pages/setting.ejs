@@ -99,7 +99,6 @@
               <input autocomplete id="lastName" class="form__input" type="text" value=<%=user.lastName %>
               oninput="customizeInput(this)" onblur="customizeInput(this)">
             </div>
-
             <div class="form__group ma-bt-md checkerEmail">
               <span class="errors"></span>
               <span class="loading"></span>
@@ -109,7 +108,8 @@
             </div>
             <div class="form__group form__photo-upload">
               <img class="form__user-photo" src=/imgs/users/<%=user.img %> alt="User photo">
-              <a class="btn-text" href="#">Choose new photo</a>
+              <input type="file" accept="image/*" class="form__upload" id="image-input" name="userImg" onchange="showImg(this)">
+              <label for="image-input"> Choose Photo</label>
             </div>
             <div class="form__group right">
               <button class="btn btn--small btn--green">Save settings</button>
@@ -148,6 +148,10 @@
         <script>
           updateUserData()
           updatePassword()
+          
+
+          
+
         </script>
   </body>
 
