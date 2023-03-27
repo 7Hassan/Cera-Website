@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Welcome</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('../partials/styleEmail.ejs') -%>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <td>
+        <img class="head-img" src="http://drive.google.com/uc?export=view&id=1Qe3gvR5cMvkennNxZm2bxs0e9oazCgzQ"
+          alt="photo" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h1>Welcome <%=name %>
+        </h1>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>We would like to extend a warm welcome to you and As a new member of our community, you now have access to
+          exclusive benefits and you can get all Products you want.</p>
+        <a href=<%=url %> class="button">Home</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="team">Cera Team</span>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
