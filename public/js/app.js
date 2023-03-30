@@ -20,13 +20,21 @@ let containerDivCart = document.querySelector('.container-cart');
 
 
 flashMessage()
-
+checkCart()
 if (navA.length !== 0) {
   addActiveBar()
-  // getLocalStroageData();
-  // totalPrice(document.querySelectorAll(".total"));
 }
-
+function checkCart() {
+  const element = document.querySelector('.text-cart')
+  if (!element) return 0
+  if (cartIcon.dataset.content == '0') {
+    element.textContent = 'add products to cart';
+    document.getElementById('buy-button').classList.remove('show');
+  } else {
+    element.textContent = '';
+    document.getElementById('buy-button').classList.add('show');
+  }
+}
 
 // add and remove active class to navbar elements
 function addActiveBar() {
@@ -59,37 +67,6 @@ function setLocalStroageData() {
 
 
 
-// set all produces in shop page
-// function setAllProducts(products) {
-//   let holder = document.querySelector(".holder-cont");
-//   let counter = 0;
-//   let countContainers = parseInt(products.length / 8);
-
-//   for (let i = 0; i < countContainers; i++) {
-//     holder.innerHTML += createSecProducts();
-//     setProductBox(holder.children[i].children[1], products, counter, counter + 8);
-//     counter += 8;
-//   }
-//   if (products.length % 8 != 0) {
-//     if (products.length % 8 > 4) {
-//       holder.innerHTML += createSecProducts();
-//       setProductBox(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
-
-//     } else {
-//       holder.innerHTML += createEndSecProducts();
-//       setProductBox(holder.children[countContainers].children[1], products, counter, counter + products.length % 8);
-
-//     }
-//   }
-
-// }
-
-// Function to set products boxes
-// async function setProductBox(element, products, min, max) {
-//   for (let i = min; i < max; i++) {
-//     element.innerHTML += createProdutBox(products, i);
-//   }
-// }
 
 
 
@@ -99,34 +76,10 @@ function setLocalStroageData() {
 
 
 
-// push data in carteData and local stroage
-function addProductToCart(id, img, price) {
-  document.getElementById('cart-shop').addEventListener('click', () => {
-
-    let check = carteData.filter((prod) => prod.imgUrl == img.src);
-    if (check == 0) {
-      carteData.push({
-        id: id,
-        imgUrl: img.src,
-        price: price.textContent,
-        count: document.getElementById('count-product').value,
-      });
-      setLocalStroageData();
-      cartIcon.dataset.content = carteData.length;
-      let positionDive = setDivCarte(
-        img.src,
-        price.textContent,
-        carteData[carteData.length - 1].count
-      );
-      totalPrice(document.querySelectorAll('.total'));
-
-      movingImg(positionDive)
-    }
-  });
 
 
 
-}
+
 
 // function to calculate total price
 function totalPrice(elements) {
@@ -145,90 +98,32 @@ function totalPrice(elements) {
 }
 
 
-// Create box for product
-// function createProdutBox(products, i) {
-//   let stars = "";
-//   for (let j = 0; j < products[i].stars; j++) {
-//     stars += '<i class="fa-solid fa-star"></i>';
-//   }
-//   if (products[i].stoked == true) {
-//     return `
-//     <div class="product-box" onclick='window.location.pathname= "/shop/${products[i]._id}"'>
-//     <img src="${products[i].imgUrl}" alt="product image">
-//       <div class="details"><span>Cera</span>
-//         <h5>Cartoon Astronaut ${products[i].name}</h5>
-//         <div class="stars">
-//         ${stars}
-//         </div>
-//         <h4>$${products[i].price}</h4>
-//       </div>
-//       <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-//     </div>
-// `
-//   } else {
-//     return `
-//     <div class="product-box" style="opacity:.5; pointer-events: none;" >
-//     <img src="${products[i].imgUrl}" alt="product image">
-//       <div style="color:red; font-weight:600;">It will be soon</div>
-//       <div class="details"><span>Cera</span>
-//         <h5>Cartoon Astronaut ${products[i].name}</h5>
-//         <div class="stars">
-//         ${stars}
-//         </div>
-//         <h4>$${products[i].price}</h4>
-//       </div>
-//       <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-//     </div>
-// `
-//   }
-
-// }
 
 
 
 
 
 
-function createDivCarte(img, price, countInput) {
-  return `
-    <div>
-      <img src="${img}">
-      <h2>${price}</h2>
-      <h6>x ${countInput}</h6>
-      <div class="plus-minus">
-        <i class="fa-sharp fa-solid fa-plus"></i>
-        <i class="fa-sharp fa-solid fa-minus"></i>
-      </div>
-      <i class="fa-regular fa-circle-xmark"></i>
-    </div>
-  `;
-}
+
+
 
 // Function to set divs products in carte
 function setDivCarte(img, price, count) {
   checkOnCarte();
   containerDivCart.firstElementChild.textContent = '';
-  let productIput = +count;
+  let productInput = +count;
 
-  containerDivCart.innerHTML += createDivCarte(img, price, productIput)
+  containerDivCart.innerHTML += createDivCarte(img, price, productInput)
 
   for (let i = 1; i < containerDivCart.children.length; i++) {
     removeProductCarte(containerDivCart.children[i]);
-    plusMinus(containerDivCart.children[i], productIput);
+    plusMinus(containerDivCart.children[i], productInput);
   }
   return containerDivCart.lastElementChild.getBoundingClientRect()
 
 }
 
-function checkOnCarte() {
-  if (cartIcon.dataset.content == '0') {
-    containerDivCart.firstElementChild.textContent = 'add products to cart';
-    document.getElementById('buy-button').classList.remove('show');
-  } else {
-    containerDivCart.firstElementChild.textContent = '';
-    document.getElementById('buy-button').classList.add('show');
-  }
-}
+
 
 function plusMinus(product, productCount) {
   product.children[3].children[0].addEventListener('click', () => {
@@ -254,20 +149,7 @@ function plusMinus(product, productCount) {
 }
 
 // function to remove div from carte on click
-function removeProductCarte(product) {
-  product.children[4].addEventListener('click', () => {
-    let index = locationInCarteData(product.children[0]);
-    product.remove();
-    --cartIcon.dataset.content;
-    // delete from array of carte shop
-    carteData.splice(index, 1);
-    //update local storage
-    setLocalStroageData();
-    //check on carte div
-    checkOnCarte();
-    totalPrice(document.querySelectorAll('.total'));
-  });
-}
+
 
 // function get location of obj and update in local strorage
 function locationInCarteData(img) {
@@ -542,22 +424,6 @@ function clickListCountries(ele) {
 
 
 
-// function movingImg(positionDive) {
-//   let moveImg = document.getElementById('img-master')
-//   let positionParent = document.querySelector('.product .other-imgs').getBoundingClientRect()
-
-//   moveImg.classList.add('move')
-//   setTimeout(() => {
-//     productsCart.classList.add('show')
-//     moveImg.style.top = `${positionDive.top - positionParent.top}px`
-//     moveImg.style.left = `${positionDive.left - positionParent.left}px`
-//     moveImg.style.height = `${positionDive.height - 4}px`
-//     moveImg.style.width = '70px'
-//   }, 900)
-// }
-
-
-
 function flashMessage() {
   let flashContents = [...document.querySelectorAll('.text-flash')]
   flashContents.forEach((flashContent) => {
@@ -574,69 +440,14 @@ function flashMessage() {
 
 
 
-//TODO: Update user Data
-function updateUserData() {
-  const form = document.querySelector('.form-user-data')
-  const button = document.querySelector('.form-user-data button')
-  const emailAddress = document.getElementById('email').value
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
 
-    const errors = []
-    const firstName = document.getElementById('firstName')
-    const lastName = document.getElementById('lastName')
-    const email = document.getElementById('email')
-    const userImg = document.getElementById('image-input')
 
-    errors.push(customizeInput(firstName))
-    errors.push(customizeInput(lastName))
-    if (!email.value) {
-      email.parentElement.firstElementChild.innerHTML = "required"
-      errors.push('required')
-    }
-    if (email.value !== emailAddress) {
-      await checkEmail(email.value)
-      errors.push(checker)
-    }
-    if (errors.findIndex(err => err != true) == -1) {
-      const form = new FormData()
-      form.append('firstName', firstName.value)
-      form.append('lastName', lastName.value)
-      form.append('email', email.value)
-      form.append('userImg', userImg.files[0])
-      postData(button, form, '/me/updateUser')
-    }
-  })
+function goToElement(id) {
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    element.classList.add('shadow')
+  }
 }
-
-//TODO: Update Password 
-function updatePassword() {
-  const form = document.querySelector('.form-user-settings')
-  const button = document.querySelector('.form-user-settings button')
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-
-    const errors = []
-    const currentPass = document.getElementById('password-current')
-    const newPass = document.getElementById('password')
-    const confirmPass = document.getElementById('password-confirm')
-
-    errors.push(checkUpdatePass(currentPass))
-    errors.push(checkUpdatePass(newPass))
-    errors.push(checkUpdatePass(confirmPass))
-    if (newPass.value !== confirmPass.value) {
-      confirmPass.parentElement.firstElementChild.innerHTML = 'Confirm password isn\'t match'
-      errors.push(false)
-    }
-    if (errors.findIndex(err => err != true) == -1) {
-      const data = { currentPass: currentPass.value, newPass: newPass.value, confirmPass: confirmPass.value }
-      postData(button, data, '/me/updatePass')
-    }
-  })
-}
-
-
-
-
 
 

@@ -1,16 +1,32 @@
 const mongoose = require('mongoose')
+const AppError = require('../Errors/classError')
 
 const cartSchema = new mongoose.Schema({
-  products: [
-    {
+  products: [{
+    product: {
       type: mongoose.Schema.ObjectId,
       ref: 'products'
+    },
+    count: {
+      type: Number,
+      required: [true, 'Count is required'],
+      max: [9, 'The amount is limited '],
+      min: [1, 'The amount isn\'t match ']
+    },
+    size: {
+      type: String,
+      required: [true, 'Size is required'],
+      enum: ['XL', 'L', 'M', 'S'],
     }
-  ]
+  }],
+  //   user: {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'users'
+  //   }
 },
-//? to activate virtuals
+  //? to activate virtuals
   {
-    toJSON: { virtuals: true }, 
+    toJSON: { virtuals: true },
     toObject: { virtuals: true }
   }
 )
@@ -20,6 +36,10 @@ cartSchema.virtual('user', {
   ref: 'users',
   foreignField: 'cart',
   localField: '_id'
+})
+
+cartSchema.pre(/^find/, async function () {
+  this.select("-__v").populate({ path: 'products.product', select: "-__v" })
 })
 
 

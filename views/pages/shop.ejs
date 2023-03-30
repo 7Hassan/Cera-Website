@@ -40,7 +40,7 @@
                               <h4>$<%= products[i][j].price %>
                               </h4>
                             </div>
-                            <div><i class="fa-solid fa-cart-shopping cart" ></i></div>
+                            <div><i class="fa-solid fa-cart-shopping cart"></i></div>
                         </div>
                         <% } else { %>
                           <div class="product-box" style="opacity:.5 !important; pointer-events: none;">
@@ -72,24 +72,28 @@
           </div>
         </div>
         <%- include('../partials/footer.ejs') -%>
-        <%- include('../partials/scripting.ejs') %>
-          <script>
-            observesTop();
-            // showData();
-            async function showData() {
-              products = await getAllData();
-              setAllProducts(products);
-              // setProductBox(document.querySelector(".other-products .container"), products, 4, 8);
-              //on click on product
-              // ProductsOnclick(products);
-              //Add products to shop carte
-              // addProductToCart(
-              //   document.getElementById("main-img"),
-              //   document.getElementById("price-product")
-              // );
-              // totalPrice(document.querySelectorAll(".total"));
-            }
-          </script>
+          <%- include('../partials/scripting.ejs') %>
+            <script>
+              observesTop();
+              // showData();
+              async function showData() {
+                products = await getAllData();
+                setAllProducts(products);
+                // setProductBox(document.querySelector(".other-products .container"), products, 4, 8);
+                //on click on product
+                // ProductsOnclick(products);
+                //Add products to shop carte
+                // addProductToCart(
+                //   document.getElementById("main-img"),
+                //   document.getElementById("price-product")
+                // );
+                // totalPrice(document.querySelectorAll(".total"));
+              }
+
+
+              const eleId = window.location.href.split('?')[1]
+              if (eleId) goToElement(eleId)
+            </script>
   </body>
 
 

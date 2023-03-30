@@ -1,4 +1,5 @@
 const User = require('../models/users')
+const Cart = require('../models/cart')
 const Product = require('../models/products')
 const catchError = require('../Errors/catch')
 const helper = require('./helperFunc')
@@ -48,6 +49,33 @@ exports.singleProd = catchError(async (req, res, next) => {
     success: req.flash('success'),
     toast: req.flash('toast'),
   });
+})
+
+exports.addProduct = catchError(async (req, res, next) => {
+  const productId = req.originalUrl.split('/')[2]
+  const { count, size } = req.body
+  const user = req.user
+  const product = await Product.findById(productId)
+  if (!product) return next(new AppError('Product not found', 401))
+  const cart = await Cart.findById(user.cart._id)
+  if (!cart) return next(new AppError('Error, try again', 401))
+  const index = cart.products.findIndex((obj) => obj.product.id == productId)
+  if (index !== -1) return next(new AppError('Product is in a Cart', 400))
+  cart.products.push({ product: product._id, count: count, size: size })
+  await cart.save()
+  res.status(200).send(product)
+})
+
+exports.removeProduct = catchError(async (req, res, next) => {
+  const { id } = req.body
+  const user = req.user
+  const cart = await Cart.findById(user.cart._id)
+  if (!cart) return next(new AppError('Error, try again', 401))
+  const index = cart.products.findIndex((obj) => obj.product.id == id)
+  if (index == -1) return next(new AppError('Product not found', 401))
+  cart.products.splice(index, 1)
+  await cart.save()
+  res.status(200).send('success')
 })
 
 exports.userData = catchError(async (req, res, next) => {

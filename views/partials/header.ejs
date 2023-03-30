@@ -7,7 +7,7 @@
       <div class="text">
         <% if(user.emailConfig){%>
           <div class="cart-icon">
-            <i id="carte" data-content="0" class="fa-solid fa-cart-shopping shop-icon"
+            <i id="carte" data-content=<%=user.cart.products.length %> class="fa-solid fa-cart-shopping shop-icon"
               onclick="cartIconClicker(this)"></i>
           </div>
           <% } else{%>
@@ -34,7 +34,24 @@
           </div>
 
           <div class="container-cart">
-            <h6 style="text-align: center">add products to cart</h6>
+            <h6 style="text-align: center" class="text-cart">
+              Add products to Cart
+            </h6>
+            <% for(let i=0;i<user.cart.products.length;i++){%>
+              <div id='<%=user.cart.products[i].product.id%>'>
+                <img src='/<%=user.cart.products[i].product.imgSrc %>'>
+                <h2>
+                  <%=user.cart.products[i].product.price %>
+                </h2>
+                <h6>x <%=user.cart.products[i].count %>
+                </h6>
+                <div class="plus-minus">
+                  <i class="fa-sharp fa-solid fa-plus"></i>
+                  <i class="fa-sharp fa-solid fa-minus"></i>
+                </div>
+                <i class="fa-regular fa-circle-xmark" onclick='removeProduct(this.parentElement)'></i>
+              </div>
+              <% } %>
           </div>
           <div>
             <a href="/payment">
@@ -107,6 +124,6 @@
                 </ul>
               </div>
   </div>
-  <div class="over-layout"></div>
+  <div class="over-layout" onclick="hideNav()"></div>
 
 </div>

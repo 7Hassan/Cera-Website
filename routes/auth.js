@@ -7,7 +7,7 @@ const func = require('../controller/auth')
 Router.route('/signup/check').patch(func.checkEmail)
 // logged
 Router.route('/logout').post(func.logOut)
-Router.route('/signup/verify').get(func.isEmailConfig, func.verifyPage).post(func.isEmailConfig, func.changEmailVerify)
+Router.route('/signup/verify').get(func.isEmailConfig, func.verifyPage).post(func.isEmailConfig, func.changEmailVerify).patch(func.isEmailConfig, func.resendEmail)
 Router.route('/signup/verify').get(func.isEmailConfig, func.verifyPage)
 Router.route('/signup/verify/:token').get(func.verify)
 

@@ -101,3 +101,64 @@ function updateEmail() {
 
 
 
+
+//TODO: Update user Data
+function updateUserData() {
+  const form = document.querySelector('.form-user-data')
+  const button = document.querySelector('.form-user-data button')
+  const emailAddress = document.getElementById('email').value
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const errors = []
+    const firstName = document.getElementById('firstName')
+    const lastName = document.getElementById('lastName')
+    const email = document.getElementById('email')
+    const userImg = document.getElementById('image-input')
+
+    errors.push(customizeInput(firstName))
+    errors.push(customizeInput(lastName))
+    if (!email.value) {
+      email.parentElement.firstElementChild.innerHTML = "required"
+      errors.push('required')
+    }
+    if (email.value !== emailAddress) {
+      await checkEmail(email.value)
+      errors.push(checker)
+    }
+    if (errors.findIndex(err => err != true) == -1) {
+      const form = new FormData()
+      form.append('firstName', firstName.value)
+      form.append('lastName', lastName.value)
+      form.append('email', email.value)
+      form.append('userImg', userImg.files[0])
+      postData(button, form, '/me/updateUser')
+    }
+  })
+}
+
+//TODO: Update Password 
+function updatePassword() {
+  const form = document.querySelector('.form-user-settings')
+  const button = document.querySelector('.form-user-settings button')
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const errors = []
+    const currentPass = document.getElementById('password-current')
+    const newPass = document.getElementById('password')
+    const confirmPass = document.getElementById('password-confirm')
+
+    errors.push(checkUpdatePass(currentPass))
+    errors.push(checkUpdatePass(newPass))
+    errors.push(checkUpdatePass(confirmPass))
+    if (newPass.value !== confirmPass.value) {
+      confirmPass.parentElement.firstElementChild.innerHTML = 'Confirm password isn\'t match'
+      errors.push(false)
+    }
+    if (errors.findIndex(err => err != true) == -1) {
+      const data = { currentPass: currentPass.value, newPass: newPass.value, confirmPass: confirmPass.value }
+      postData(button, data, '/me/updatePass')
+    }
+  })
+}

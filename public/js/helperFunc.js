@@ -9,6 +9,13 @@ async function get(url) {
     errorHandling(err)
   }
 }
+async function deleteFun(url, data) {
+  try {
+    return await axios.delete(url, { data })
+  } catch (err) {
+    errorHandling(err)
+  }
+}
 
 async function post(url, data) {
   try {
@@ -89,8 +96,34 @@ async function postData(button, data, url) {
   window.location.href = path
 }
 
+function productsToCart(product, count) {
+  cartIcon.dataset.content++
+  checkCart()
+  containerDivCart.innerHTML += createDivCarte(product, count)
+}
 
 
+
+
+
+
+
+
+
+function createDivCarte(product, count) {
+  return `
+    <div id='${product._id}'>
+      <img src="/${product.imgSrc}">
+      <h2>${product.price}</h2>
+      <h6>x ${count}</h6>
+      <div class="plus-minus">
+        <i class="fa-sharp fa-solid fa-plus"></i>
+        <i class="fa-sharp fa-solid fa-minus"></i>
+      </div>
+      <i class="fa-regular fa-circle-xmark" onclick='removeProduct(this.parentElement)'></i>
+    </div>
+  `
+}
 
 
 

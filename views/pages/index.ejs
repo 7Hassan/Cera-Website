@@ -78,24 +78,23 @@
           <p>Summer Collection New Modern design</p>
           <div class="container boxs">
             <% for (let i=0; i < newProd.length; i++) {%>
-              <a href="/shop#<%= newProd[i]._id%> " style="display: block;">
-                <div class="product-box">
-                  <img src="<%=newProd[i].imgSrc %>" alt="product image">
-                  <div class="details"><span>Cera</span>
-                    <h5>Cartoon Astronaut <%= newProd[i].name %>
-                    </h5>
-                    <div class="stars">
-                      <% for (let k=0; k < newProd[i].stars; k++) {%>
-                        <i class="fa-solid fa-star"></i>
-                        <% } %>
-                    </div>
-
-                    <h4>$<%= newProd[i].price %>
-                    </h4>
+              <div class="product-box"
+                onclick="window.location.href=`${window.location.origin}/shop?<%= newProd[i]._id%>`">
+                <img src="<%=newProd[i].imgSrc %>" alt="product image">
+                <div class="details"><span>Cera</span>
+                  <h5>Cartoon Astronaut <%= newProd[i].name %>
+                  </h5>
+                  <div class="stars">
+                    <% for (let k=0; k < newProd[i].stars; k++) {%>
+                      <i class="fa-solid fa-star"></i>
+                      <% } %>
                   </div>
-                  <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+
+                  <h4>$<%= newProd[i].price %>
+                  </h4>
                 </div>
-              </a>
+                <div><i class="fa-solid fa-cart-shopping cart"></i></div>
+              </div>
               <% }%>
 
           </div>

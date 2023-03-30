@@ -8,6 +8,9 @@
   font-family: "Spartan", sans-serif;
 }
 
+.shadow {
+  box-shadow: 20px 10px 52px 68px rgb(0 0 0 / 9%) !important;
+}
 
 .product-show-top {
   animation: slideTop .5s ease-in-out both;
@@ -372,6 +375,17 @@ body.hidden {
   height: 25px;
   border-radius: 50%;
   cursor: pointer;
+  transition: .3s;
+}
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.fa-user.active {
+  width: 30px;
+  height: 30px;
 }
 
 .user-div .user-img img {
@@ -474,7 +488,7 @@ body.hidden {
   border-radius: 100vw;
 }
 
-.container-cart div {
+.container-cart>div {
   width: 100%;
   height: fit-content;
   display: flex;
@@ -1024,10 +1038,18 @@ footer .copyright {
   gap: 50px;
 }
 
-.product .container div,
+.product .container div:not(.loading),
 .main-blog .container div {
   min-width: 220px;
   max-width: 400px;
+}
+
+.product .container div button {
+  position: relative;
+}
+
+.product .container div .loading {
+  left: 8px;
 }
 
 .product .container .imgs {
@@ -1097,18 +1119,20 @@ footer .copyright {
 
 .product .text select {
   display: block;
-  padding: 5px 10px;
-  margin-bottom: 10px;
+  padding: 5px;
   outline: none;
+  border: 2px solid #44ba32;
+  border-radius: 10px;
 }
 
 .product .text input {
-  width: 50px;
-  height: 47px;
-  padding-left: 10px;
+  width: 30px;
+  height: 30px;
   font-size: 16px;
-  margin-right: 10px;
   outline: none;
+  padding-left: 5px;
+  border: 2px solid #44ba32;
+  border-radius: 10px;
 }
 
 .product .text button {
@@ -2887,4 +2911,22 @@ button.clicked {
 
 button.clicked:hover {
   background-color: #14a800 !important;
+}
+
+.size-count {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  position: relative;
+
+}
+
+.size-count .errors {
+  font-size: 15px;
+}
+
+.verify-buttons {
+  flex-direction: row !important;
+  gap: 10px !important;
 }

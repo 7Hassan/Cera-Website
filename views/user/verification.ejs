@@ -200,8 +200,12 @@
             </div>
 
           </div>
-          <div>
-            <button class="normal">Resend Verification Email</button>
+          <div class="verify-buttons">
+            <a target="_blank" href="https://mail.google.com/mail/u/<%=user.email  %>/#search/from:cera.shp@gmail.com">
+              <button class="normal">Go To Gmail</button>
+            </a>
+
+            <button class="normal" onclick="resendEmail('/auth/signup/verify',this)"> Resend Email</button>
           </div>
         </div>
 

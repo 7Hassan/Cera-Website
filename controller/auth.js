@@ -76,6 +76,16 @@ exports.changEmailVerify = catchError(async (req, res, next) => {
   res.status(200).json({ redirect: '/auth/signup/verify' })
 })
 
+exports.resendEmail = catchError(async (req, res, next) => {
+  const user = req.user
+  const token = await user.createToken('email')
+  await user.save()
+  const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
+  await new Email(req.user, url).verify()
+  res.status(200).send('Email send')
+})
+
+
 
 
 
