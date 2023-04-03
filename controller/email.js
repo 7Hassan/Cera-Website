@@ -1,44 +1,5 @@
 const nodemailer = require('nodemailer')
 const ejs = require('ejs')
-const htmlToText = require('html-to-text')
-
-
-
-
-function passwordHtml(options) {
-  return `<div>
-  <h3>Reset your password to can log in</h3>
-  <h4>Hi, ${options.name}</h4>
-<p>
-  Thanks for your interest in joining Cera!
-  <br>
-  To can log in, we need you to reset your password.
-</p>
-<br>
-<a href=${options.url}>
-<button
-   style="background-color: #14a800;
-          border-color: transparent;
-          color: white;
-          border-radius: 20px;
-          width: 200px;
-          padding-bottom: 10px;
-          padding-top: 10px;
-          font-size: 13px;
-          margin-top: 20px;
-          font-weight: 600;">
-  Reset password</button></a>
-<br><br><br>
-<p>Thanks for your time,<br>The Cera Team</p>
-<p style="color:red; font-size:10px"> This message is available for 30 minutes only</p></div>`
-}
-
-
-
-
-
-
-
 module.exports = class Email {
   constructor(user, url) {
     this.name = user.firstName,
@@ -76,7 +37,9 @@ module.exports = class Email {
     //3) send email
     await this.Transport().sendMail(options)
   }
-  async welcome() { await this.send('welcome', 'Welcome to Cera Shop') }
+  async welcome() {
+    await this.send('welcome', 'Welcome to Cera Shop')
+  }
   async verify() { await this.send('verify', 'Verify Email Address') }
-  // async verify() {await this.send('verify', 'Verify Email Address')}
+  async resetPass() { await this.send('resetPass', 'Reset a password') }
 }

@@ -106,3 +106,16 @@ async function resendEmail(url, button) {
   removeLoadingForm(button)
   console.log('🚀 ~ res:', res)
 }
+
+//Hide password
+function hidePassword(ele) {
+  document.querySelector('.password-input').type = 'password';
+  document.querySelector('.fa-eye-slash').style.display = 'inline';
+  ele.style.display = 'none';
+}
+//see password
+function showPassword(ele) {
+  document.querySelector('.password-input').type = 'text';
+  document.querySelector('.fa-eye').style.display = 'inline';
+  ele.style.display = 'none';
+}

@@ -13,6 +13,7 @@ const { countries, zones } = require("moment-timezone/data/meta/latest.json");
 const WebSocket = require('ws');
 const multer = require('multer')
 const sharp = require('sharp')
+const cron = require('node-cron')
 
 
 exports.cookieOptions = {
@@ -90,3 +91,18 @@ exports.sliceDataShop = (data, length) => {
   for (let i = 0; i < data.length; i += length) products.push(data.slice(i, length + i))
   return products
 }
+
+exports.resetEmailCounter = async (user) => {
+  setTimeout(async () => {
+    user.emailCount = process.env.MAX_EMAIL_COUNT
+    await user.save()
+    return user
+  })
+
+}
+
+exports.resetAllEmailCounter = () => cron.schedule('0 0 * * *', async () => {//? run every day
+  try { await User.updateMany({ emailCount: 0 }, { $set: { emailCount: process.env.MAX_EMAIL_COUNT } }) }
+  catch (err) { console.log(err) }
+})
+

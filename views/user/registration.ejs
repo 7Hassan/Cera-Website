@@ -14,22 +14,12 @@
           </div>
           <div class="log">
             <div class="email-input">
-              <form id="signup-form" >
+              <form id="signup-form">
                 <div class="User-login-email">
                   <span class="errors"></span>
                   <i class="fa-solid fa-user"></i>
                   <input autocomplete="" class="input" type="text" name="email" id="email" placeholder="Email">
                 </div>
-                <div class="User-login-pass">
-                  <span class="errors"></span>
-                  <div>
-                    <i class="fa-sharp fa-solid fa-eye-slash"></i>
-                    <i class="fa-solid fa-eye" style="display:none ;"></i>
-                  </div>
-                  <input autocomplete="" class="input password-input" type="password" name="password" id="password"
-                    placeholder="Password">
-                </div>
-                <div class="forget-password"><a href="/auth/forgetPassword"> Forget password </a></div>
                 <button class="normal">
                   Continue with Email
                 </button>
@@ -50,6 +40,7 @@
               <a href="/auth/signup"><button>Sign Up</button></a>
             </div>
           </div>
+          
         </div>
 
       </div>
@@ -57,8 +48,8 @@
       <%- include('../partials/scripting.ejs') %>
   </body>
   <script>
-    passwordFunction()
     logIn()
+    //passwordFunction()
 
   </script>
 

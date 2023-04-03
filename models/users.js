@@ -31,6 +31,12 @@ const userSchema = new mongoose.Schema({
   },
   emailToken: String,
   expEmailToken: Date,
+  emailCount: {
+    type: Number,
+    max: process.env.MAX_EMAIL_COUNT,
+    min: [0, 'Email Limited, try again after 10 hours'],
+    default: process.env.MAX_EMAIL_COUNT
+  },
   password: {
     type: String,
     required: [true, 'Password is required'],
@@ -93,7 +99,6 @@ userSchema.methods.createToken = function (validation) {
     this.emailToken = crypto.createHash('sha256').update(token).digest('hex') //? Hash a token & save
     this.expEmailToken = Date.now() + 24 * 60 * 60 * 1000 //? date now + 24 hours
   }
-
   return token
 }
 

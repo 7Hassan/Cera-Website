@@ -83,7 +83,7 @@ function checkLogIn(ele) {
   if (ele.id == 'email' && !validationEmail(ele.value)) return error.innerHTML = "Enter a valid email"
   if (ele.id == 'password' && ele.value.length < 8) return error.innerHTML = "incorrect password"
   error.innerHTML = ""
-  return true
+  return false
 }
 
 async function postData(button, data, url) {
@@ -124,7 +124,36 @@ function createDivCarte(product, count) {
     </div>
   `
 }
-
+function LogInPassword(name) {
+  return ` <div class="main-log">
+    <div div class="head" >Welcome <p> ${name} </p></div>
+    <div class="log">
+      <div class="email-input">
+        <form id="signup-form">
+          <div class="User-login-pass">
+            <span class="errors"></span>
+            <div>
+              <i class="fa-sharp fa-solid fa-eye-slash" onclick='showPassword(this)'></i>
+              <i class="fa-solid fa-eye" style="display:none;" onclick='hidePassword(this)'></i>
+            </div>
+            <input autocomplete="" class="input password-input" type="password" name="password" id="password"
+              placeholder="Password">
+          </div>
+          <div class="forget-password">
+          <div> 
+          <input class="input" type="checkbox" id="checkboxInput" checked onchange="customizeInput(this)" value="checked">
+          Keep me logged 
+          </div>
+          <a href="/auth/forgetPassword"> Forget password? </a>
+          </div>
+          <button class="normal">
+            Log In
+          </button>
+        </form>
+      </div>
+    </div>
+  </div > `
+}
 
 
 

@@ -1736,13 +1736,15 @@ footer .contact {
     font-size: 8px;
   }
 
-  /* Sin-up page */
-  .layout .img-log img:not(.sin-up .img-log img) {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-left: 25px;
-  }
+
+}
+
+/* Sin-up page */
+.layout .img-log img:not(.sin-up .img-log img) {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: 25px;
 }
 
 #nav-bar .user {
@@ -2204,23 +2206,38 @@ footer p a:hover {
 }
 
 .main-log .email-input form .forget-password {
-  position: absolute;
-  right: 5px;
-  bottom: 40px;
+  margin: 0 !important;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 20px;
+
+}
+
+.main-log .email-input form .forget-password div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .main-log .email-input form .forget-password a {
-  color: red;
-  font-size: 10px;
-  font-weight: 500;
-  display: block;
-  text-decoration: underline;
+  color: #14a800;
+  position: absolute;
+  right: 0;
 }
+
 
 .main-log .User-login-email i,
 .main-log .User-login-pass div {
   position: absolute;
   left: 7px;
+}
+
+.main-log .User-login-email {
+  margin: 0px !important;
+}
+
+.main-log .User-login-email .fa-user {
+  top: 10px !important;
 }
 
 .main-log .email-input form div input {

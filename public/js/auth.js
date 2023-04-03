@@ -1,3 +1,4 @@
+
 // check email
 let checker = false
 
@@ -10,7 +11,7 @@ async function checkEmail(email) {
   loadingEle.classList.add('show')
   const res = await patch('/auth/signup/check', { email })
   loadingEle.classList.remove('show')
-  if (!res.data) error.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.'
+  if (res.data) error.innerHTML = 'This email is already in use. Want to <a href="/auth/login">Log In</a>?.'
   else error.innerHTML = ''
   checker = res.data
 }
@@ -58,17 +59,31 @@ function logIn() {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const errors = []
     const email = document.getElementById('email')
+    const error = document.querySelector('.User-login-email .errors')
+
+    if (checkLogIn(email)) return 0
+    loadingForm(button)
+    const res = await patch('/auth/signup/check', { email: email.value })
+    removeLoadingForm(button)
+    if (!res.data) return error.innerHTML = "Email Incorrect"
+    document.querySelector('.main-log').remove()
+    passwordLogIn(email.value, res.data)
+  })
+}
+
+function passwordLogIn(email, name) {
+  document.querySelector('.layout').innerHTML += LogInPassword(name)
+  const form = document.getElementById('signup-form')
+  const button = document.querySelector('#signup-form button')
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
     const password = document.getElementById('password')
+    if (checkLogIn(password)) return 0
 
-    errors.push(checkLogIn(email))
-    errors.push(checkLogIn(password))
-
-    if (errors.findIndex(err => err != true) == -1) {
-      const data = { email: email.value, password: password.value }
-      postData(button, data, '/auth/login')
-    }
+    const data = { email, password: password.value }
+    postData(button, data, '/auth/login')
   })
 }
 
@@ -89,7 +104,6 @@ function updateEmail() {
       errors.push('required')
     }
     errors.push(checker)
-    console.log('🚀 ~ errors:', errors)
 
     if (errors.findIndex(err => err != true) == -1) {
       const data = { email: email.value }

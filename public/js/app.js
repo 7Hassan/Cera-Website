@@ -347,24 +347,10 @@ function getDataProduct(product) {
 //         `;
 // }
 /* see and hide passord function */
-function passwordFunction() {
-  let passInput = document.querySelector('.password-input');
-  let seeEye = document.querySelector('.fa-eye');
-  let hideEye = document.querySelector('.fa-eye-slash');
 
-  //Hide password
-  seeEye.addEventListener('click', () => {
-    passInput.type = 'password';
-    seeEye.style.display = 'none';
-    hideEye.style.display = 'inline';
-  });
-  //see password
-  hideEye.addEventListener('click', () => {
-    passInput.type = 'text';
-    seeEye.style.display = 'inline';
-    hideEye.style.display = 'none';
-  });
-}
+
+
+
 
 function observesTop() {
   let divs = document.querySelectorAll('.product-box');

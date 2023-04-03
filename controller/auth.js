@@ -12,6 +12,8 @@ const validator = require('validator');
 const helper = require('./helperFunc')
 
 
+helper.resetAllEmailCounter()
+
 exports.signPage = catchError(async (req, res, next) => {
   res.render('user/createAccount', {
     country: helper.getCountry(),
@@ -72,13 +74,15 @@ exports.changEmailVerify = catchError(async (req, res, next) => {
   const token = await user.createToken('email')
   await user.save()
   const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
-  await new Email(user, url).verify()
+  new Email(user, url).verify()
   res.status(200).json({ redirect: '/auth/signup/verify' })
 })
 
-exports.resendEmail = catchError(async (req, res, next) => {
+exports.resendEmailVerify = catchError(async (req, res, next) => {
   const user = req.user
+  if (user.emailCount <= 0) return next(new AppError('Email Limited, try again after 24 hours.', 401))
   const token = await user.createToken('email')
+  user.emailCount = user.emailCount - 1
   await user.save()
   const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
   await new Email(req.user, url).verify()
@@ -100,8 +104,8 @@ exports.resendEmail = catchError(async (req, res, next) => {
 exports.checkEmail = catchError(async (req, res, next) => {
   const email = req.body.email
   const user = await User.findOne({ email })
-  if (user) res.status(200).send(false)
-  else res.status(201).send(true)
+  if (user) res.status(200).send(user.firstName)
+  else res.status(201).send(false)
 })
 
 
@@ -184,7 +188,7 @@ exports.verify = async (req, res, next) => {
   res.status(200).redirect('/')
   helper.sendSocket('emailConfirmed')
   const url = `${req.protocol}://${req.get('host')}`
-  await new Email(req.user, url).welcome()
+  new Email(req.user, url).welcome()
 }
 
 
@@ -227,18 +231,12 @@ exports.forgetPass = catchError(async (req, res, next) => {
 
   //? 2) generate a random token
   const token = user.createToken('password')
+  // if (!token) return next(new AppError('Email Limited, try again after 10 hours.', 401))
+  await user.save()
 
   //? 3) send a email
-  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}/${token}`
-  const options = {
-    url: url,
-    email: user.email,
-    name: user.firstName,
-    subject: 'Reset your password',
-    about: 'password'
-  }
-  await helper.senderEmail(options, next)
-  await user.save()
+  const url = `${req.protocol}://${req.get('host')}/auth/forgetpassword/${token}`
+  new Email(user, url).resetPass()
   res.status(201).send('Email sent')
 })
 
