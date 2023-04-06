@@ -37,19 +37,7 @@ function hideNav() {
   nav.classList.remove('click')
 }
 
-async function logOut(ele) {
-  loadingForm(ele)
-  try {
-    const res = await axios.post('/auth/logout', { data: 'logOut' })
-    const path = res.data.redirect
-    if (path) return window.location.href = path
-    else window.alert('try again later')
-  } catch (err) {
-    console.log(err)
-
-  }
-  removeLoadingForm(ele)
-}
+function logOut(ele) { postData(ele, { data: 'logOut' }, '/') }
 
 function changeEmailInput(event) {
   [...document.querySelectorAll('.change-email i')].forEach(ele => ele.classList.toggle('hidden-slide'));
@@ -88,23 +76,22 @@ async function addProductToCart(ele) {
   if (res) productsToCart(res.data, data.count)
 }
 
-async function removeProduct(product) {
-  loadingForm(product)
-  product.lastElementChild.remove()
-  await deleteFun(window.location.pathname, { id: product.id })
-  removeLoadingForm(product)
-  product.remove();
+async function removeProduct(productEle) {
+  loadingForm(productEle)
+  productEle.lastElementChild.remove()
+  await deleteFun(`/shop/${productEle.id}`, { id: productEle.id })
+  removeLoadingForm(productEle)
+  productEle.remove();
   --cartIcon.dataset.content;
   checkCart();
   totalPrice(document.querySelectorAll('.total'));
 }
 
 async function resendEmail(url, button) {
-  const data = { send: 'Email' }
   loadingForm(button)
-  const res = await patch(url, data)
+  const res = await patch(url, { send: 'Email' })
   removeLoadingForm(button)
-  console.log('🚀 ~ res:', res)
+  if (res) flashMessage(res.data, 'success')
 }
 
 //Hide password
@@ -118,4 +105,32 @@ function showPassword(ele) {
   document.querySelector('.password-input').type = 'text';
   document.querySelector('.fa-eye').style.display = 'inline';
   ele.style.display = 'none';
+}
+
+function resetPassLogIn(email) {
+  document.querySelector('.main-log').remove()
+  document.querySelector('.layout').innerHTML += forgetPassDiv(email)
+  const button = document.querySelector('.email-pass button.send-email')
+  button.addEventListener('click', () => sendPassEmail(button, email))
+}
+
+async function sendPassEmail(button, email) {
+  loadingForm(button)
+  const res = await patch('/auth/login', { email })
+  removeLoadingForm(button)
+  if (res) flashMessage(res.data, 'success')
+}
+
+function quickAddLove(icon) {
+  icon.classList.contains('fa-solid') ? icon.classList.replace('fa-solid', 'fa-regular') : icon.classList.replace('fa-regular', 'fa-solid')
+
+}
+
+async function quickRemoveProduct(id, ele) {
+  const productEle = document.getElementById(id)
+  const eleParent = ele.parentElement
+  loadingForm(eleParent)
+  ele.remove()
+  await removeProduct(productEle)
+  eleParent.innerHTML = `<i class="fa-solid fa-cart-plus cart"onclick="quickAddProduct('<%= products[i][j]._id %>')"></i>`
 }

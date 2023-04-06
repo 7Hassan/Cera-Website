@@ -44,7 +44,8 @@
                 <%if (user && user.emailConfig) {%>
                   <button id="cart-shop" class="normal" onclick="addProductToCart(this)">Add To Cart</button>
                   <% }else{ %>
-                    <button id="cart-shop" class="normal" onclick="errorHandling('Please, Log in to get Access')">Add To
+                    <button id="cart-shop" class="normal"
+                      onclick="flashMessage('Please, Log in to get Access','errors')">Add To
                       Cart</button>
                     <% } %>
                       <div class="product-details">

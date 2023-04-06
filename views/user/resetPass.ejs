@@ -1,0 +1,35 @@
+<%- include('../partials/head.ejs') %>
+
+  <body>
+    <%- include('../partials/flashMsg.ejs') -%>
+
+      <div class="layout reset-password">
+        <div class="img-log">
+          <img src="/imgs/logo.png" alt="">
+        </div>
+        <div class="main-log verify-holder">
+          <div class="text-verify">Enter your new Password</div>
+          <div class="email-input">
+            <form id="resetPassword">
+              <div class="update-email ">
+                <div class="User-sinUp-pass">
+                  <span class="errors"></span>
+                  <input autocomplete="" class="input password-input" type="password" name="password" id="newPassword"
+                    placeholder="Password" oninput="customizeInput(this)" onblur="customizeInput(this)">
+                  <div class="icon-eyes">
+                    <i class="fa-sharp fa-solid fa-eye-slash" onclick='showPassword(this)'></i>
+                    <i class="fa-solid fa-eye" style="display:none;" onclick='hidePassword(this)'></i>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button class="normal">Reset My Password</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <%- include('../partials/scripting.ejs') %>
+        <script>resetPassword()</script>
+  </body>
+  </html>

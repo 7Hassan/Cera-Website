@@ -19,7 +19,7 @@ let containerDivCart = document.querySelector('.container-cart');
 
 
 
-flashMessage()
+showFlashMessage()
 checkCart()
 if (navA.length !== 0) {
   addActiveBar()
@@ -410,14 +410,17 @@ function clickListCountries(ele) {
 
 
 
-function flashMessage() {
+function showFlashMessage() {
   let flashContents = [...document.querySelectorAll('.text-flash')]
   flashContents.forEach((flashContent) => {
-    if (flashContent.innerText != "") {
-      flashContent.offsetParent.classList.remove('hidden')
-      setTimeout(() => {
-        if (flashContent.offsetParent.classList.contains('up-mess')) flashContent.offsetParent.classList.add('hidden')
-      }, 4000);
+    const parentFlash = flashContent.offsetParent
+    parentFlash.classList.add('hidden')
+    if (flashContent.innerText) {
+      parentFlash.classList.remove('hidden')
+      if (parentFlash.classList.contains('up-mess')) setTimeout(() => {
+        parentFlash.classList.add('hidden')
+        setTimeout(() => flashContent.innerText = '', 900)
+      }, 4000)
     }
   })
 }
@@ -429,7 +432,7 @@ function flashMessage() {
 
 
 function goToElement(id) {
-  const element = document.getElementById(id)
+  const element = document.getElementById(`box-${id}`)
   if (element) {
     element.scrollIntoView({ behavior: 'smooth', block: 'center' })
     element.classList.add('shadow')

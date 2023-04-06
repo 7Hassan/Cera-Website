@@ -6,17 +6,17 @@ const helper = require('./helperFunc')
 const AppError = require('../Errors/classError')
 const Email = require('./email')
 
-exports.aboutPage = (req, res) => res.render('pages/about', helper.pageObject('About Us', req))
-exports.paymentPage = (req, res) => res.render('pages/payment', helper.pageObject('Payment', req))
-exports.contactPage = (req, res) => res.render('pages/contact', helper.pageObject('Contact Us', req))
-exports.blogPage = (req, res) => res.render('pages/blog', helper.pageObject('Blog', req))
+exports.aboutPage = (req, res) => res.render('pages/about', helper.pageObject('Cera | About', req))
+exports.paymentPage = (req, res) => res.render('pages/payment', helper.pageObject('Cera | Payment', req))
+exports.contactPage = (req, res) => res.render('pages/contact', helper.pageObject('Cera | Contact Us', req))
+exports.blogPage = (req, res) => res.render('pages/blog', helper.pageObject('Cera | Blog', req))
 exports.notFoundPage = (req, res) => res.status(404).render('pages/404', helper.pageObject('404', req))
 exports.settingPage = (req, res, next) => res.render('pages/setting', helper.pageObject('Cera | Account', req))
 
 exports.homePage = catchError(async (req, res, next) => {
   res.render('pages/index', {
     featureProd: await Product.find({ stoked: false }),
-    newProd: await Product.find({ new: true }),
+    newProd: await Product.find({ new: true, stoked: true }),
     title: 'Cera',
     errors: req.flash('errors'),
     warning: req.flash('warning'),
@@ -103,8 +103,17 @@ exports.isUser = catchError(async (req, res, next) => {
   }
 })
 
-exports.upload = helper.upload.single('userImg')
+exports.logOut = catchError(async (req, res, next) => {
+  if (req.body.data == 'logOut' && req.user) {
+    res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
+    res.status(200).json({ redirect: '/' })
+  } else next(new AppError('You aren\'t register', 401))
+})
 
+
+
+
+exports.upload = helper.upload.single('userImg')
 exports.resizeImg = catchError(async (req, res, next) => {
   if (!req.file) return next()
   req.file.filename = `user-img-${req.user.id}-${Date.now()}.jpeg`

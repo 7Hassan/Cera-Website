@@ -17,7 +17,7 @@
     "rest.http": true,
     "nodemailer.js": true,
     "config": true,
-    ".env": false
+    ".env": true
   },
   "explorerExclude.backup": {},
   "cSpell.words": [

@@ -109,8 +109,8 @@ userSchema.pre(/^find/, async function () {
 
 //? create a cart
 userSchema.methods.createCart = async function (Cart) {
-  const cart = await Cart.create({})
-  this.cart = cart._id;
+  const cart = await Cart.create({ user: this._id })
+  this.cart = cart._id
 }
 
 

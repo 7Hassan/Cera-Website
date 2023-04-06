@@ -47,15 +47,7 @@ exports.verifyPage = catchError(async (req, res, next) => {
   })
 })
 
-exports.forgetPage = catchError(async (req, res, next) => {
-  res.render('user/forget', {
-    title: 'Forget password',
-    errors: req.flash('errors'),
-    warning: req.flash('warning'),
-    success: req.flash('success'),
-    toast: req.flash('toast'),
-  });
-})
+
 
 
 
@@ -68,14 +60,16 @@ exports.forgetPage = catchError(async (req, res, next) => {
 exports.changEmailVerify = catchError(async (req, res, next) => {
   const { email } = req.body
   const user = req.user
+  if (user.emailCount <= 0) return next(new AppError('Email Limited, try again after 24 hours.', 401))
   if (!email) return next(new AppError('Email required', 401))
   if (email == user.email) return next(new AppError('Email is used', 401))
   user.email = email
   const token = await user.createToken('email')
+  user.emailCount = user.emailCount - 1
   await user.save()
   const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
   new Email(user, url).verify()
-  res.status(200).json({ redirect: '/auth/signup/verify' })
+  res.status(200).json({ email: user.email })
 })
 
 exports.resendEmailVerify = catchError(async (req, res, next) => {
@@ -213,13 +207,6 @@ exports.logIn = catchError(async (req, res, next) => {
   res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/' })
 })
 
-exports.logOut = catchError(async (req, res, next) => {
-  if (req.body.data == 'logOut' && req.cookies.jwt) {
-    res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
-    req.flash('success', 'Log out')
-    res.status(200).json({ redirect: '/' })
-  } else next(new AppError('You aren\'t register', 401))
-})
 
 
 
@@ -231,35 +218,45 @@ exports.forgetPass = catchError(async (req, res, next) => {
 
   //? 2) generate a random token
   const token = user.createToken('password')
-  // if (!token) return next(new AppError('Email Limited, try again after 10 hours.', 401))
   await user.save()
 
   //? 3) send a email
-  const url = `${req.protocol}://${req.get('host')}/auth/forgetpassword/${token}`
+  const url = `${req.protocol}://${req.get('host')}/auth/resetpassword/${token}`
   new Email(user, url).resetPass()
   res.status(201).send('Email sent')
 })
 
-exports.resetPass = catchError(async (req, res, next) => {
+exports.protect = catchError(async (req, res, next) => {
   const token = crypto.createHash('sha256').update(req.params.token).digest('hex')
-  const newPassword = req.body.newPassword
-
   //? 1) Get a user based on token & expired date
-  const user = await User.findOne({ passwordToken: token, expPasswordToken: { $gt: Date.now() } }).select('+password')
+  const user = await User.findOne({ passwordToken: token, expPasswordToken: { $gt: Date.now() } }).select('password')
   if (!user) return next(new AppError('Page is not found or Email Date is expired', 404))
-
-  //? 2) Save a new password
-  user.password = newPassword
-  user.passwordToken = undefined
-  user.expPasswordToken = undefined
-  const jwtToken = await helper.createJwtToken(user._id)
-  await user.save()
-
-  //? 4) log in user & send a token
-  res.cookie('jwt', helper.cookieOptions, jwtToken,).status(200).redirect("/")
+  req.user = user
+  next()
+})
+exports.resetPage = catchError(async (req, res, next) => {
+  res.render('user/resetPass', {
+    title: 'Reset password',
+    errors: req.flash('errors'),
+    warning: req.flash('warning'),
+    success: req.flash('success'),
+    toast: req.flash('toast'),
+  });
 })
 
 
+exports.resetPassword = catchError(async (req, res, next) => {
+  const user = req.user
+  const { password } = req.body
+  if (!password) return next(new AppError('Password is required', 401))
+
+  //? 2) Save a new password
+  user.password = password
+  user.passwordToken = undefined
+  user.expPasswordToken = undefined
+  await user.save()
+  res.status(200).json({ redirect: '/auth/login' })
+})
 
 
 

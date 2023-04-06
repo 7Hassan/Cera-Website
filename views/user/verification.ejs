@@ -158,7 +158,7 @@
                 <div class="div-input checkerEmail">
                   <span class="errors"></span>
                   <div class="loading"></div>
-                  <input type="text" placeholder="Email" name="email" id="email" onblur="checkEmail(this.value)">
+                  <input type="text" placeholder="Email" name="email" id="email">
                 </div>
                 <div class="sin-up">
                   <button>Update & Resend</button>
@@ -205,13 +205,15 @@
               <button class="normal">Go To Gmail</button>
             </a>
 
-            <button class="normal" onclick="resendEmail('/auth/signup/verify',this)"> Resend Email</button>
+            <button class="normal resend"> Resend Email</button>
           </div>
         </div>
 
     </div>
     <%- include('../partials/scripting.ejs') %>
       <script>
+        const resendButton = document.querySelector('.verify-buttons button.resend')
+        resendButton.addEventListener('click', () => resendEmail('/auth/signup/verify', resendButton))
         updateEmail()
       </script>
   </body>

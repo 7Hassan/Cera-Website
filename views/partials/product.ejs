@@ -1,0 +1,59 @@
+<% if(objProduct.stoked){ %>
+  <div class="product-box" id='box-<%=objProduct._id %>'>
+    <% if(place=="shope" ){%>
+      <div onclick="window.location.pathname='/shop/<%=objProduct._id %>'">
+        <% }else if(place=='home' ){ %>
+          <div onclick="window.location.href=`${window.location.origin}/shop?<%= objProduct._id%>`">
+            <% } %>
+              <img src="<%=objProduct.imgSrc %>" alt="product image">
+              <div class="details"><span>Cera</span>
+                <h5>Cartoon Astronaut <%= objProduct.name %>
+                </h5>
+                <div class="stars">
+                  <% for (let k=0; k < objProduct.stars; k++) {%>
+                    <i class="fa-solid fa-star"></i>
+                    <% } %>
+                </div>
+                <h4>$<%= objProduct.price %>
+                </h4>
+              </div>
+          </div>
+          <div class="product-box-icons">
+            <div>
+              <i class="fa-regular fa-heart love" onclick="quickAddLove(this)"></i>
+            </div>
+            <% const id=(objProduct._id).toString() %>
+              <% const index=user.cart.products.findIndex((obj)=>obj.product._id==id) %>
+                <%if(index!==-1){%>
+                  <div>
+                    <i class="fa-solid fa-cart-shopping cart"
+                      onclick="quickRemoveProduct('<%= objProduct._id %>',this)"></i>
+                  </div>
+                  <% }else{ %>
+                    <div>
+                      <i class="fa-solid fa-cart-plus cart" onclick="quickAddProduct('<%= objProduct._id %>')"></i>
+                    </div>
+                    <% } %>
+          </div>
+      </div>
+      <% }else{ %>
+        <div class="product-box notStock">
+          <img src="../<%=objProduct.imgSrc %>" alt="product image">
+          <div style="color:red; font-weight:600;">It will be soon</div>
+          <div class="details"><span>Cera</span>
+            <h5>Cartoon Astronaut <%= objProduct.name %>
+            </h5>
+            <div class="stars">
+              <% for (let k=0; k < objProduct.stars; k++) {%>
+                <i class="fa-solid fa-star"></i>
+                <% } %>
+            </div>
+            <h4>$<%= objProduct.price %>
+            </h4>
+          </div>
+          <div class="product-box-icons">
+            <div> <i class="fa-regular fa-heart love"></i></div>
+            <div> <i class="fa-solid fa-cart-plus cart"></i></div>
+          </div>
+        </div>
+        <% } %>

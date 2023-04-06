@@ -37,7 +37,7 @@ function signUp() {
     errors.push(customizeInput(password))
     errors.push(customizeInput(country))
     errors.push(customizeInput(checkBox))
-    errors.push(checker)
+    errors.push(!checker)
 
     if (errors.findIndex(err => err != true) == -1) {
       const data = {
@@ -73,7 +73,7 @@ function logIn() {
 }
 
 function passwordLogIn(email, name) {
-  document.querySelector('.layout').innerHTML += LogInPassword(name)
+  document.querySelector('.layout').innerHTML += LogInPassword(email, name)
   const form = document.getElementById('signup-form')
   const button = document.querySelector('#signup-form button')
   form.addEventListener('submit', async (event) => {
@@ -87,29 +87,32 @@ function passwordLogIn(email, name) {
   })
 }
 
+function resetPassword() {
+  const form = document.querySelector('#resetPassword')
+  const button = document.querySelector('#resetPassword button')
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const newPassword = document.getElementById('newPassword')
+    console.log('🚀 ~ customizeInput(newPassword):', customizeInput(newPassword))
+    if (customizeInput(newPassword) !== true) return 0
+    postData(button, { password: newPassword.value }, window.location.pathname)
+  })
+}
 
 
 //TODO: Update Email 
-function updateEmail() {
+async function updateEmail() {
   const form = document.querySelector('#updateEmail')
   const button = document.querySelector('#updateEmail button')
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
-
-    const errors = []
     const email = document.getElementById('email')
-
-    if (!email.value) {
-      email.parentElement.firstElementChild.innerHTML = 'required'
-      errors.push('required')
-    }
-    errors.push(checker)
-
-    if (errors.findIndex(err => err != true) == -1) {
-      const data = { email: email.value }
-      postData(button, data, '/auth/signup/verify')
-    }
-
+    button.classList.add('clicked')
+    loadingForm(button)
+    if (checkLogIn(email)) return removeLoadingForm(button)
+    const res = await post('/auth/signup/verify', { email: email.value })
+    removeLoadingForm(button)
+    if (res) changeEmailText(res.data.email)
   })
 }
 

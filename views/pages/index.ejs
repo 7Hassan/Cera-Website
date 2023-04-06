@@ -48,22 +48,7 @@
           <p>Summer Collection New Modern design</p>
           <div class="container boxs">
             <% for (let i=0; i < featureProd.length; i++) {%>
-              <div class="product-box" style="opacity:.5 !important; pointer-events: none;">
-                <img src="../<%=featureProd[i].imgSrc %>" alt="product image">
-                <div style="color:red; font-weight:600;">It will be soon</div>
-                <div class="details"><span>Cera</span>
-                  <h5>Cartoon Astronaut <%= featureProd[i].name %>
-                  </h5>
-                  <div class="stars">
-                    <% for (let k=0; k < featureProd[i].stars; k++) {%>
-                      <i class="fa-solid fa-star"></i>
-                      <% } %>
-                  </div>
-                  <h4>$<%= featureProd[i].price %>
-                  </h4>
-                </div>
-                <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-              </div>
+              <%- include('../partials/product.ejs',{objProduct:featureProd[i],place:"home"}) %>
               <% }%>
 
           </div>
@@ -78,24 +63,8 @@
           <p>Summer Collection New Modern design</p>
           <div class="container boxs">
             <% for (let i=0; i < newProd.length; i++) {%>
-              <div class="product-box"
-                onclick="window.location.href=`${window.location.origin}/shop?<%= newProd[i]._id%>`">
-                <img src="<%=newProd[i].imgSrc %>" alt="product image">
-                <div class="details"><span>Cera</span>
-                  <h5>Cartoon Astronaut <%= newProd[i].name %>
-                  </h5>
-                  <div class="stars">
-                    <% for (let k=0; k < newProd[i].stars; k++) {%>
-                      <i class="fa-solid fa-star"></i>
-                      <% } %>
-                  </div>
-
-                  <h4>$<%= newProd[i].price %>
-                  </h4>
-                </div>
-                <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-              </div>
-              <% }%>
+              <%- include('../partials/product.ejs',{objProduct:newProd[i],place:"home"}) %>
+                <% }%>
 
           </div>
         </div>

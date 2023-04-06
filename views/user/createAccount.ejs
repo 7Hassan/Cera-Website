@@ -50,8 +50,8 @@
                     placeholder="Password" oninput="customizeInput(this)" onblur="customizeInput(this)">
 
                   <div class="icon-eyes">
-                    <i class="fa-sharp fa-solid fa-eye-slash"></i>
-                    <i class="fa-solid fa-eye" style="display:none ;"></i>
+                    <i class="fa-sharp fa-solid fa-eye-slash" onclick='showPassword(this)'></i>
+                    <i class="fa-solid fa-eye" style="display:none;" onclick='hidePassword(this)'></i>
                   </div>
                 </div>
                 <div class="User-sinUp-country">
@@ -105,7 +105,6 @@
       <%- include('../partials/scripting.ejs') %>
   </body>
   <script>
-    passwordFunction()
     signUp()
     getCountries()
   </script>

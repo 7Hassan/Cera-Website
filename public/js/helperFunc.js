@@ -6,14 +6,14 @@ async function get(url) {
   try {
     return await axios.get(url)
   } catch (err) {
-    errorHandling(err)
+    flashMessage(err, 'errors')
   }
 }
 async function deleteFun(url, data) {
   try {
     return await axios.delete(url, { data })
   } catch (err) {
-    errorHandling(err)
+    flashMessage(err, 'errors')
   }
 }
 
@@ -21,7 +21,7 @@ async function post(url, data) {
   try {
     return await axios.post(url, data)
   } catch (err) {
-    errorHandling(err)
+    flashMessage(err, 'errors')
   }
 }
 
@@ -29,15 +29,14 @@ async function patch(url, data) {
   try {
     return await axios.patch(url, data)
   } catch (err) {
-    errorHandling(err)
+    flashMessage(err, 'errors')
   }
 }
 
-function errorHandling(err) {
-  const messageErr = err.response ? err.response.data : err
-  const flash = document.querySelector('.flash-errors .text-flash')
-  flash.innerText = messageErr
-  flashMessage()
+function flashMessage(mess, flashType) {
+  const message = (mess.response ? mess.response.data : mess);
+  [...document.querySelectorAll('.text-flash')].map((flash) => flash.offsetParent.classList.contains(`flash-${flashType}`) ? flash.innerText = message : flash.innerText = '')
+  showFlashMessage()
 }
 
 function loadingForm(button) {
@@ -92,7 +91,7 @@ async function postData(button, data, url) {
   removeLoadingForm(button)
   if (!res) return 0
   const path = res.data.redirect
-  if (!path) return errorHandling('Please, try again later')
+  if (!path) return flashMessage('Please, try again later')
   window.location.href = path
 }
 
@@ -104,56 +103,15 @@ function productsToCart(product, count) {
 
 
 
+function changeEmailText(email) {
+  document.querySelector('.text-email span').innerHTML = email;
+  flashMessage('Email Updated & Resend', 'success')
 
-
-
-
-
-
-function createDivCarte(product, count) {
-  return `
-    <div id='${product._id}'>
-      <img src="/${product.imgSrc}">
-      <h2>${product.price}</h2>
-      <h6>x ${count}</h6>
-      <div class="plus-minus">
-        <i class="fa-sharp fa-solid fa-plus"></i>
-        <i class="fa-sharp fa-solid fa-minus"></i>
-      </div>
-      <i class="fa-regular fa-circle-xmark" onclick='removeProduct(this.parentElement)'></i>
-    </div>
-  `
 }
-function LogInPassword(name) {
-  return ` <div class="main-log">
-    <div div class="head" >Welcome <p> ${name} </p></div>
-    <div class="log">
-      <div class="email-input">
-        <form id="signup-form">
-          <div class="User-login-pass">
-            <span class="errors"></span>
-            <div>
-              <i class="fa-sharp fa-solid fa-eye-slash" onclick='showPassword(this)'></i>
-              <i class="fa-solid fa-eye" style="display:none;" onclick='hidePassword(this)'></i>
-            </div>
-            <input autocomplete="" class="input password-input" type="password" name="password" id="password"
-              placeholder="Password">
-          </div>
-          <div class="forget-password">
-          <div> 
-          <input class="input" type="checkbox" id="checkboxInput" checked onchange="customizeInput(this)" value="checked">
-          Keep me logged 
-          </div>
-          <a href="/auth/forgetPassword"> Forget password? </a>
-          </div>
-          <button class="normal">
-            Log In
-          </button>
-        </form>
-      </div>
-    </div>
-  </div > `
-}
+
+
+
+
 
 
 

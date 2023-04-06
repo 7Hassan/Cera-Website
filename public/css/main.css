@@ -698,18 +698,36 @@ body.hidden {
   color: var(--main-color);
 }
 
-.product01 .product-box .cart {
+.product-box.notStock {
+  opacity: .5 !important;
+  pointer-events: none;
+}
+
+.product01 .product-box .product-box-icons {
+  position: absolute;
+  display: flex;
+  bottom: 6px;
+  right: 10px;
+  z-index: 10;
+  padding: 5px;
+}
+
+.product01 .product-box .product-box-icons>div {
   width: 40px;
   height: 40px;
-  line-height: 40px;
   border-radius: 50px;
   background-color: #e8f6ea;
   color: var(--main-color);
   border: 1px solid #cce7d0;
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-  z-index: 10;
+  line-height: 40px;
+  margin-left: 5px;
+
+}
+
+.product01 .product-box .product-box-icons>div .loading {
+  bottom: 18px;
+  right: 18px;
+  box-shadow: inset 1px 0px 0px 0px black;
 }
 
 /* Start banner */
@@ -2219,8 +2237,9 @@ footer p a:hover {
   align-items: center;
 }
 
-.main-log .email-input form .forget-password a {
+.main-log .email-input form .forget-password .forget-element {
   color: #14a800;
+  cursor: pointer;
   position: absolute;
   right: 0;
 }
@@ -2601,6 +2620,28 @@ form>div {
   margin: 4px 0 !important;
 }
 
+.reset-password .User-sinUp-pass {
+  padding: 20px 0 10px;
+}
+
+.reset-password .verify-holder .change-email {
+  margin-bottom: 0 !important;
+}
+
+.reset-password .verify-holder .update-email {
+  height: auto !important;
+}
+
+.reset-password .main-log .email-input {
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.reset-password button {
+  margin: 0 !important;
+}
+
 .verify-holder .change-email {
   margin-bottom: 20px;
   margin-top: 10px;
@@ -2617,7 +2658,7 @@ form>div {
 
 }
 
-.verify-holder i {
+.verify-holder i :not(.reset-password i) {
   font-size: 8px;
   background: #108a00;
   border-radius: 50%;
@@ -2669,6 +2710,22 @@ form>div {
   font-size: 12px;
 }
 
+.reset-password .errors {
+  top: 6px;
+}
+
+.reset-password .icon-eyes {
+  left: 9px;
+  right: unset;
+  bottom: 20px;
+}
+
+
+
+.verify-holder .change-email .update-email button .loading {
+  right: -25px !important;
+}
+
 .verify-holder .change-email .update-email .sin-up button {
   width: 150px !important;
   padding: 6px 0;
@@ -2676,6 +2733,7 @@ form>div {
 
 .verify-holder button {
   border-color: transparent;
+  position: relative;
   border-radius: 30px;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -2915,7 +2973,7 @@ i.hidden-slide {
   }
 }
 
-button .loading {
+button .loading:not(.verify-holder .update-email button .loading) {
   box-shadow: inset 1px 0px 0px 0px white !important;
   right: unset !important;
 }

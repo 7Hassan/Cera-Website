@@ -19,10 +19,10 @@ const cartSchema = new mongoose.Schema({
       enum: ['XL', 'L', 'M', 'S'],
     }
   }],
-  //   user: {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'users'
-  //   }
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'users'
+  }
 },
   //? to activate virtuals
   {
@@ -32,14 +32,16 @@ const cartSchema = new mongoose.Schema({
 )
 
 //? get user linked with this cart
-cartSchema.virtual('user', {
+cartSchema.virtual('author', {
   ref: 'users',
-  foreignField: 'cart',
-  localField: '_id'
+  localField: 'user',
+  foreignField: '_id',
+  justOne: true
 })
 
 cartSchema.pre(/^find/, async function () {
   this.select("-__v").populate({ path: 'products.product', select: "-__v" })
+  // this.select("-__v").populate({ path: 'user', select: "-__v" })
 })
 
 
