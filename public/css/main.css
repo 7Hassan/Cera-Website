@@ -734,6 +734,7 @@ body.hidden {
   align-items: center;
   gap: 5px;
   transition: .3s;
+  /* height: 237px; */
 }
 
 .product-pop {
@@ -750,6 +751,7 @@ body.hidden {
   padding: 10px;
   box-shadow: 1px 1px 30px 4px rgb(0 0 0 / 13%);
   border: 1px solid #cce7d0;
+  max-width: 80px;
 }
 
 .product-pop .size-count input {

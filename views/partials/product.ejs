@@ -4,7 +4,7 @@
       <% if(place=="shope" ){%>
         <div onclick="window.location.pathname='/shop/<%=objProduct._id %>'">
           <% }else if(place=='home' ){ %>
-            <div onclick="window.location.href=`${window.location.origin}/shop?<%= objProduct._id%>`">
+            <div onclick="window.location.href=`${window.location.pathname}shop?<%= objProduct._id%>`">
               <% } %>
                 <img src="<%=objProduct.imgSrc %>" alt="product image">
                 <div class="details"><span>Cera</span>
@@ -53,7 +53,7 @@
     <% }else{ %>
       <div class="product-box notStock">
         <img src="../<%=objProduct.imgSrc %>" alt="product image">
-        <div style="color:red; font-weight:600;">It will be soon</div>
+        <div style="color:red; height: 0; font-weight:600;">It will be soon</div>
         <div class="details"><span>Cera</span>
           <h5>Cartoon Astronaut <%= objProduct.name %>
           </h5>

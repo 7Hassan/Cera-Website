@@ -49,10 +49,10 @@
           <div class="container boxs">
             <% for (let i=0; i < featureProd.length; i++) {%>
               <%- include('../partials/product.ejs',{objProduct:featureProd[i],place:"home"}) %>
-              <% }%>
-
+                <% }%>
           </div>
         </div>
+
         <div class="banner">
           <h4>Repair Services</h4>
           <h2>Up to <span>70% off</span> -All T-Shirts & Accessories</h2>
@@ -65,15 +65,14 @@
             <% for (let i=0; i < newProd.length; i++) {%>
               <%- include('../partials/product.ejs',{objProduct:newProd[i],place:"home"}) %>
                 <% }%>
-
           </div>
-        </div>
+        <!-- </div> -->
         </div>
         <%- include('../partials/footer.ejs') %>
           <%- include('../partials/scripting.ejs') %>
   </body>
   <script>
-    observesRight()
+    observesTop()
   </script>
 
   </html>
