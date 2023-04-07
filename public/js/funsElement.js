@@ -158,3 +158,16 @@ function forgetPassDiv(email) {
         </div>
   `
 }
+
+function productRemoveCartDiv(id) {
+  return `
+  <div class="remove-product-pop" onclick="quickRemoveProduct(this,'${id}')">
+    <i class="fa-solid fa-cart-shopping cart"></i>
+  </div>`
+}
+function productAddCartDiv() {
+  return `
+  <div class="add-product-pop" onmouseover="showPopProduct(this)">
+    <i class="fa-solid fa-cart-plus cart"></i>
+  </div>`
+}

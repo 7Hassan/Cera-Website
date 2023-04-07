@@ -58,21 +58,22 @@ function showImg(ele) {
 }
 
 // push data in carteData
-async function addProductToCart(ele) {
-  const count = document.getElementById('count-product')
-  const size = document.getElementById('select-input')
+async function addProductToCart(ele, id) {
+  const count = document.querySelector(`#box-${id} #count-product`)
+  const size = document.querySelector(`#box-${id} #select-input`)
   const error = count.parentElement.firstElementChild
+
   if (!count.value) return error.innerHTML = "required"
   if (+count.value < 1) return error.innerHTML = "Less than one"
   if (+count.value > 9) return error.innerHTML = "More than 9"
   if (!size.value) return error.innerHTML = "required"
 
-  const data = { count: +count.value, size: size.value }
-  ele.textContent = 'Loading...'
+  const data = { count: +count.value, size: size.value, productId: id }
+  ele.textContent = ele.classList.contains('pop') ? '' : 'Loading...'
   loadingForm(ele)
-  const res = await post(window.location.pathname, data)
+  const res = await post(`/shop/${id}`, data)
   removeLoadingForm(ele)
-  ele.textContent = 'Add To Cart'
+  ele.textContent = ele.classList.contains('pop') ? 'Add' : 'Add To Cart'
   if (res) productsToCart(res.data, data.count)
 }
 
@@ -126,11 +127,34 @@ function quickAddLove(icon) {
 
 }
 
-async function quickRemoveProduct(id, ele) {
-  const productEle = document.getElementById(id)
-  const eleParent = ele.parentElement
-  loadingForm(eleParent)
+async function quickRemoveProduct(ele, id) {
+  console.log('🚀 ~ ele:', ele)
+  const parentEle = ele.parentElement
+  ele.firstElementChild.remove()
+  loadingForm(ele)
+  await removeProduct(document.getElementById(id))
   ele.remove()
-  await removeProduct(productEle)
-  eleParent.innerHTML = `<i class="fa-solid fa-cart-plus cart"onclick="quickAddProduct('<%= products[i][j]._id %>')"></i>`
+  parentEle.innerHTML += productAddCartDiv()
+}
+
+async function quickAddProduct(ele, id) {
+  const cartDiv = document.querySelector(`#box-${id} .add-product-pop`)
+  const parentCartDiv = cartDiv.parentElement
+  const popProduct = ele.parentElement.parentElement
+  if (await addProductToCart(ele, id)) return 0
+  cartDiv.remove()
+  parentCartDiv.innerHTML += productRemoveCartDiv(id)
+  popProduct.classList.remove('show')
+}
+
+function showPopProduct(ele) {
+  ele.classList.add('hover')
+  const topParent = ele.closest('.master-holder-product')
+  topParent.lastElementChild.classList.add('show')
+}
+
+function hiddenPopProduct(ele) {
+  const cartDiv = document.querySelector(`#${ele.id} .add-product-pop.hover`)
+  if (cartDiv) cartDiv.classList.remove('hover')
+  ele.lastElementChild.classList.remove('show')
 }

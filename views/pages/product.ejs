@@ -6,12 +6,12 @@
 
         <div class="product-home">
           <div class="product">
-            <div class="container" id=<%=product._id %>>
+            <div class="container" id='box-<%=product._id %>'>
               <div class="imgs">
                 <img srcset="/<%=product.imgSrc %>" id="main-img" />
                 <div class="other-imgs relative">
                   <img id="first-img" srcset="/<%=product.imgSrc %>"
-                    onclick="document.getElementById('main-img').srcset=this.srcset" />
+                    onclick="document.getElementById(' main-img').srcset=this.srcset" />
                   <img id="img-master" srcset="/<%=product.imgSrc%>" />
 
                   <%for (let i=0; i < product.imgs.length; i++) { %>
@@ -42,10 +42,12 @@
                     onkeypress="return onlyNumbers(event)" />
                 </div>
                 <%if (user && user.emailConfig) {%>
-                  <button id="cart-shop" class="normal" onclick="addProductToCart(this)">Add To Cart</button>
+                  <button id="cart-shop" class="normal" onclick="addProductToCart(this,'<%=product._id %>')">Add To
+                    Cart</button>
                   <% }else{ %>
                     <button id="cart-shop" class="normal"
-                      onclick="flashMessage('Please, Log in to get Access','errors')">Add To
+                      onclick="flashMessage('Please, Log in to get Access','errors')">Add
+                      To
                       Cart</button>
                     <% } %>
                       <div class="product-details">

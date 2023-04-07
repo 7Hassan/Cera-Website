@@ -187,7 +187,7 @@ body.hidden {
 #header {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 3;
 }
 
 #header .container {
@@ -658,6 +658,9 @@ body.hidden {
   position: relative;
   margin: 20px 0;
   opacity: 0;
+  z-index: 2;
+  background-color: white;
+
 }
 
 
@@ -712,6 +715,74 @@ body.hidden {
   padding: 5px;
 }
 
+.product-box-icons .remove-product-pop:hover {
+  background-color: #ff00002b !important;
+  color: red !important;
+}
+
+.product-box-icons .add-product-pop.hover {
+  background-color: #9dcca4 !important;
+}
+
+.product-pop .size-count {
+  flex-direction: column;
+}
+
+.master-holder-product {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  transition: .3s;
+}
+
+.product-pop {
+  visibility: hidden;
+  margin-left: -80px !important;
+  z-index: -1;
+  background-color: white;
+  border-radius: 10px;
+  min-height: 250px;
+  transition: .3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  box-shadow: 1px 1px 30px 4px rgb(0 0 0 / 13%);
+  border: 1px solid #cce7d0;
+}
+
+.product-pop .size-count input {
+  width: 100% !important;
+  padding-left: 20px !important;
+}
+
+.product-pop .errors {
+  position: unset;
+  height: 10px;
+  width: 100%;
+}
+
+.product-pop.show {
+  margin: 0 !important;
+  visibility: visible;
+  z-index: 1;
+}
+
+.product-pop button {
+  background-color: var(--main-color);
+  padding: 11px;
+  color: white;
+  width: 100% !important;
+  height: 39px !important;
+  position: relative;
+}
+
+.product-pop button .loading {
+  top: 13px;
+  left: 19px;
+}
+
 .product01 .product-box .product-box-icons>div {
   width: 40px;
   height: 40px;
@@ -721,8 +792,9 @@ body.hidden {
   border: 1px solid #cce7d0;
   line-height: 40px;
   margin-left: 5px;
-
 }
+
+
 
 .product01 .product-box .product-box-icons>div .loading {
   bottom: 18px;
@@ -1040,7 +1112,7 @@ footer .copyright {
 
 /* ----------------------------------------------------- */
 
-.product,
+.product:not(.product-pop),
 .main-blog,
 .main-about {
   margin-top: 50px;
@@ -1716,7 +1788,7 @@ footer .contact {
   }
 
   /* shop page */
-  .products-holder .button-products button {
+  .products-holder .button-products button:not(.product-pop button) {
     display: none;
   }
 }
@@ -2999,6 +3071,10 @@ button.clicked:hover {
 
 .size-count .errors {
   font-size: 15px;
+}
+
+.product-pop .size-count .errors {
+  font-size: 7px;
 }
 
 .verify-buttons {

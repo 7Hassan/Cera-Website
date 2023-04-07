@@ -52,8 +52,7 @@ exports.singleProd = catchError(async (req, res, next) => {
 })
 
 exports.addProduct = catchError(async (req, res, next) => {
-  const productId = req.originalUrl.split('/')[2]
-  const { count, size } = req.body
+  const { count, size, productId } = req.body
   const user = req.user
   const product = await Product.findById(productId)
   if (!product) return next(new AppError('Product not found', 401))
