@@ -27,7 +27,7 @@ exports.homePage = catchError(async (req, res, next) => {
 })
 
 exports.shopPage = catchError(async (req, res, next) => {
-  let result = await Product.find().sort({ "name": -1 })
+  let result = await Product.find({ stoked: true }).sort({ "name": -1 })
   res.render('pages/shop', {
     title: 'Cera | Shop',
     products: helper.sliceDataShop(result, 8),
@@ -40,9 +40,10 @@ exports.shopPage = catchError(async (req, res, next) => {
 
 exports.singleProd = catchError(async (req, res, next) => {
   const singleProduct = await Product.findOne({ _id: req.params.id })
-  let result = await Product.find({ stoked: true, name: singleProduct.name }).sort({ "price": -1 })
+  let result = await Product.find({ stoked: true, name: singleProduct.name, _id: { $ne: req.params.id } }).sort({ "price": -1 })
   res.render('pages/product', {
-    title: 'Product', product: singleProduct,
+    title: 'Product',
+    product: singleProduct,
     products: result,
     errors: req.flash('errors'),
     warning: req.flash('warning'),

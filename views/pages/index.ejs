@@ -1,11 +1,7 @@
 <%- include('../partials/head.ejs') -%>
-
   <body>
     <%- include('../partials/header.ejs') -%>
       <%- include('../partials/flashMsg.ejs') -%>
-
-
-
         <div class="main-sec-home" id="main">
           <div class="container">
             <h4>Trade-in-offer</h4>
@@ -66,13 +62,12 @@
               <%- include('../partials/product.ejs',{objProduct:newProd[i],place:"home"}) %>
                 <% }%>
           </div>
-        <!-- </div> -->
         </div>
         <%- include('../partials/footer.ejs') %>
           <%- include('../partials/scripting.ejs') %>
   </body>
   <script>
-    observesTop()
+    observesRight()
   </script>
 
   </html>

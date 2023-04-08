@@ -106,8 +106,8 @@ async function updateEmail() {
   const button = document.querySelector('#updateEmail button')
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
-    const email = document.getElementById('email')
     button.classList.add('clicked')
+    const email = document.getElementById('email')
     loadingForm(button)
     if (checkLogIn(email)) return removeLoadingForm(button)
     const res = await post('/auth/signup/verify', { email: email.value })

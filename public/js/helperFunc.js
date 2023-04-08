@@ -47,8 +47,8 @@ function loadingForm(button) {
 }
 
 function removeLoadingForm(button) {
-  button.classList.remove('clicked')
   button.firstElementChild.remove()
+  button.classList.remove('clicked')
 }
 
 function customizeInput(ele) {
@@ -97,8 +97,8 @@ async function postData(button, data, url) {
 
 function productsToCart(product, count) {
   cartIcon.dataset.content++
-  checkCart()
   containerDivCart.innerHTML += createDivCarte(product, count)
+  checkCart()
 }
 
 
@@ -109,7 +109,15 @@ function changeEmailText(email) {
 
 }
 
-
+async function headerRemoverX(productEle) {
+  loadingForm(productEle)
+  productEle.lastElementChild.remove()
+  await deleteFun(`/shop/${productEle.id}`, { id: productEle.id })
+  removeLoadingForm(productEle)
+  productEle.remove();
+  --cartIcon.dataset.content;
+  checkCart();
+}
 
 
 

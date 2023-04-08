@@ -78,15 +78,17 @@ async function addProductToCart(ele, id) {
 }
 
 async function removeProduct(productEle) {
-  loadingForm(productEle)
-  productEle.lastElementChild.remove()
-  await deleteFun(`/shop/${productEle.id}`, { id: productEle.id })
-  removeLoadingForm(productEle)
-  productEle.remove();
-  --cartIcon.dataset.content;
-  checkCart();
-  totalPrice(document.querySelectorAll('.total'));
+  const cartEle = document.querySelector(`#box-${productEle.id} .remove-product-pop`)
+  if (!cartEle) return headerRemoverX(productEle)
+  const parentCartEle = cartEle.parentElement
+  cartEle.firstElementChild.remove()
+  loadingForm(cartEle)
+  await headerRemoverX(productEle)
+  cartEle.remove()
+  parentCartEle.innerHTML += productAddCartDiv();
 }
+
+
 
 async function resendEmail(url, button) {
   loadingForm(button)
@@ -127,14 +129,8 @@ function quickAddLove(icon) {
 
 }
 
-async function quickRemoveProduct(ele, id) {
-  console.log('🚀 ~ ele:', ele)
-  const parentEle = ele.parentElement
-  ele.firstElementChild.remove()
-  loadingForm(ele)
-  await removeProduct(document.getElementById(id))
-  ele.remove()
-  parentEle.innerHTML += productAddCartDiv()
+async function quickRemoveProduct(id) {
+  removeProduct(document.getElementById(id))
 }
 
 async function quickAddProduct(ele, id) {
@@ -155,6 +151,7 @@ function showPopProduct(ele) {
 
 function hiddenPopProduct(ele) {
   const cartDiv = document.querySelector(`#${ele.id} .add-product-pop.hover`)
-  if (cartDiv) cartDiv.classList.remove('hover')
+  if (!cartDiv) return 0
+  cartDiv.classList.remove('hover')
   ele.lastElementChild.classList.remove('show')
 }

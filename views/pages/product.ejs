@@ -3,7 +3,6 @@
   <body>
     <%- include('../partials/header.ejs') -%>
       <%- include('../partials/flashMsg.ejs') -%>
-
         <div class="product-home">
           <div class="product">
             <div class="container" id='box-<%=product._id %>'>
@@ -11,9 +10,8 @@
                 <img srcset="/<%=product.imgSrc %>" id="main-img" />
                 <div class="other-imgs relative">
                   <img id="first-img" srcset="/<%=product.imgSrc %>"
-                    onclick="document.getElementById(' main-img').srcset=this.srcset" />
+                    onclick="document.getElementById('main-img').srcset=this.srcset" />
                   <img id="img-master" srcset="/<%=product.imgSrc%>" />
-
                   <%for (let i=0; i < product.imgs.length; i++) { %>
                     <img srcset="/<%=product.imgs[i]%>" onerror="this.style.display='none'"
                       onclick="document.getElementById('main-img').srcset=this.srcset" />
@@ -42,28 +40,30 @@
                     onkeypress="return onlyNumbers(event)" />
                 </div>
                 <%if (user && user.emailConfig) {%>
-                  <button id="cart-shop" class="normal" onclick="addProductToCart(this,'<%=product._id %>')">Add To
-                    Cart</button>
-                  <% }else{ %>
+                  <% if(product.new){%>
                     <button id="cart-shop" class="normal"
-                      onclick="flashMessage('Please, Log in to get Access','errors')">Add
-                      To
-                      Cart</button>
-                    <% } %>
-                      <div class="product-details">
-                        <h4>Product Details</h4>
-                        <span>
-                          Lorem ipsum dolor sit amen consenter adipisicing, durius rerun
-                          fugit corrupts amen hic porno? Perspiciatis site expedite
-                          similitude dolors! Nebo vera corporal quasi dicta aut hic doit?
-                        </span>
-                      </div>
+                      onclick="flashMessage('On arrival, save it in Love section','toast')">Add To Cart</button>
+                    <% }else{ %>
+                      <button id="cart-shop" class="normal" onclick="addProductToCart(this,'<%=product._id %>')">Add To
+                        Cart</button>
+                      <% }}else{ %>
+                        <button id="cart-shop" class="normal"
+                          onclick="flashMessage('Please, Log in to get Access','errors')">Add To Cart</button>
+                        <% } %>
+                          <div class="product-details">
+                            <h4>Product Details</h4>
+                            <span>
+                              Lorem ipsum dolor sit amen consenter adipisicing, durius rerun
+                              fugit corrupts amen hic porno? Perspiciatis site expedite
+                              similitude dolors! Nebo vera corporal quasi dicta aut hic doit?
+                            </span>
+                          </div>
               </div>
             </div>
           </div>
         </div>
         <div class="other-products product01 ">
-          <h2>Other products</h2>
+          <h2>Other <%=product.name[product.name.length-1]=='s'?product.name:product.name+'s' %></h2>
           <div class="holder-cont products-holder">
             <div class="button-products ">
               <button class="left-slide" onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 1000)">
@@ -71,22 +71,8 @@
               </button>
               <div class="container boxs">
                 <% for (let i=0; i < products.length; i++) {%>
-                  <div class="product-box" onclick="window.location.pathname='/shop/<%= products[i]._id %>'">
-                    <img src="/<%=products[i].imgSrc %>" alt="product image">
-                    <div class="details"><span>Cera</span>
-                      <h5>Cartoon Astronaut <%= products[i].name %>
-                      </h5>
-                      <div class="stars">
-                        <% for (let k=0; k < products[i].stars; k++) {%>
-                          <i class="fa-solid fa-star"></i>
-                          <% } %>
-                      </div>
-                      <h4>$<%= products[i].price %>
-                      </h4>
-                    </div>
-                    <div><i class="fa-solid fa-cart-shopping cart"></i></div>
-                  </div>
-                  <% } %>
+                  <%- include('../partials/product.ejs',{objProduct:products[i],place:"shope"}) %>
+                    <% } %>
               </div>
               <button class="right-slide" onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 1000)">
                 <i class="fa-solid fa-angles-right"></i>

@@ -39,15 +39,19 @@
             </h6>
             <% for(let i=0;i<user.cart.products.length;i++){%>
               <div id='<%=user.cart.products[i].product.id%>'>
-                <img src='/<%=user.cart.products[i].product.imgSrc %>'>
+                <img
+                  onclick="window.location.href=`${window.location.origin}/shop?<%= user.cart.products[i].product._id%>`"
+                  src='/<%=user.cart.products[i].product.imgSrc %>'>
                 <h2>
                   <%=user.cart.products[i].product.price %>
                 </h2>
                 <h6>x <%=user.cart.products[i].count %>
                 </h6>
-                <div class="plus-minus">
-                  <i class="fa-sharp fa-solid fa-plus"></i>
-                  <i class="fa-sharp fa-solid fa-minus"></i>
+                <div class="total-product-price">
+
+                  <span>
+                    $<%=user.cart.products[i].count *user.cart.products[i].product.price %>
+                  </span>
                 </div>
                 <i class="fa-regular fa-circle-xmark" onclick='removeProduct(this.parentElement)'></i>
               </div>
@@ -127,3 +131,7 @@
   <div class="over-layout" onclick="hideNav()"></div>
 
 </div>
+
+
+<!-- <i class="fa-sharp fa-solid fa-plus"></i>
+<i class="fa-sharp fa-solid fa-minus"></i> -->

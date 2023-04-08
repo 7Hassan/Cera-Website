@@ -20,10 +20,9 @@ let containerDivCart = document.querySelector('.container-cart');
 
 
 showFlashMessage()
+addActiveBar()
 checkCart()
-if (navA.length !== 0) {
-  addActiveBar()
-}
+
 function checkCart() {
   const element = document.querySelector('.text-cart')
   if (!element) return 0
@@ -34,10 +33,12 @@ function checkCart() {
     element.textContent = '';
     document.getElementById('buy-button').classList.add('show');
   }
+  totalPrice()
 }
 
 // add and remove active class to navbar elements
 function addActiveBar() {
+  if (!navA) return 0
   navA.forEach((a) => {
     if (window.location.pathname == a.attributes[0].value) a.classList.add('active')
     a.addEventListener('click', () => navA.forEach((a) => a.classList.remove('active')))
@@ -80,21 +81,13 @@ function setLocalStroageData() {
 
 
 
-
 // function to calculate total price
-function totalPrice(elements) {
+function totalPrice() {
   let total = 0;
-  let products = JSON.parse(localStorage.getItem('data'));
-  for (let i = 0; i < products.length; i++) {
-    let count = 0;
-    let price = 0;
-    count = +products[i].count;
-    price = +products[i].price.split('$')[1];
-    total += count * price;
-  }
-  elements.forEach((ele) => {
-    ele.innerHTML = `$${total}`;
-  });
+  const prices = [...document.querySelectorAll('.container-cart .total-product-price span')]
+  const totalEle = document.querySelector('.total-carte .total')
+  prices.map((priceEle) => total += +priceEle.innerText.split('$')[1])
+  totalEle.innerHTML = `$${total}`
 }
 
 
@@ -134,7 +127,6 @@ function plusMinus(product, productCount) {
     let index = locationInCarteData(product.children[0]);
     carteData[index].count = productCount;
     setLocalStroageData();
-    totalPrice(document.querySelectorAll('.total'));
   });
   product.children[3].children[1].addEventListener('click', () => {
     if (productCount > 1) {
@@ -144,7 +136,6 @@ function plusMinus(product, productCount) {
     let index = locationInCarteData(product.children[0]);
     carteData[index].count = productCount;
     setLocalStroageData();
-    totalPrice(document.querySelectorAll('.total'));
   });
 }
 
@@ -305,7 +296,7 @@ function luhnAlgorithmCheck(num) {
 
 
 
-//get data from onclicked product
+//get data from onclick product
 function getDataProduct(product) {
   let nameProducts = [...document.querySelectorAll('.name-product')];
   document.getElementById('main-img').src = product.imgUrl;
@@ -317,36 +308,6 @@ function getDataProduct(product) {
 
 
 
-// function createSecProducts() {
-//   return `
-//       <div div class= "button-products" >
-//       <button class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
-//         <i class="fa-solid fa-angles-left"></i>
-//       </button>
-//       <div class="container boxs">
-//       </div>
-//       <button class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
-//         <i class="fa-solid fa-angles-right"></i>
-//       </button>
-//     </div >
-//         `;
-// }
-
-// function createEndSecProducts() {
-//   return `
-//         <div div class="button-products" >
-//   <button style=" visibility: hidden;"  class="left-slide" onclick='sideScroll(this.parentElement.children[1], "left", 4, 800, 10)'>
-//     <i class="fa-solid fa-angles-left"></i>
-//   </button>
-//   <div class="container boxs">
-//   </div>
-//   <button style=" visibility: hidden;" class="right-slide" onclick='sideScroll(this.parentElement.children[1], "right", 4, 800, 10)'>
-//     <i class="fa-solid fa-angles-right"></i>
-//   </button>s
-// </div >
-//         `;
-// }
-/* see and hide passord function */
 
 
 
@@ -412,16 +373,17 @@ function clickListCountries(ele) {
 
 function showFlashMessage() {
   let flashContents = [...document.querySelectorAll('.text-flash')]
+  if (!flashContents) return 0
   flashContents.forEach((flashContent) => {
     const parentFlash = flashContent.offsetParent
     parentFlash.classList.add('hidden')
-    if (flashContent.innerText) {
-      parentFlash.classList.remove('hidden')
-      if (parentFlash.classList.contains('up-mess')) setTimeout(() => {
-        parentFlash.classList.add('hidden')
-        setTimeout(() => flashContent.innerText = '', 900)
-      }, 4000)
-    }
+    if (!flashContent.innerText) return 0
+    parentFlash.classList.remove('hidden')
+    if (!parentFlash.classList.contains('up-mess')) return 0
+    setTimeout(() => {
+      parentFlash.classList.add('hidden')
+      setTimeout(() => flashContent.innerText = '', 900)
+    }, 4000)
   })
 }
 
@@ -431,12 +393,13 @@ function showFlashMessage() {
 
 
 
-function goToElement(id) {
+function goToElement() {
+  const id = window.location.href.split('?')[1]
+  if (!id) return 0
   const element = document.getElementById(`box-${id}`)
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    element.classList.add('shadow')
-  }
+  if (!element) return 0
+  element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  element.firstElementChild.classList.add('shadow')
 }
 
 

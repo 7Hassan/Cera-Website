@@ -1,20 +1,18 @@
 function createDivCarte(product, count) {
   return `
     <div id='${product._id}'>
-      <img src="/${product.imgSrc}">
-      <h2>${product.price}</h2>
+      <img src="/${product.imgSrc}" onclick="window.location.href='${window.location.origin}/shop?${product._id}'">
+    
+    <h2> ${product.price}</h2 >
       <h6>x ${count}</h6>
-      <div class="plus-minus">
-        <i class="fa-sharp fa-solid fa-plus"></i>
-        <i class="fa-sharp fa-solid fa-minus"></i>
-      </div>
+      <div class="total-product-price"><span>$${count * product.price}</span></div>
       <i class="fa-regular fa-circle-xmark" onclick='removeProduct(this.parentElement)'></i>
-    </div>
-  `
+    </div >
+    `
 }
 
 function LogInPassword(email, name) {
-  return ` <div class="main-log">
+  return ` <div class="main-log" >
     <div div class="head" >Welcome <p> ${name} </p></div>
     <div class="log">
       <div class="email-input">
@@ -46,7 +44,7 @@ function LogInPassword(email, name) {
 
 function forgetPassDiv(email) {
   return `
-  <div class="main-log verify-holder email-pass">
+    < div class="main-log verify-holder email-pass" >
           <div class="head">
             <svg style="width: 100px;" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145 130" aria-hidden="true" role="img">
               <g clip-path="url(#clip0_11448_56766)">
@@ -161,13 +159,13 @@ function forgetPassDiv(email) {
 
 function productRemoveCartDiv(id) {
   return `
-  <div class="remove-product-pop" onclick="quickRemoveProduct(this,'${id}')">
-    <i class="fa-solid fa-cart-shopping cart"></i>
-  </div>`
+    <div class="remove-product-pop" onclick = "quickRemoveProduct('${id}')" >
+      <i class="fa-solid fa-cart-shopping cart"></i>
+  </div > `
 }
 function productAddCartDiv() {
   return `
-  <div class="add-product-pop" onmouseover="showPopProduct(this)">
-    <i class="fa-solid fa-cart-plus cart"></i>
-  </div>`
+    <div  class="add-product-pop" onmouseover = "showPopProduct(this)" >
+      <i class="fa-solid fa-cart-plus cart"></i>
+  </div > `
 }
