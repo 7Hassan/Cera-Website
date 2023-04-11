@@ -8,81 +8,31 @@
     <%- include('../partials/flashMsg.ejs') -%>
       <nav class="user-view__menu">
         <ul class="side-nav">
-          <li class="side-nav--active">
-            <a href="#">
-              <svg>
-                <use xlink:href="img/icons.svg#icon-settings"></use>
-              </svg>
+          <li class="side-nav--active" onclick="changeElementContainer('user-view__content')">
+            <i class="fa-solid fa-gear"></i>
+            <a href="#" onclick="event.preventDefault()">
               Settings
             </a>
           </li>
           <li>
-            <a href="#">
-              <svg>
-                <use xlink:href="img/icons.svg#icon-briefcase"></use>
-              </svg>
-              My bookings
+            <i class="fa-solid fa-cart-shopping shop-icon"></i>
+            <a href="#" onclick="event.preventDefault()">
+              Cart
             </a>
           </li>
           <li>
-            <a href="#">
-              <svg>
-                <use xlink:href="img/icons.svg#icon-star"></use>
-              </svg>
-              My reviews
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <svg>
-                <use xlink:href="img/icons.svg#icon-credit-card"></use>
-              </svg>
-              Billing
+            <i class="fa-solid fa-heart love"></i>
+            <a href="#" onclick="event.preventDefault()">
+              Loves
             </a>
           </li>
         </ul>
-
-        <% if(user.role=='admin' ){ %>
-          <div class="admin-nav">
-            <h5 class="admin-nav__heading">Admin</h5>
-            <ul class="side-nav">
-              <li>
-                <a href="#">
-                  <svg>
-                    <use xlink:href="img/icons.svg#icon-map"></use>
-                  </svg>
-                  Manage tours
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <svg>
-                    <use xlink:href="img/icons.svg#icon-users"></use>
-                  </svg>
-                  Manage users
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <svg>
-                    <use xlink:href="img/icons.svg#icon-star"></use>
-                  </svg>
-                  Manage reviews
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <svg>
-                    <use xlink:href="img/icons.svg#icon-briefcase"></use>
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <% } %>
       </nav>
 
-      <div class="user-view__content">
+
+
+
+      <div class="user-view__content hidden-sec">
         <div class="user-view__form-container">
           <h2 class="heading-secondary ma-bt-md">Your account settings</h2>
           <form class="form form-user-data">
@@ -108,7 +58,8 @@
             </div>
             <div class="form__group form__photo-upload">
               <img class="form__user-photo" src=/imgs/users/<%=user.img %> alt="User photo">
-              <input type="file" accept="image/*" class="form__upload" id="image-input" name="userImg" onchange="showImg(this)">
+              <input type="file" accept="image/*" class="form__upload" id="image-input" name="userImg"
+                onchange="showImg(this)">
               <label for="image-input"> Choose Photo</label>
             </div>
             <div class="form__group right">
@@ -144,14 +95,59 @@
           </form>
         </div>
       </div>
+
+      <div class="cart-view__content">
+        <div class="table-box special">
+          <table width="">
+            <thead>
+              <tr>
+                <td>remove</td>
+                <td> image</td>
+                <td> project</td>
+                <td> price</td>
+                <td> ountatiy</td>
+                <td> subtotal</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let i=0;i<user.cart.products.length;i++){ %>
+                <% const product=user.cart.products[i].product%>
+                  <tr>
+                    <td><i class="fa-solid fa-trash-can"></i>
+                    </td>
+                    <td><img width="100px" src="/<%=product.imgSrc %>" alt=""></td>
+                    <td>cartoon astronaut <%=product.name %>
+                    </td>
+                    <td>
+                      $<%=product.price %>
+                    </td>
+
+                    <td>
+                      <div class="stepperInput">
+                        <button class="button button--addOnLeft" onclick="minusInput()">-</button>
+                        <input id="count-product" type="text" placeholder="Count" value="<%= user.cart.products[i].count %>"
+                          class="input stepperInput__input">
+                        <button class="button button--addOnRight" onclick="plusInput()">+</button>
+                      </div>
+                    </td>
+                    <td class="sub-total">$<%=product.price*user.cart.products[i].count%>
+                    </td>
+                  </tr>
+                  <% } %>
+
+            </tbody>
+          </table>
+
+
+        </div>
+      </div>
+
+
+
       <%- include('../partials/scripting.ejs') %>
         <script>
           updateUserData()
           updatePassword()
-          
-
-          
-
         </script>
   </body>
 

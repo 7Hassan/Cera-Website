@@ -169,3 +169,18 @@ function productAddCartDiv() {
       <i class="fa-solid fa-cart-plus cart"></i>
   </div > `
 }
+
+function productRemoveLoveDiv(id) {
+  return `
+  <div onclick="quickRemoveLove(this,'${id}')">
+      <i class="fa-solid fa-heart love"></i>
+  </div>
+  `
+}
+function productAddLoveDiv(id) {
+  return `
+  <div onclick="quickAddLove(this,'${id}')">
+      <i class="fa-regular fa-heart love"></i>
+  </div>
+  `
+}

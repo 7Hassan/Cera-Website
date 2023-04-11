@@ -66,16 +66,41 @@ exports.addProduct = catchError(async (req, res, next) => {
   res.status(200).send(product)
 })
 
+exports.loveProduct = catchError(async (req, res, next) => {
+  const { productId } = req.body
+  const user = req.user
+  const product = await Product.findById(productId)
+  if (!product) return next(new AppError('Product not found', 401))
+  const cart = await Cart.findById(user.cart._id)
+  if (!cart) return next(new AppError('Error, try again', 401))
+  const index = cart.loves.findIndex((obj) => obj.id == productId)
+  if (index !== -1) return next(new AppError('Product is in love list', 400))
+  cart.loves.push(product._id)
+  await cart.save()
+  res.status(200).send('add')
+})
+
 exports.removeProduct = catchError(async (req, res, next) => {
-  const { id } = req.body
+  const { id, name } = req.body
   const user = req.user
   const cart = await Cart.findById(user.cart._id)
   if (!cart) return next(new AppError('Error, try again', 401))
-  const index = cart.products.findIndex((obj) => obj.product.id == id)
-  if (index == -1) return next(new AppError('Product not found', 401))
-  cart.products.splice(index, 1)
-  await cart.save()
-  res.status(200).send('success')
+  if (name == 'cart') {
+    const index = cart.products.findIndex((obj) => obj.product.id == id)
+    if (index == -1) return next(new AppError('Product not found', 401))
+    cart.products.splice(index, 1)
+    await cart.save()
+    res.status(200).send('success')
+  } else if (name == 'loves') {
+    const index = cart.loves.findIndex((obj) => obj.id == id)
+    if (index == -1) return next(new AppError('Product not found', 401))
+    cart.loves.splice(index, 1)
+    await cart.save()
+    res.status(200).send('success')
+  } else {
+    res.status(401).send('failed')
+  }
+
 })
 
 exports.userData = catchError(async (req, res, next) => {

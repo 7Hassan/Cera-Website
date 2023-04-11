@@ -20,21 +20,33 @@
                 </div>
             </div>
             <div class="product-box-icons">
-              <div>
-                <i class="fa-regular fa-heart love" onclick="quickAddLove(this)"></i>
-              </div>
               <% const id=(objProduct._id).toString() %>
-                <% const index=user?user.cart.products.findIndex((obj)=>obj.product._id==id):-1; %>
-                  <% if(!objProduct.new) {%>
-                    <%if(index!==-1){%>
-                      <div class="remove-product-pop" onclick="quickRemoveProduct('<%= objProduct._id %>')">
-                        <i class="fa-solid fa-cart-shopping cart"></i>
+                <% if(user){ %>
+                  <% const indexLove=user.cart.loves.findIndex((obj)=>obj._id==id)%>
+                    <%if(indexLove!==-1){%>
+                      <div class="love-div" onclick="quickRemoveLove(this,'<%= objProduct._id %>')">
+                        <i class="fa-solid fa-heart love"></i>
                       </div>
-                      <% }else{ %>
-                        <div class="add-product-pop" onmouseover="showPopProduct(this)">
-                          <i class="fa-solid fa-cart-plus cart"></i>
+                      <% } else{%>
+                        <div class="love-div" onclick="quickAddLove(this,'<%= objProduct._id %>')">
+                          <i class="fa-regular fa-heart love"></i>
                         </div>
-                        <% } } %>
+                        <% }}else{%>
+                          <div class="love-div" onclick="flashMessage('Please, Log in to get Access','errors')">
+                            <i class="fa-regular fa-heart love"></i>
+                          </div>
+                          <% } %>
+                            <% const indexCart=user?user.cart.products.findIndex((obj)=>obj.product._id==id):-1 %>
+                              <% if(!objProduct.new) {%>
+                                <%if(indexCart!==-1){%>
+                                  <div class="remove-product-pop" onclick="quickRemoveProduct('<%= objProduct._id %>')">
+                                    <i class="fa-solid fa-cart-shopping cart"></i>
+                                  </div>
+                                  <% }else{ %>
+                                    <div class="add-product-pop" onmouseover="showPopProduct(this)">
+                                      <i class="fa-solid fa-cart-plus cart"></i>
+                                    </div>
+                                    <% } } %>
             </div>
         </div>
         <% if(!objProduct.new) {%>
@@ -47,7 +59,7 @@
                 <option value="M">M</option>
                 <option value="S">S</option>
               </select>
-              <input id="count-product" type="text" maxlength="1" value="1" onkeypress="return onlyNumbers(event)">
+              <input id="count-product" type="text"  value="1" class="input stepperInput__input">
               <% if(user){ %>
                 <button id="cart-shop" class="normal pop"
                   onclick="quickAddProduct(this,'<%=objProduct._id%>')">Add</button>

@@ -32,7 +32,6 @@ body {
   font-weight: 300;
   font-family: 'Lato', sans-serif;
   color: #777;
-  padding: 3rem;
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -791,7 +790,6 @@ body {
 .user-view__menu {
   -webkit-box-flex: 32rem;
   -ms-flex: 32rem 0 0px;
-  flex: 32rem 0 0;
   background-image: -webkit-gradient(linear,
       left top,
       right bottom,
@@ -799,6 +797,20 @@ body {
       to(#28b487));
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 4rem 0;
+  width: 277px;
+
+}
+
+@media (max-width:699px) {
+  .user-view__menu {
+    width: 50px;
+  }
+
+  .cart-view__content,
+  .user-view__content,
+  .love-view__content {
+    width: calc(100%-50px);
+  }
 }
 
 .user-view__content {
@@ -807,6 +819,7 @@ body {
   flex: 1;
   padding: 7rem 0;
 }
+
 
 .user-view__form-container {
   max-width: 68rem;
@@ -1087,7 +1100,7 @@ body {
 
 .side-nav a:link,
 .side-nav a:visited {
-  padding: 1rem 4rem;
+  padding: 1rem 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1097,13 +1110,12 @@ body {
   color: #fff;
   font-size: 1.5rem;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
   text-decoration: none;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
 
-.side-nav a:hover,
 .side-nav a:active {
   -webkit-transform: translateX(3px);
   transform: translateX(3px);
@@ -1425,3 +1437,179 @@ button .loading {
 }
 
 
+
+.user-view__menu li {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  cursor: pointer;
+  font-size: 23px;
+
+}
+
+.user-view__menu li i {
+  margin-left: 10px;
+}
+
+.hidden-sec {
+  display: none;
+}
+
+.table-box {
+  overflow-x: auto;
+}
+
+.special {
+  padding: 40px 70px;
+}
+
+.table-box table {
+  width: 100%;
+  table-layout: fixed;
+  white-space: nowrap;
+  border-collapse: collapse;
+  text-transform: capitalize;
+  user-select: none;
+  color: black;
+
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+  font-size: 14px;
+  color: black;
+  font-weight: 900;
+}
+
+.table-box table {
+  width: 100%;
+  table-layout: fixed;
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+  font-size: 13px;
+  color: black;
+  font-weight: 600;
+}
+
+table {
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 2px;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+
+.table-box table thead td {
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 18px 0px;
+}
+
+td {
+  display: table-cell;
+  vertical-align: inherit;
+}
+
+.table-box table td:nth-child(1) {
+  padding: 10px 0px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.table-box table td:nth-child(2) {
+  min-width: 100px;
+  text-align: center;
+}
+
+.table-box table td:nth-child(3) {
+  min-width: 250px;
+  text-align: center;
+}
+
+.table-box table td:nth-child(5),
+.table-box table td:nth-child(6) {
+  min-width: 150px;
+  text-align: center;
+}
+
+table td:nth-child(6) {
+  min-width: 150px;
+  text-align: center;
+}
+
+.table-box table td:nth-child(1) {
+  padding: 10px 0px;
+  width: 100px;
+  text-align: center;
+}
+
+.table-box table tbody td i {
+  cursor: pointer;
+  font-size: 21px;
+  color: #279470;
+}
+
+.table-box table tbody td i {
+  cursor: pointer;
+}
+
+.table-box table td:nth-child(2) {
+  width: 100px;
+  text-align: center;
+}
+
+.table-box table tbody td {
+  padding: 18px 0px;
+}
+
+.table-box table img {
+  width: 70px;
+  border-radius: 10px;
+}
+
+.table-box table td:nth-child(3) {
+  width: 250px;
+  text-align: center;
+}
+
+.table-box table td:nth-child(4) {
+  width: 150px;
+  text-align: center;
+}
+
+.table-box table td:nth-child(5),
+.table-box table td:nth-child(6) {
+  width: 150px;
+  text-align: center;
+}
+
+.stepperInput {
+  margin-left: 20px;
+}
+
+table .sub-total {
+  color: #279470;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+table .fa-trash-can:hover {
+  color: red;
+}

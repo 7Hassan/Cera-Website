@@ -64,10 +64,11 @@ async function addProductToCart(ele, id) {
   const error = count.parentElement.firstElementChild
 
   if (!count.value) return error.innerHTML = "required"
-  if (+count.value < 1) return error.innerHTML = "Less than one"
-  if (+count.value > 9) return error.innerHTML = "More than 9"
+  if (isNaN(count.value)) return error.innerHTML = "Only numbers"
+  if (+count.value < 1) return error.innerHTML = "Only (+)numbers"
+  if (+count.value > 9) return error.innerHTML = "products less 9"
   if (!size.value) return error.innerHTML = "required"
-
+  error.innerHTML = ""
   const data = { count: +count.value, size: size.value, productId: id }
   ele.textContent = ele.classList.contains('pop') ? '' : 'Loading...'
   loadingForm(ele)
@@ -124,10 +125,26 @@ async function sendPassEmail(button, email) {
   if (res) flashMessage(res.data, 'success')
 }
 
-function quickAddLove(icon) {
-  icon.classList.contains('fa-solid') ? icon.classList.replace('fa-solid', 'fa-regular') : icon.classList.replace('fa-regular', 'fa-solid')
-
+async function quickAddLove(ele, id) {
+  const icon = ele.firstElementChild
+  loadingForm(ele)
+  icon.remove()
+  await patch(`/shop/${id}`, { productId: id })
+  removeLoadingForm(ele)
+  ele.innerHTML = '<i class="fa-solid fa-heart love"></i>'
+  ele.setAttribute('onclick', `quickRemoveLove(this, '${id}')`)
 }
+
+async function quickRemoveLove(ele, id) {
+  const icon = ele.firstElementChild
+  loadingForm(ele)
+  icon.remove()
+  await deleteFun(`/shop/${id}`, { id, name: 'loves' })
+  removeLoadingForm(ele)
+  ele.innerHTML = '<i class="fa-regular fa-heart love"></i>'
+  ele.setAttribute('onclick', `quickAddLove(this, '${id}')`)
+}
+
 
 async function quickRemoveProduct(id) {
   removeProduct(document.getElementById(id))
@@ -154,4 +171,13 @@ function hiddenPopProduct(ele) {
   if (!cartDiv) return 0
   cartDiv.classList.remove('hover')
   ele.lastElementChild.classList.remove('show')
+}
+
+function plusInput() {
+  const input = document.getElementById('count-product')
+  input.value++;
+}
+function minusInput() {
+  const input = document.getElementById('count-product')
+  input.value--;
 }

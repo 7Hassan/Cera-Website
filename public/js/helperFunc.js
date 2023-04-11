@@ -112,7 +112,7 @@ function changeEmailText(email) {
 async function headerRemoverX(productEle) {
   loadingForm(productEle)
   productEle.lastElementChild.remove()
-  await deleteFun(`/shop/${productEle.id}`, { id: productEle.id })
+  await deleteFun(`/shop/${productEle.id}`, { id: productEle.id, name: 'cart' })
   removeLoadingForm(productEle)
   productEle.remove();
   --cartIcon.dataset.content;

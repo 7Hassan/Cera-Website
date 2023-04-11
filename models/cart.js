@@ -19,6 +19,12 @@ const cartSchema = new mongoose.Schema({
       enum: ['XL', 'L', 'M', 'S'],
     }
   }],
+  loves: [{
+    // product: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'products'
+    // }
+  }],
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'users'
@@ -41,7 +47,7 @@ cartSchema.virtual('author', {
 
 cartSchema.pre(/^find/, async function () {
   this.select("-__v").populate({ path: 'products.product', select: "-__v" })
-  // this.select("-__v").populate({ path: 'user', select: "-__v" })
+  this.select("-__v").populate({ path: 'loves', select: "-__v" })
 })
 
 

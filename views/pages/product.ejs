@@ -36,52 +36,59 @@
                     <option value="M">M</option>
                     <option value="S">S</option>
                   </select>
-                  <input id="count-product" type="text" maxlength="1" value="1"
-                    onkeypress="return onlyNumbers(event)" />
+                  <div class="stepperInput">
+                    <span class="errors"></span>
+                    <button class="button button--addOnLeft" onclick="minusInput()">-</button>
+                    <input id="count-product" type="text" placeholder="Count" value="1"
+                      class="input stepperInput__input">
+                    <button class="button button--addOnRight" onclick="plusInput()">+</button>
+                  </div>
+
+                  <%if (user && user.emailConfig) {%>
+                    <% if(product.new){%>
+                      <button id="cart-shop" class="normal"
+                        onclick="flashMessage('On arrival, save it in Love section','toast')">Add To Cart</button>
+                      <% }else{ %>
+                        <button id="cart-shop" class="normal" onclick="addProductToCart(this,'<%=product._id %>')">Add
+                          To
+                          Cart</button>
+                        <% }}else{ %>
+                          <button id="cart-shop" class="normal"
+                            onclick="flashMessage('Please, Log in to get Access','errors')">Add To Cart</button>
+                          <% } %>
+                            <div class="product-details">
+                              <h4>Product Details</h4>
+                              <span>
+                                Lorem ipsum dolor sit amen consenter adipisicing, durius rerun
+                                fugit corrupts amen hic porno? Perspiciatis site expedite
+                                similitude dolors! Nebo vera corporal quasi dicta aut hic doit?
+                              </span>
+                            </div>
                 </div>
-                <%if (user && user.emailConfig) {%>
-                  <% if(product.new){%>
-                    <button id="cart-shop" class="normal"
-                      onclick="flashMessage('On arrival, save it in Love section','toast')">Add To Cart</button>
-                    <% }else{ %>
-                      <button id="cart-shop" class="normal" onclick="addProductToCart(this,'<%=product._id %>')">Add To
-                        Cart</button>
-                      <% }}else{ %>
-                        <button id="cart-shop" class="normal"
-                          onclick="flashMessage('Please, Log in to get Access','errors')">Add To Cart</button>
-                        <% } %>
-                          <div class="product-details">
-                            <h4>Product Details</h4>
-                            <span>
-                              Lorem ipsum dolor sit amen consenter adipisicing, durius rerun
-                              fugit corrupts amen hic porno? Perspiciatis site expedite
-                              similitude dolors! Nebo vera corporal quasi dicta aut hic doit?
-                            </span>
-                          </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="other-products product01 ">
-          <h2>Other <%=product.name[product.name.length-1]=='s'?product.name:product.name+'s' %></h2>
-          <div class="holder-cont products-holder">
-            <div class="button-products ">
-              <button class="left-slide" onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 1000)">
-                <i class="fa-solid fa-angles-left"></i>
-              </button>
-              <div class="container boxs">
-                <% for (let i=0; i < products.length; i++) {%>
-                  <%- include('../partials/product.ejs',{objProduct:products[i],place:"shope"}) %>
-                    <% } %>
+          <div class="other-products product01 ">
+            <h2>Other <%=product.name[product.name.length-1]=='s'?product.name:product.name+'s' %></h2>
+            <div class="holder-cont products-holder">
+              <div class="button-products ">
+                <button class="left-slide" onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 1000)">
+                  <i class="fa-solid fa-angles-left"></i>
+                </button>
+                <div class="container boxs">
+                  <% for (let i=0; i < products.length; i++) {%>
+                    <%- include('../partials/product.ejs',{objProduct:products[i],place:"shope"}) %>
+                      <% } %>
+                </div>
+                <button class="right-slide"
+                  onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 1000)">
+                  <i class="fa-solid fa-angles-right"></i>
+                </button>
               </div>
-              <button class="right-slide" onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 1000)">
-                <i class="fa-solid fa-angles-right"></i>
-              </button>
             </div>
           </div>
-        </div>
-        <%- include('../partials/footer.ejs') %>
-          <%- include('../partials/scripting.ejs') %>
+          <%- include('../partials/footer.ejs') %>
+            <%- include('../partials/scripting.ejs') %>
   </body>
   <script>
     observesTop()
