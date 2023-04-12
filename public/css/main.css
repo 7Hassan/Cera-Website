@@ -172,12 +172,17 @@ body.hidden {
 }
 
 .holder-image h2 {
-  color: var(--main-color);
+  color: white;
   text-align: center !important;
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.main-sec-contact.holder-image h2{
+  color: var(--main-color) !important;
+
 }
 
 
@@ -794,11 +799,11 @@ body.hidden {
 
 .product-pop .size-count input {
   width: 100% !important;
-  padding: 0 !important;
   font-size: 15px !important;
   border: 2px solid #44ba32 !important;
   border-radius: 10px !important;
-  padding: 0 10px !important;
+  padding: 5px 10px !important;
+  text-align: center;
 }
 
 .product-pop .errors {
@@ -1025,6 +1030,10 @@ footer .container div {
 footer .container div h5 {
   font-size: 16px;
   margin-bottom: 5px;
+}
+
+select:focus {
+  border-color: #7171db;
 }
 
 footer .container div h4 {
@@ -1272,12 +1281,17 @@ footer .copyright {
 
 .product .text select {
   display: block;
+  width: 100%;
+}
+
+select {
   width: 50px;
   height: 40px;
   padding: 1px;
   outline: none;
   border: 2px solid #44ba32;
   border-radius: 10px;
+  text-align: center;
 }
 
 .stepperInput input {
@@ -2031,7 +2045,7 @@ footer .contact {
 }
 
 @media (max-width: 499px) {
-  h2:not(.main-sec-contact h2) {
+  h2 {
     font-size: 18px !important;
     line-height: 10px;
   }

@@ -65,6 +65,18 @@ exports.addProduct = catchError(async (req, res, next) => {
   await cart.save()
   res.status(200).send(product)
 })
+exports.updateCart = catchError(async (req, res, next) => {
+  const { count, size, productId } = req.body
+  const user = req.user
+  const cart = await Cart.findById(user.cart._id)
+  if (!cart) return next(new AppError('Error, try again', 401))
+  const index = cart.products.findIndex((obj) => obj.product.id == productId)
+  if (index === -1) return next(new AppError('Product isn\'t in a Cart', 400))
+  cart.products[index].count = count
+  cart.products[index].size = size
+  await cart.save()
+  res.status(200).json({ count: cart.products[index].count, size: cart.products[index].size })
+})
 
 exports.loveProduct = catchError(async (req, res, next) => {
   const { productId } = req.body
@@ -100,7 +112,6 @@ exports.removeProduct = catchError(async (req, res, next) => {
   } else {
     res.status(401).send('failed')
   }
-
 })
 
 exports.userData = catchError(async (req, res, next) => {

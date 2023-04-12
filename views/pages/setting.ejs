@@ -7,20 +7,24 @@
   <body>
     <%- include('../partials/flashMsg.ejs') -%>
       <nav class="user-view__menu">
+        <a href="/">
+
+          <img src="/imgs/logo.png" alt="">
+        </a>
         <ul class="side-nav">
-          <li class="side-nav--active" onclick="changeElementContainer('user-view__content')">
+          <li class="side-nav--active" onclick="changeElementContainer(this,'user-view__content')">
             <i class="fa-solid fa-gear"></i>
             <a href="#" onclick="event.preventDefault()">
               Settings
             </a>
           </li>
-          <li>
+          <li onclick="changeElementContainer(this,'cart-view__content')">
             <i class="fa-solid fa-cart-shopping shop-icon"></i>
             <a href="#" onclick="event.preventDefault()">
               Cart
             </a>
           </li>
-          <li>
+          <li onclick="changeElementContainer(this,'love-view__content')">
             <i class="fa-solid fa-heart love"></i>
             <a href="#" onclick="event.preventDefault()">
               Loves
@@ -32,7 +36,7 @@
 
 
 
-      <div class="user-view__content hidden-sec">
+      <div class="user-view__content show-sec">
         <div class="user-view__form-container">
           <h2 class="heading-secondary ma-bt-md">Your account settings</h2>
           <form class="form form-user-data">
@@ -96,24 +100,27 @@
         </div>
       </div>
 
-      <div class="cart-view__content">
+      <div class="cart-view__content hidden-sec">
         <div class="table-box special">
-          <table width="">
+          <table>
             <thead>
               <tr>
                 <td>remove</td>
                 <td> image</td>
                 <td> project</td>
                 <td> price</td>
+                <td> Size</td>
                 <td> ountatiy</td>
                 <td> subtotal</td>
+                <td> Save</td>
               </tr>
             </thead>
             <tbody>
               <% for(let i=0;i<user.cart.products.length;i++){ %>
                 <% const product=user.cart.products[i].product%>
-                  <tr>
-                    <td><i class="fa-solid fa-trash-can"></i>
+                  <tr id="box-<%=product._id%>">
+                    <td>
+                      <i class="fa-solid fa-trash-can" onclick="crashRemover(this,'<%=product._id%>')"></i>
                     </td>
                     <td><img width="100px" src="/<%=product.imgSrc %>" alt=""></td>
                     <td>cartoon astronaut <%=product.name %>
@@ -121,25 +128,120 @@
                     <td>
                       $<%=product.price %>
                     </td>
-
+                    <td>
+                      <select id="select-input">
+                        <% const sizes=['XL','L','M','S'] %>
+                          <%for(let j=0;j<sizes.length;j++){%>
+                            <% if(sizes[j]==user.cart.products[i].size){ %>
+                              <option selected value="<%= sizes[j] %>">
+                                <%= sizes[j] %>
+                              </option>
+                              <% }else{ %>
+                                <option value="<%= sizes[j] %>">
+                                  <%= sizes[j] %>
+                                </option>
+                                <% }} %>
+                      </select>
+                    </td>
                     <td>
                       <div class="stepperInput">
-                        <button class="button button--addOnLeft" onclick="minusInput()">-</button>
-                        <input id="count-product" type="text" placeholder="Count" value="<%= user.cart.products[i].count %>"
-                          class="input stepperInput__input">
-                        <button class="button button--addOnRight" onclick="plusInput()">+</button>
+                        <button class="button button--addOnLeft"
+                          onclick="changeInput('<%=product._id%>', 'minus','<%=product.price%>')">-</button>
+                        <input id="count-product" type="text" placeholder="Count"
+                          oninput=" changeSunTotal('<%=product._id%>', this.value, '<%=product.price%>')"
+                          value="<%= user.cart.products[i].count %>" class="input stepperInput__input">
+                        <button class="button button--addOnRight"
+                          onclick="changeInput('<%=product._id%>', 'plus','<%=product.price%>')">+</button>
                       </div>
                     </td>
-                    <td class="sub-total">$<%=product.price*user.cart.products[i].count%>
+                    <td class="sub-total">
+                      $<%=product.price*user.cart.products[i].count%>
+                    </td>
+                    <td id="save-changes">
+                      <i class="fa-solid fa-floppy-disk"
+                        onclick="updateCart(this,'<%=product._id%>','<%=product.price%>')"></i>
                     </td>
                   </tr>
                   <% } %>
 
             </tbody>
           </table>
-
-
         </div>
+        <div class="holder-total">
+          <div class="table-box total-table">
+            <table>
+              <thead>
+                <tr>
+                  <td>name</td>
+                  <td> subtotal</td>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% let total=0 %>
+                  <% for(let i=0;i<user.cart.products.length;i++){ %>
+                    <% const product=user.cart.products[i].product%>
+                      <% total+=product.price *user.cart.products[i].count%>
+                        <tr id="total-<%=product._id%>">
+                          <td>
+                            <%=product.name %>
+                          </td>
+                          <td class="sub-total-product">
+                            $<%=product.price *user.cart.products[i].count%>
+                          </td>
+                        </tr>
+                        <% } %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td class="total-products-price">
+                    $<%= total%>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <a href="/payment">
+
+            <button class="normal">Proceed to checkout</button>
+          </a>
+        </div>
+        <%- include('../partials/footer.ejs') -%>
+      </div>
+
+      <div class="love-view__content hidden-sec">
+        <div class="table-box special">
+          <table>
+            <thead>
+              <tr>
+                <td>remove</td>
+                <td> image</td>
+                <td> project</td>
+                <td> price</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let i=0;i<user.cart.loves.length;i++){ %>
+                <% const product=user.cart.loves[i]%>
+                  <tr id="box-<%=product._id%>">
+                    <td>
+                      <i class="fa-solid fa-heart love" onclick="loveRemover(this,'<%=product._id%>')"></i>
+
+                      <!-- <i class="fa-solid fa-trash-can" onclick="crashRemover(this,'<%=product._id%>')"></i> -->
+                    </td>
+                    <td><img width="100px" src="/<%=product.imgSrc %>" alt=""></td>
+                    <td>cartoon astronaut <%=product.name %>
+                    </td>
+                    <td>
+                      $<%=product.price %>
+                    </td>
+                  </tr>
+                  <% } %>
+            </tbody>
+          </table>
+        </div>
+        <%- include('../partials/footer.ejs') -%>
       </div>
 
 

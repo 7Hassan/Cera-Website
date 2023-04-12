@@ -38,10 +38,12 @@
                   </select>
                   <div class="stepperInput">
                     <span class="errors"></span>
-                    <button class="button button--addOnLeft" onclick="minusInput()">-</button>
+                    <button class="button button--addOnLeft"
+                      onclick="changeInput('<%=product._id%>', 'minus','<%=product.price%>')">-</button>
                     <input id="count-product" type="text" placeholder="Count" value="1"
                       class="input stepperInput__input">
-                    <button class="button button--addOnRight" onclick="plusInput()">+</button>
+                    <button class="button button--addOnRight"
+                      onclick="changeInput('<%=product._id%>', 'plus','<%=product.price%>')">+</button>
                   </div>
 
                   <%if (user && user.emailConfig) {%>

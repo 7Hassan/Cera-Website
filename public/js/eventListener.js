@@ -129,7 +129,8 @@ async function quickAddLove(ele, id) {
   const icon = ele.firstElementChild
   loadingForm(ele)
   icon.remove()
-  await patch(`/shop/${id}`, { productId: id })
+  const res = await patch(`/shop/${id}`, { productId: id })
+  if (!res) return 0
   removeLoadingForm(ele)
   ele.innerHTML = '<i class="fa-solid fa-heart love"></i>'
   ele.setAttribute('onclick', `quickRemoveLove(this, '${id}')`)
@@ -139,7 +140,8 @@ async function quickRemoveLove(ele, id) {
   const icon = ele.firstElementChild
   loadingForm(ele)
   icon.remove()
-  await deleteFun(`/shop/${id}`, { id, name: 'loves' })
+  const res = await deleteFun(`/shop/${id}`, { id, name: 'loves' })
+  if (!res) return 0
   removeLoadingForm(ele)
   ele.innerHTML = '<i class="fa-regular fa-heart love"></i>'
   ele.setAttribute('onclick', `quickAddLove(this, '${id}')`)
@@ -173,11 +175,56 @@ function hiddenPopProduct(ele) {
   ele.lastElementChild.classList.remove('show')
 }
 
-function plusInput() {
-  const input = document.getElementById('count-product')
-  input.value++;
+function changeInput(id, type, price) {
+  const input = document.querySelector(`#box-${id} #count-product`)
+  const subTotal = document.querySelector(`#box-${id} .sub-total`)
+  if (type == 'plus') input.value++
+  else input.value--
+  if (subTotal) changeSunTotal(id, input.value, price)
 }
-function minusInput() {
-  const input = document.getElementById('count-product')
-  input.value--;
+
+async function crashRemover(ele, id) {
+  const tr = ele.parentElement.parentElement
+  const td = ele.parentElement
+  ele.remove()
+  loadingForm(td)
+  const res = await deleteFun(`/shop/${id}`, { id, name: 'cart' })
+  if (!res) return 0
+  tr.remove();
+  document.getElementById(`total-${id}`).remove()
+  totalPrice()
+}
+async function loveRemover(ele, id) {
+  const tr = ele.parentElement.parentElement
+  const td = ele.parentElement
+  ele.remove()
+  loadingForm(td)
+  const res = await deleteFun(`/shop/${id}`, { id, name: 'loves' })
+  if (!res) return 0
+  tr.remove();
+}
+
+async function updateCart(ele, id, price) {
+  const count = document.querySelector(`#box-${id} #count-product`).value
+  const size = document.querySelector(`#box-${id} #select-input`).value
+  const td = ele.parentElement
+  const data = { count, size, productId: id }
+  ele.classList.add('hidden')
+  loadingForm(td)
+  const res = await put(`/shop/${id}`, data)
+  removeLoadingForm(td)
+  ele.classList.remove('hidden')
+  if (!res) return 0
+  document.getElementById(`total-${id}`).lastElementChild.innerHTML = `$${count * price}`
+  totalPrice()
+}
+
+function changeElementContainer(ele, className) {
+  const elementNav = document.querySelector(".side-nav--active")
+  const showSec = document.querySelector(`.${className}`)
+  const hideSec = document.querySelector(".show-sec")
+  elementNav.classList.remove("side-nav--active")
+  ele.classList.add("side-nav--active")
+  hideSec.classList.replace('show-sec', 'hidden-sec')
+  showSec.classList.replace('hidden-sec', 'show-sec')
 }

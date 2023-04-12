@@ -32,6 +32,13 @@ async function patch(url, data) {
     flashMessage(err, 'errors')
   }
 }
+async function put(url, data) {
+  try {
+    return await axios.put(url, data)
+  } catch (err) {
+    flashMessage(err, 'errors')
+  }
+}
 
 function flashMessage(mess, flashType) {
   const message = (mess.response ? mess.response.data : mess);
@@ -119,7 +126,10 @@ async function headerRemoverX(productEle) {
   checkCart();
 }
 
-
+function changeSunTotal(id, count, price) {
+  if (isNaN(count) || count <= 0 || count > 9) return 0
+  document.querySelector(`#box-${id} .sub-total`).innerHTML = `$${price * count}`
+}
 
 
 

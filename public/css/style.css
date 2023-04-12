@@ -797,8 +797,17 @@ body {
       to(#28b487));
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 4rem 0;
-  width: 277px;
+  width: 150px;
+  position: fixed;
+  height: 150vh;
+  z-index: 10;
 
+}
+
+.cart-view__content,
+.user-view__content,
+.love-view__content {
+  margin-left: 150px;
 }
 
 @media (max-width:699px) {
@@ -806,10 +815,23 @@ body {
     width: 50px;
   }
 
+  .user-view__menu img {
+    width: 65px;
+    margin-left: 5px !important;
+  }
+
+
+
+  .user-view__menu ul {
+    width: 100%;
+    overflow: hidden;
+  }
+
   .cart-view__content,
   .user-view__content,
   .love-view__content {
-    width: calc(100%-50px);
+    width: calc(100%);
+    margin-left: 50px;
   }
 }
 
@@ -1436,6 +1458,10 @@ button .loading {
   animation: spin 1s linear infinite !important;
 }
 
+.user-view__menu img {
+  margin-left: auto;
+  display: block;
+}
 
 
 .user-view__menu li {
@@ -1445,6 +1471,7 @@ button .loading {
   align-items: center;
   cursor: pointer;
   font-size: 23px;
+  margin: 50px 0;
 
 }
 
@@ -1549,6 +1576,10 @@ td {
   text-align: center;
 }
 
+table td {
+  position: relative;
+}
+
 table td:nth-child(6) {
   min-width: 150px;
   text-align: center;
@@ -1600,6 +1631,12 @@ table td:nth-child(6) {
   text-align: center;
 }
 
+.table-box table td:nth-child(7),
+.table-box table td:nth-child(8) {
+  width: 150px;
+  text-align: center;
+}
+
 .stepperInput {
   margin-left: 20px;
 }
@@ -1612,4 +1649,55 @@ table .sub-total {
 
 table .fa-trash-can:hover {
   color: red;
+}
+
+table .loading {
+  top: 42%;
+  right: 50%;
+}
+
+i.hidden {
+  display: none;
+}
+
+.holder-total {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 250px;
+  width: 100%;
+}
+
+.total-table {
+  border: 1px solid #ccc;
+}
+
+.holder-total .sub-total-product {
+  color: #279470;
+}
+
+.holder-total a {
+  display: block;
+  margin: auto;
+}
+
+.holder-total a button {
+  background-color: #279470;
+  color: white;
+  margin: 15px 0;
+}
+
+.total-table tfoot {
+  border-top: 1px solid #ccc;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.total-table tfoot tr td:nth-child(2) {
+  color: #279470;
+}
+
+td .love {
+  font-size: 30px !important;
 }

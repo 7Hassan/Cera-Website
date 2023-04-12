@@ -81,14 +81,18 @@ function setLocalStroageData() {
 
 
 
-// function to calculate total price
 function totalPrice() {
   let total = 0;
-  const prices = [...document.querySelectorAll('.container-cart .total-product-price span')]
-  const totalEle = document.querySelector('.total-carte .total')
+  let prices = [...document.querySelectorAll('.container-cart .total-product-price span')]
+  let totalEle = document.querySelector('.total-carte .total')
+  if (!prices || !totalEle) {
+    prices = [...document.querySelectorAll('.holder-total table .sub-total-product')]
+    totalEle = document.querySelector('.holder-total table .total-products-price')
+  }
   prices.map((priceEle) => total += +priceEle.innerText.split('$')[1])
   totalEle.innerHTML = `$${total}`
 }
+
 
 
 
