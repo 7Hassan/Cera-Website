@@ -1,19 +1,14 @@
 const User = require('../models/users')
-const Cart = require('../models/cart')
 const jwt = require('jsonwebtoken')
-const base64url = require('base64url')
 const { promisify } = require('util')
-const Email = require('./email')
-const axios = require('axios')
-const crypto = require('crypto')
-const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
-const validator = require('validator');
 const { countries, zones } = require("moment-timezone/data/meta/latest.json");
 const WebSocket = require('ws');
 const multer = require('multer')
 const sharp = require('sharp')
-const cron = require('node-cron')
+const geoip = require('geoip-lite');
+const requestIp = require('request-ip');
+const iso = require('iso-3166-1-alpha-2')
 
 
 exports.cookieOptions = {
@@ -25,7 +20,8 @@ exports.cookieOptions = {
 //? create a jwt token
 exports.createJwtToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
 
-exports.getCountry = () => {
+exports.getCountry = (req) => {
+  /* one way by time zone  
   const cityToCountry = {};
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   Object.keys(zones).forEach(z => {
@@ -34,32 +30,27 @@ exports.getCountry = () => {
     cityToCountry[city] = countries[zones[z].countries[0]].name;
   })
   const city = timeZone.split("/")[1];
-  return cityToCountry[city];
+  return cityToCountry[city]; */
+  const ip = requestIp.getClientIp(req);
+  const countryCode = geoip.lookup(ip).country;
+  const country = iso.getCountry(countryCode);
+  return country
 }
 
 exports.testJwtToken = async (req, res, next) => {
   let cookie, user, time
   if (req.cookies) cookie = req.cookies.jwt
-  if (cookie) {
-    if (cookie.split('.').length !== 3) return { user, time }
-    await promisify(jwt.verify)(cookie, process.env.JWT_SECRET)
-      .then(async (decoded) => {
-        time = decoded.iat
-        user = await User.findOne({ _id: decoded.id })
-      }).catch((err) => 0)
-  }
+  if (!cookie) return { user, time }
+  if (cookie.split('.').length !== 3) return { user, time }
+  await promisify(jwt.verify)(cookie, process.env.JWT_SECRET)
+    .then(async (decoded) => {
+      time = decoded.iat
+      user = await User.findOne({ _id: decoded.id })
+    }).catch((err) => 0)
   return { user, time }
 }
 
 exports.sendSocket = (data) => wss.clients.forEach((client) => (client.readyState === WebSocket.OPEN) ? client.send(data) : 0)
-
-exports.senderEmail = (user, next) => {
-  try {
-    new Email(user, url).welcome()
-  } catch (err) {
-    next(new AppError('Error in sending an Email. Try again later', 500))
-  }
-}
 
 exports.pageObject = (title, req) => {
   return {
@@ -71,12 +62,12 @@ exports.pageObject = (title, req) => {
   }
 }
 
-//TODO: img Editing
 const multerStorage = multer.memoryStorage()
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) cb(null, true)
   else cb(new AppError('Please upload only images', 400), false)
 }
+
 exports.upload = multer({ storage: multerStorage, fileFilter: multerFilter })
 
 exports.sharpImg = (req) => sharp(req.file.buffer)
@@ -91,18 +82,4 @@ exports.sliceDataShop = (data, length) => {
   for (let i = 0; i < data.length; i += length) products.push(data.slice(i, length + i))
   return products
 }
-
-exports.resetEmailCounter = async (user) => {
-  setTimeout(async () => {
-    user.emailCount = process.env.MAX_EMAIL_COUNT
-    await user.save()
-    return user
-  })
-
-}
-
-exports.resetAllEmailCounter = () => cron.schedule('0 0 * * *', async () => {//? run every day
-  try { await User.updateMany({ emailCount: 0 }, { $set: { emailCount: process.env.MAX_EMAIL_COUNT } }) }
-  catch (err) { console.log(err) }
-})
 

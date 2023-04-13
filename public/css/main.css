@@ -180,7 +180,7 @@ body.hidden {
   transform: translateX(-50%);
 }
 
-.main-sec-contact.holder-image h2{
+.main-sec-contact.holder-image h2 {
   color: var(--main-color) !important;
 
 }
@@ -380,6 +380,7 @@ body.hidden {
 .user-div .log-out {
   display: flex;
   align-items: center;
+  color: black !important;
 }
 
 .user-div .user-img {
@@ -737,8 +738,13 @@ body.hidden {
 }
 
 .product-box.notStock {
-  opacity: .5 !important;
-  pointer-events: none;
+  pointer-events: none !important;
+}
+
+.notStock .message-not-stock {
+  color: red;
+  height: 0;
+  font-weight: 600;
 }
 
 .product01 .product-box .product-box-icons {
@@ -1279,9 +1285,12 @@ footer .copyright {
   color: var(--main-color);
 }
 
+.product-pop select {
+  width: 100%;
+}
+
 .product .text select {
   display: block;
-  width: 100%;
 }
 
 select {

@@ -1,10 +1,8 @@
 const User = require('../models/users')
-const Cart = require('../models/cart')
 const Product = require('../models/products')
 const catchError = require('../Errors/catch')
 const helper = require('./helperFunc')
 const AppError = require('../Errors/classError')
-const Email = require('./email')
 
 exports.aboutPage = (req, res) => res.render('pages/about', helper.pageObject('Cera | About', req))
 exports.paymentPage = (req, res) => res.render('pages/payment', helper.pageObject('Cera | Payment', req))
@@ -12,8 +10,7 @@ exports.contactPage = (req, res) => res.render('pages/contact', helper.pageObjec
 exports.blogPage = (req, res) => res.render('pages/blog', helper.pageObject('Cera | Blog', req))
 exports.notFoundPage = (req, res) => res.status(404).render('pages/404', helper.pageObject('404', req))
 exports.settingPage = (req, res, next) => res.render('pages/setting', helper.pageObject('Cera | Account', req))
-
-exports.homePage = catchError(async (req, res, next) => {
+exports.homePage = catchError(async (req, res, next) =>
   res.render('pages/index', {
     featureProd: await Product.find({ stoked: false }),
     newProd: await Product.find({ new: true, stoked: true }),
@@ -22,9 +19,7 @@ exports.homePage = catchError(async (req, res, next) => {
     warning: req.flash('warning'),
     success: req.flash('success'),
     toast: req.flash('toast'),
-  })
-
-})
+  }))
 
 exports.shopPage = catchError(async (req, res, next) => {
   let result = await Product.find({ stoked: true }).sort({ "name": -1 })
@@ -40,11 +35,11 @@ exports.shopPage = catchError(async (req, res, next) => {
 
 exports.singleProd = catchError(async (req, res, next) => {
   const singleProduct = await Product.findOne({ _id: req.params.id })
-  let result = await Product.find({ stoked: true, name: singleProduct.name, _id: { $ne: req.params.id } }).sort({ "price": -1 })
+  let otherProducts = await Product.find({ stoked: true, name: singleProduct.name, _id: { $ne: req.params.id } }).sort({ "price": -1 })
   res.render('pages/product', {
     title: 'Product',
     product: singleProduct,
-    products: result,
+    products: otherProducts,
     errors: req.flash('errors'),
     warning: req.flash('warning'),
     success: req.flash('success'),
@@ -52,76 +47,13 @@ exports.singleProd = catchError(async (req, res, next) => {
   });
 })
 
-exports.addProduct = catchError(async (req, res, next) => {
-  const { count, size, productId } = req.body
-  const user = req.user
-  const product = await Product.findById(productId)
-  if (!product) return next(new AppError('Product not found', 401))
-  const cart = await Cart.findById(user.cart._id)
-  if (!cart) return next(new AppError('Error, try again', 401))
-  const index = cart.products.findIndex((obj) => obj.product.id == productId)
-  if (index !== -1) return next(new AppError('Product is in a Cart', 400))
-  cart.products.push({ product: product._id, count: count, size: size })
-  await cart.save()
-  res.status(200).send(product)
-})
-exports.updateCart = catchError(async (req, res, next) => {
-  const { count, size, productId } = req.body
-  const user = req.user
-  const cart = await Cart.findById(user.cart._id)
-  if (!cart) return next(new AppError('Error, try again', 401))
-  const index = cart.products.findIndex((obj) => obj.product.id == productId)
-  if (index === -1) return next(new AppError('Product isn\'t in a Cart', 400))
-  cart.products[index].count = count
-  cart.products[index].size = size
-  await cart.save()
-  res.status(200).json({ count: cart.products[index].count, size: cart.products[index].size })
-})
-
-exports.loveProduct = catchError(async (req, res, next) => {
-  const { productId } = req.body
-  const user = req.user
-  const product = await Product.findById(productId)
-  if (!product) return next(new AppError('Product not found', 401))
-  const cart = await Cart.findById(user.cart._id)
-  if (!cart) return next(new AppError('Error, try again', 401))
-  const index = cart.loves.findIndex((obj) => obj.id == productId)
-  if (index !== -1) return next(new AppError('Product is in love list', 400))
-  cart.loves.push(product._id)
-  await cart.save()
-  res.status(200).send('add')
-})
-
-exports.removeProduct = catchError(async (req, res, next) => {
-  const { id, name } = req.body
-  const user = req.user
-  const cart = await Cart.findById(user.cart._id)
-  if (!cart) return next(new AppError('Error, try again', 401))
-  if (name == 'cart') {
-    const index = cart.products.findIndex((obj) => obj.product.id == id)
-    if (index == -1) return next(new AppError('Product not found', 401))
-    cart.products.splice(index, 1)
-    await cart.save()
-    res.status(200).send('success')
-  } else if (name == 'loves') {
-    const index = cart.loves.findIndex((obj) => obj.id == id)
-    if (index == -1) return next(new AppError('Product not found', 401))
-    cart.loves.splice(index, 1)
-    await cart.save()
-    res.status(200).send('success')
-  } else {
-    res.status(401).send('failed')
-  }
-})
 
 exports.userData = catchError(async (req, res, next) => {
   const { user, time } = await helper.testJwtToken(req, res, next)
-  if (user && !user.isChangedPass(time)) {
-    res.locals.user = user
-    req.user = user
-    return next()
-  }
   res.locals.user = ''
+  if (!user || user.isChangedPass(time)) return next()
+  res.locals.user = user
+  req.user = user
   next()
 })
 
@@ -140,10 +72,11 @@ exports.isUser = catchError(async (req, res, next) => {
 })
 
 exports.logOut = catchError(async (req, res, next) => {
-  if (req.body.data == 'logOut' && req.user) {
-    res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
-    res.status(200).json({ redirect: '/' })
-  } else next(new AppError('You aren\'t register', 401))
+  const user = req.user
+  const data = req.body.data
+  if (data != 'logOut' || !user) return next(new AppError('You aren\'t register', 401))
+  res.cookie('jwt', 'out', { expires: new Date(Date.now() + 1_000_0), httpOnly: true })
+  res.status(200).json({ redirect: '/' })
 })
 
 
@@ -205,4 +138,58 @@ exports.updatePassword = catchError(async (req, res, next) => {
   await user.save()
   req.flash('success', 'Password updated')
   res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/' })
+})
+
+exports.addProduct = catchError(async (req, res, next) => {
+  const { count, size, productId } = req.body
+  const user = req.user
+  const cart = user.cart
+  const product = await Product.findById(productId)
+  if (!product) return next(new AppError('Product not found', 401))
+  const index = cart.products.findIndex((obj) => obj.product.id == productId)
+  if (index !== -1) return next(new AppError('Product is in a Cart', 400))
+  cart.products.push({ product: product._id, count: count, size: size })
+  await cart.save()
+  res.status(200).send(product)
+})
+exports.updateCart = catchError(async (req, res, next) => {
+  const { count, size, productId } = req.body
+  const user = req.user
+  const cart = user.cart
+  const index = cart.products.findIndex((obj) => obj.product.id == productId)
+  if (index === -1) return next(new AppError('Product isn\'t in a Cart', 400))
+  cart.products[index].count = count
+  cart.products[index].size = size
+  await cart.save()
+  res.status(200).json({ count: cart.products[index].count, size: cart.products[index].size })
+})
+
+exports.loveProduct = catchError(async (req, res, next) => {
+  const { productId } = req.body
+  const user = req.user
+  const cart = user.cart
+  const product = await Product.findById(productId)
+  if (!product) return next(new AppError('Product not found', 401))
+  const index = cart.loves.findIndex((obj) => obj.id == productId)
+  if (index !== -1) return next(new AppError('Product is in love list', 400))
+  cart.loves.push(product._id)
+  await cart.save()
+  res.status(200).send('add')
+})
+
+exports.removeProduct = catchError(async (req, res, next) => {
+  const { id, name } = req.body
+  const user = req.user
+  const cart = user.cart
+  if (name == 'cart') {
+    const index = cart.products.findIndex((obj) => obj.product.id == id)
+    if (index == -1) return next(new AppError('Product not found', 401))
+    cart.products.splice(index, 1)
+  } else if (name == 'loves') {
+    const index = cart.loves.findIndex((obj) => obj.id == id)
+    if (index == -1) return next(new AppError('Product not found', 401))
+    cart.loves.splice(index, 1)
+  } else return res.status(401).send('failed')
+  await cart.save()
+  res.status(200).send('success')
 })

@@ -44,7 +44,7 @@ function LogInPassword(email, name) {
 
 function forgetPassDiv(email) {
   return `
-    < div class="main-log verify-holder email-pass" >
+    <div class="main-log verify-holder email-pass" >
           <div class="head">
             <svg style="width: 100px;" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145 130" aria-hidden="true" role="img">
               <g clip-path="url(#clip0_11448_56766)">

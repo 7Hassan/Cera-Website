@@ -1,20 +1,8 @@
 const Product = require('../models/products')
+const catchError = require('../Errors/catch')
 
-exports.allProducts = async (req, res) => {
-  try {
-    const data = await Product.find({})
-    res.status(200).send(data)
-  } catch (err) {
-    res.status(404).send('[]')
-  }
-}
-exports.oneProducts = async (req, res) => {
-  try {
-    const data = await Product.findOne({ '_id': req.params.id })
-    res.status(200).send(data)
-
-  } catch (err) {
-    res.status(404).send('[]')
-  }
-
-}
+exports.allProducts = catchError(async (req, res, next) => res.status(200).send(await Product.find({})))
+exports.oneProducts = catchError(async (req, res, next) => {
+  const data = await Product.findOne({ '_id': req.params.id })
+  res.status(200).send(data)
+})

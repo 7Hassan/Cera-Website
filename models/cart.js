@@ -20,10 +20,8 @@ const cartSchema = new mongoose.Schema({
     }
   }],
   loves: [{
-    // product: {
     type: mongoose.Schema.ObjectId,
     ref: 'products'
-    // }
   }],
   user: {
     type: mongoose.Schema.ObjectId,

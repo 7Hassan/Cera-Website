@@ -31,12 +31,6 @@ const userSchema = new mongoose.Schema({
   },
   emailToken: String,
   expEmailToken: Date,
-  emailCount: {
-    type: Number,
-    max: process.env.MAX_EMAIL_COUNT,
-    min: [0, 'Email Limited, try again after 10 hours'],
-    default: process.env.MAX_EMAIL_COUNT
-  },
   password: {
     type: String,
     required: [true, 'Password is required'],

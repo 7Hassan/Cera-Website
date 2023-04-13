@@ -76,8 +76,8 @@ app.use((req, res, next) => {
 //? limit many requests to prevent hucks
 const limiter = limitReq({
   max: 200, //? maximum requests
-  windowMs: 60 * 60 * 1000, //? in 1 Hour
-  messages: 'Too many requests. Please try later'
+  windowMs: 1000 * 60 * 60, //? in 1 Hour
+  message: 'Too many requests, try again after one hour'
 })
 app.use('/auth', limiter) //! to prevent many requests attacks on this url
 
@@ -93,6 +93,7 @@ wss.on('connection', function connection(ws) {
 })
 
 //? use routing
+
 app.use('/', require('./routes/pages'));
 app.use('/api', require('./routes/api'));
 app.use('/auth', require('./routes/auth'));
@@ -107,6 +108,5 @@ app.use(errorHandler)
 
 
 module.exports = app
-
 
 

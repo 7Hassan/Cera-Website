@@ -121,8 +121,8 @@ function resetPassLogIn(email) {
 async function sendPassEmail(button, email) {
   loadingForm(button)
   const res = await patch('/auth/login', { email })
+  if (res) await flashMessage(res.data, 'success')
   removeLoadingForm(button)
-  if (res) flashMessage(res.data, 'success')
 }
 
 async function quickAddLove(ele, id) {
