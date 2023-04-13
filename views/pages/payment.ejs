@@ -3,130 +3,131 @@
   <body>
     <%- include('../partials/flashMsg.ejs') -%>
 
-    <div class="main-payment">
-      <div class="payment">
-        <div class="heade-holder">
-          <div class="text">
-            <h2>Pay Securely</h2>
-          </div>
-          <div class="img-price">
-            <img src="./imgs/logo.png" alt="">
-            <div class="total-price">
-              Total:
-              <span class="total"></span>
+      <div class="main-payment">
+        <div class="payment">
+          <div class="heade-holder">
+            <div class="text">
+              <h2>Pay Securely</h2>
+            </div>
+            <div class="img-price">
+              <img src="./imgs/logo.png" alt="">
+              <div class="total-price">
+                Total:
+                <span class="total"></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="holder">
-          <div class="information">
-            <div class="carde-info  div-click">
-              <h4>Credit Card</h4>
-              <div class="holed">
-                <div> ENTER CARD NUMBER </div>
-                <div>
-                  <img src="https://secure-media.hotstarext.com/web-assets/prod/images/dc-sg-card-icons.svg" alt="">
+          <div class="holder">
+            <div class="information">
+              <div class="carde-info  div-click">
+                <h4>Credit Card</h4>
+                <div class="holed">
+                  <div> ENTER CARD NUMBER </div>
+                  <div>
+                    <img src="https://secure-media.hotstarext.com/web-assets/prod/images/dc-sg-card-icons.svg" alt="">
+                  </div>
                 </div>
               </div>
+              <div class="place-info div-click">
+                <h4>Delivery Location</h4>
+                <div class="holed">
+                  <div> ENTER DELIVERY LOCATION</div>
+                  <div>
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                </div>
+              </div>
+              <footer>
+                <p>
+                  Subscription will automatically renew at the then current annual price. Ts and Cs apply.
+                  By Proceeding, I confirm that I meet the minimum age requirements, and I agree to the Subscriber
+                  Agreement
+                  and
+                  <a href="">Privacy Policy</a>
+                </p>
+              </footer>
             </div>
-            <div class="place-info div-click">
-              <h4>Delivery Location</h4>
-              <div class="holed">
-                <div> ENTER DELIVERY LOCATION</div>
-                <div>
-                  <i class="fa-solid fa-location-dot"></i>
-                </div>
-              </div>
-            </div>
-            <footer>
-              <p>
-                Subscription will automatically renew at the then current annual price. Ts and Cs apply.
-                By Proceeding, I confirm that I meet the minimum age requirements, and I agree to the Subscriber
-                Agreement
-                and
-                <a href="">Privacy Policy</a>
-              </p>
-            </footer>
           </div>
-        </div>
-        <div class="credit-card popup show">
-          <div class="inf">
-            <div class="bs-header">LOCATION</div>
-            <form action="" method="post">
-              <div>
-                <input id="carde-number" name="Card Number" maxlength="19" type="text" required
-                  placeholder="XXXX XXXX XXXX XXXX" onblur="checkCaredAllNumbers(this)" onkeypress="return cardedSpace()"
-                  oninput="checkCaredFirstNumbers(this,document.getElementById('visa-img'))" />
-                <label for="carde-number">Card Number</label>
-                <span id="error-carde">Please enter a valid Card Number</span>
-                <img id="visa-img" src="">
-              </div>
-              <div class="row-input">
+          <div class="credit-card popup show">
+            <div class="inf">
+              <div class="bs-header">LOCATION</div>
+              <form action="" method="post">
                 <div>
-                  <input name="buyer's City" id="carde-date" maxlength="5" type="text" required placeholder="MM/YY"
-                    onkeypress="return  addSlashes()">
-                  <label for="">VALIDITY</label>
+                  <input id="carde-number" name="Card Number" maxlength="19" type="text" required
+                    placeholder="XXXX XXXX XXXX XXXX" onblur="checkCaredAllNumbers(this)"
+                    onkeypress="return cardedSpace()"
+                    oninput="checkCaredFirstNumbers(this,document.getElementById('visa-img'))" />
+                  <label for="carde-number">Card Number</label>
+                  <span id="error-carde">Please enter a valid Card Number</span>
+                  <img id="visa-img" src="">
+                </div>
+                <div class="row-input">
+                  <div>
+                    <input name="buyer's City" id="carde-date" maxlength="5" type="text" required placeholder="MM/YY"
+                      onkeypress="return  addSlashes()">
+                    <label for="">VALIDITY</label>
+                  </div>
+                  <div>
+                    <input name=" zip-code" type="text" maxlength="3" onkeypress="return onlyNumbers(event)" required />
+                    <label for="">CVV</label>
+                  </div>
                 </div>
                 <div>
-                  <input name=" zip-code" type="text" maxlength="3" onkeypress="return onlyNumbers(event)" required />
-                  <label for="">CVV</label>
+                  <input name="buyer's Email" type="text" required />
+                  <label for="">Name</label>
                 </div>
-              </div>
-              <div>
-                <input name="buyer's Email" type="text" required />
-                <label for="">Name</label>
-              </div>
-              <div class="buttom">
-                <a href=""> <button class="normal non-click" onclick="return false">PAY SECURELY &nbsp; </button></a>
-              </div>
-          </div>
-          </form>
-          <div class="bs-footer">
-            <div class="total-footer">
-              Total:
-              <span class="total"></span>
-            </div>
-
-          </div>
-        </div>
-        <div class="location popup show">
-          <div class="inf">
-            <div class="bs-header">CREDIT CARDS</div>
-            <form action="" method="post">
-              <div>
-                <input id="full-name" name="full name" type="text" />
-                <label for="">Full Name</label>
-              </div>
-              <div>
-                <input name="Address" type="text" required />
-                <label for="">Address</label>
-              </div>
-              <div class="row-input">
-                <div>
-                  <input name="City" type="text" required placeholder="">
-                  <label for="">State</label>
-                </div>
-                <div>
-                  <input name=" zip-code" type="text" onkeypress="return onlyNumbers(event)" required />
-                  <label for="">Zip Code</label>
-                </div>
-              </div>
-
-              <div class="bs-footer">
                 <div class="buttom">
-                  <a href=""><button class="normal">SEND </button></a>
+                  <a href=""> <button class="normal non-click" onclick="return false">PAY SECURELY &nbsp; </button></a>
                 </div>
-              </div>
+            </div>
             </form>
+            <div class="bs-footer">
+              <div class="total-footer">
+                Total:
+                <span class="total"></span>
+              </div>
+
+            </div>
+          </div>
+          <div class="location popup show">
+            <div class="inf">
+              <div class="bs-header">CREDIT CARDS</div>
+              <form action="" method="post">
+                <div>
+                  <input id="full-name" name="full name" type="text" />
+                  <label for="">Full Name</label>
+                </div>
+                <div>
+                  <input name="Address" type="text" required />
+                  <label for="">Address</label>
+                </div>
+                <div class="row-input">
+                  <div>
+                    <input name="City" type="text" required placeholder="">
+                    <label for="">State</label>
+                  </div>
+                  <div>
+                    <input name=" zip-code" type="text" onkeypress="return onlyNumbers(event)" required />
+                    <label for="">Zip Code</label>
+                  </div>
+                </div>
+
+                <div class="bs-footer">
+                  <div class="buttom">
+                    <a href=""><button class="normal">SEND </button></a>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
+        <div class="over-layout"></div>
       </div>
-      <div class="over-layout"></div>
-    </div>
-    <%- include('../partials/scripting.ejs') %>
-    <script>
-      totalPrice(document.querySelectorAll(".total"));
-      popupOverlay(document.querySelectorAll(".holed"));
-    </script>
+      <%- include('../partials/scripting.ejs') %>
+        <script>
+          //totalPrice(document.querySelectorAll(".total"));
+          popupOverlay(document.querySelectorAll(".holed"));
+        </script>
 
   </body>
 

@@ -6,6 +6,9 @@ socket.addEventListener('close', (event) => console.log('🚫 Disconnected from 
 
 
 function cartIconClicker(ele) {
+  let holderDivUser = document.querySelector('.user-div')
+  let productsCart = document.querySelector('.holder-cart');
+
   if (userIcon && userIcon.classList.contains('active')) {
     userIcon.classList.remove('active')
     holderDivUser.classList.remove('show')
@@ -15,6 +18,9 @@ function cartIconClicker(ele) {
 }
 
 function userIconClicker(ele) {
+  let holderDivUser = document.querySelector('.user-div')
+  let productsCart = document.querySelector('.holder-cart');
+
   if (cartIcon && cartIcon.classList.contains('active')) {
     cartIcon.classList.remove('active')
     productsCart.classList.remove('show')
@@ -59,7 +65,7 @@ function showImg(ele) {
 
 // push data in carteData
 async function addProductToCart(ele, id) {
-  const count = document.querySelector(`#box-${id} #count-product`)
+  const count = document.querySelector(`#box-${id} .count-product`)
   const size = document.querySelector(`#box-${id} #select-input`)
   const error = count.parentElement.firstElementChild
 
@@ -176,7 +182,7 @@ function hiddenPopProduct(ele) {
 }
 
 function changeInput(id, type, price) {
-  const input = document.querySelector(`#box-${id} #count-product`)
+  const input = document.querySelector(`#box-${id} .count-product`)
   const subTotal = document.querySelector(`#box-${id} .sub-total`)
   if (type == 'plus') input.value++
   else input.value--
@@ -205,7 +211,7 @@ async function loveRemover(ele, id) {
 }
 
 async function updateCart(ele, id, price) {
-  const count = document.querySelector(`#box-${id} #count-product`).value
+  const count = document.querySelector(`#box-${id} .count-product`).value
   const size = document.querySelector(`#box-${id} #select-input`).value
   const td = ele.parentElement
   const data = { count, size, productId: id }
@@ -227,4 +233,13 @@ function changeElementContainer(ele, className) {
   ele.classList.add("side-nav--active")
   hideSec.classList.replace('show-sec', 'hidden-sec')
   showSec.classList.replace('hidden-sec', 'show-sec')
+}
+
+function clickListCountries(ele) {
+  let countryInput = document.querySelector('.countryInput');
+  let liEle = [...document.querySelectorAll('#countries .selected')];
+  if (liEle.length > 0) liEle.map((li) => li.classList.remove('selected'))
+  ele.classList.add('selected');
+  countryInput.value = ele.textContent;
+  document.querySelector('.options').classList.toggle('hidden');
 }

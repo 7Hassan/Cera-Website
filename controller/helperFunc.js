@@ -21,18 +21,8 @@ exports.cookieOptions = {
 exports.createJwtToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
 
 exports.getCountry = (req) => {
-  /* one way by time zone  
-  const cityToCountry = {};
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  Object.keys(zones).forEach(z => {
-    const cityArr = z.split("/");
-    const city = cityArr[cityArr.length - 1];
-    cityToCountry[city] = countries[zones[z].countries[0]].name;
-  })
-  const city = timeZone.split("/")[1];
-  return cityToCountry[city]; */
   const ip = requestIp.getClientIp(req);
-  const countryCode = geoip.lookup(ip).country;
+  const countryCode = geoip.lookup(ip) ? geoip.lookup(ip).country : ''
   const country = iso.getCountry(countryCode);
   return country
 }

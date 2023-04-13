@@ -41,19 +41,8 @@
         <%- include('../partials/footer.ejs') -%>
           <%- include('../partials/scripting.ejs') %>
             <script>
-              observesTop();
-              // showData();
-              async function showData() {
-                products = await getAllData();
-                setAllProducts(products);
-
-              }
-
-
-
+               observe.top()
               goToElement()
             </script>
   </body>
-
-
   </html>

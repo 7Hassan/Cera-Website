@@ -147,9 +147,9 @@
                       <div class="stepperInput">
                         <button class="button button--addOnLeft"
                           onclick="changeInput('<%=product._id%>', 'minus','<%=product.price%>')">-</button>
-                        <input id="count-product" type="text" placeholder="Count"
+                        <input type="text" placeholder="Count"
                           oninput=" changeSunTotal('<%=product._id%>', this.value, '<%=product.price%>')"
-                          value="<%= user.cart.products[i].count %>" class="input stepperInput__input">
+                          value="<%= user.cart.products[i].count %>" class="count-product input stepperInput__input">
                         <button class="button button--addOnRight"
                           onclick="changeInput('<%=product._id%>', 'plus','<%=product.price%>')">+</button>
                       </div>

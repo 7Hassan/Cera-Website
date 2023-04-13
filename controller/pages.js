@@ -35,7 +35,7 @@ exports.shopPage = catchError(async (req, res, next) => {
 
 exports.singleProd = catchError(async (req, res, next) => {
   const singleProduct = await Product.findOne({ _id: req.params.id })
-  let otherProducts = await Product.find({ stoked: true, name: singleProduct.name, _id: { $ne: req.params.id } }).sort({ "price": -1 })
+  let otherProducts = await Product.find({ _id: { $ne: req.params.id }, name: singleProduct.name, stoked: true, new: false }).sort({ "price": -1 })
   res.render('pages/product', {
     title: 'Product',
     product: singleProduct,

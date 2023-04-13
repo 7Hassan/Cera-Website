@@ -40,8 +40,7 @@
                     <span class="errors"></span>
                     <button class="button button--addOnLeft"
                       onclick="changeInput('<%=product._id%>', 'minus','<%=product.price%>')">-</button>
-                    <input id="count-product" type="text" placeholder="Count" value="1"
-                      class="input stepperInput__input">
+                    <input type="text" placeholder="Count" value="1" class="count-product input stepperInput__input">
                     <button class="button button--addOnRight"
                       onclick="changeInput('<%=product._id%>', 'plus','<%=product.price%>')">+</button>
                   </div>
@@ -93,7 +92,7 @@
             <%- include('../partials/scripting.ejs') %>
   </body>
   <script>
-    observesTop()
+    observe.top()
   </script>
 
   </html>
