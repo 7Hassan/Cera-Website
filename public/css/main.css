@@ -1101,7 +1101,7 @@ footer .copyright {
 }
 
 #nav-bar.click {
-  left: calc(100% - 125px);
+  right: 0;
 }
 
 
@@ -1467,8 +1467,8 @@ select {
 
 
 /* Payment page */
-.credit-card.show,
-.location.show {
+.credit-card.hidden,
+.location.hidden {
   top: -35%;
 }
 
@@ -1837,6 +1837,10 @@ footer .contact {
     padding: 0 20px;
   }
 
+  #header .container {
+    padding: 20px 5px 20px 0px  !important;
+  }
+
   .products-holder .container {
     padding: 0 20px;
     margin: 0;
@@ -1912,12 +1916,14 @@ footer .contact {
 
 @media (max-width: 799px) {
   #nav-bar {
+    transform: unset;
     position: fixed;
-    bottom: -50%;
-    left: calc(100% + 200px);
-    width: 250px;
+    top: 0;
+    left: unset;
+    right: -270px;
+    width: 230px;
     z-index: 6;
-    height: 100vh;
+    height: 100%;
     background-color: #e3e6fe;
   }
 
@@ -2248,7 +2254,7 @@ footer .contact {
   font-size: 13px;
 }
 
-.payment .holder .div-click .holde {
+.payment .holder .div-click .holed {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2270,10 +2276,6 @@ footer .contact {
   color: rgba(0, 0, 0, 0.4);
 }
 
-.payment .holder .carde-info .holde {
-  border: 1px solid var(--main-color);
-  color: var(--main-color);
-}
 
 .payment .holder .div-click i {
   color: var(--main-color);

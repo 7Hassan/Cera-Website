@@ -243,3 +243,48 @@ function clickListCountries(ele) {
   countryInput.value = ele.textContent;
   document.querySelector('.options').classList.toggle('hidden');
 }
+
+function cardPop() {
+  document.querySelector('.over-layout').classList.add('show')
+  document.querySelector('.credit-card.popup').classList.remove('hidden')
+}
+
+function locationPop() {
+  document.querySelector('.over-layout').classList.add('show')
+  document.querySelector('.location.popup').classList.remove('hidden')
+}
+
+function hiddenCard_Location(ele) {
+  ele.classList.remove('show');
+  document.querySelector('.credit-card.popup').classList.add('hidden');
+  document.querySelector('.location.popup').classList.add('hidden');
+}
+
+function cardedSpace(num, ele) {
+  if (isNaN(num)) return false
+  if (!(ele.value.length == 4 || ele.value.length == 9 || ele.value.length == 14)) return true
+  ele.value = ele.value + ' ';
+  ele.max = 1;
+}
+
+
+function checkCardNumbers(num) {
+  const err = document.getElementById('error-carde')
+  const img = document.getElementById('visa-img')
+  numbers = num.split(' ').join('');
+  if (numbers.length < 16)
+    img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/nocard.svg'
+  else {
+    if (luhnAlgorithm(numbers)) {
+      err.classList.remove('show');
+      if (numbers[0] == 4)
+        img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/visa.svg';
+      else if (+numbers[0] + +numbers[1] <= 10)
+        img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/mc.svg';
+      else img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/nocard.svg';
+    } else {
+      img.src = 'https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/nocard.svg';
+      err.classList.add('show');
+    }
+  }
+}

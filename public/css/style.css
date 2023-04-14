@@ -820,8 +820,6 @@ body {
     margin-left: 5px !important;
   }
 
-
-
   .user-view__menu ul {
     width: 100%;
     overflow: hidden;
@@ -832,6 +830,10 @@ body {
   .love-view__content {
     width: calc(100%);
     margin-left: 50px;
+  }
+
+  .user-view__form-container {
+    padding: 0 10px !important;
   }
 }
 

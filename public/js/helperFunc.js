@@ -3,42 +3,27 @@ const sendSocketMessage = (data) => socket.send(data)
 const closeSocket = (code) => socket.close(code, "Bye!")
 
 
-
-
-
 async function get(url) {
   try { return await axios.get(url) }
   catch (err) { flashMessage(err, 'errors') }
 }
 async function deleteFun(url, data) {
-  try {
-    return await axios.delete(url, { data })
-  } catch (err) {
-    flashMessage(err, 'errors')
-  }
+  try { return await axios.delete(url, { data }) }
+  catch (err) { flashMessage(err, 'errors') }
 }
 
 async function post(url, data) {
-  try {
-    return await axios.post(url, data)
-  } catch (err) {
-    flashMessage(err, 'errors')
-  }
+  try { return await axios.post(url, data) }
+  catch (err) { flashMessage(err, 'errors') }
 }
 
 async function patch(url, data) {
-  try {
-    return await axios.patch(url, data)
-  } catch (err) {
-    flashMessage(err, 'errors')
-  }
+  try { return await axios.patch(url, data) }
+  catch (err) { flashMessage(err, 'errors') }
 }
 async function put(url, data) {
-  try {
-    return await axios.put(url, data)
-  } catch (err) {
-    flashMessage(err, 'errors')
-  }
+  try { return await axios.put(url, data) }
+  catch (err) { flashMessage(err, 'errors') }
 }
 
 function flashMessage(mess, flashType) {
@@ -110,12 +95,9 @@ function productsToCart(product, count) {
   checkCart()
 }
 
-
-
 function changeEmailText(email) {
   document.querySelector('.text-email span').innerHTML = email;
   flashMessage('Email Updated & Resend', 'success')
-
 }
 
 async function headerRemoverX(productEle) {
@@ -159,6 +141,18 @@ function getCountries() {
   })
 }
 
+function luhnAlgorithm(numbers) {
+  let sumEven = 0;
+  let sumOdd = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    if (i % 2 == 0) {
+      if (+numbers[i] * 2 >= 10) sumEven += (+numbers[i] * 2 - 9);
+      else sumEven += (+numbers[i] * 2)
+    } else sumOdd += +numbers[i];
+  }
+  if ((sumEven + sumOdd) % 10 == 0) return true
+  else return false;
+}
 
 
 
