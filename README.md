@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>E-commerce Website README</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
+
 	<header>
 		<h1>E-commerce Website README</h1>
 	</header>
@@ -72,5 +66,3 @@
 	<footer>
 		<p>&copy; 2023 E-commerce Website. All rights reserved.</p>
 	</footer>
-</body>
-</html>
