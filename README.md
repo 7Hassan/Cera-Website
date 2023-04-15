@@ -1,5 +1,5 @@
 <header>
-<h1>Cera Shop</h1>
+<h1>Cera Shop | <a href="https://cera-shop.herokuapp.com">Demo</a></h1>
 <img class="head-img" src="http://drive.google.com/uc?export=view&id=1Qe3gvR5cMvkennNxZm2bxs0e9oazCgzQ"
           alt="photo" />
 </header>
