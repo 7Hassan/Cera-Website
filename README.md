@@ -9,10 +9,10 @@
 <h2>Main Pages</h2>
 <ul>
 <li><h3><a href="#">Home</a></h3></li>
-<img src='./imgs/Home.png'/>
 <img src='./imgs/home-cart.png'/>
 <img src='./imgs/home-profile.png'/>
 <img src='./imgs/home-log.png'/>
+	<img src='./imgs/Home.png'/>
 <li><h3><a href="#">Shop</a></h3></li>
 <img src='./imgs/shop.png'/>
 <li><h3><a href="#">Product</a></h3></li>
