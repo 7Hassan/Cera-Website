@@ -8,14 +8,26 @@
 <section>
 <h2>Main Pages</h2>
 <ul>
-<li><a href="#">Home</a></li>
-<li><a href="#">Shop</a></li>
-<li><a href="#">Product</a></li>
-<li><a href="#">Blog</a></li>
-<li><a href="#">About</a></li>
-<li><a href="#">Contact</a></li>
-<li><a href="#">Payment</a></li>
-<li><a href="#">404</a></li>
+<li><h3><a href="#">Home</a></h3></li>
+<img src='./imgs/Home.png'/>
+<img src='./imgs/home-cart.png'/>
+<img src='./imgs/home-profile.png'/>
+<img src='./imgs/home-log.png'/>
+<li><h3><a href="#">Shop</a></h3></li>
+<img src='./imgs/shop.png'/>
+<li><h3><a href="#">Product</a></h3></li>
+<img src='./imgs/addProduct.png'/>
+<li><h3><a href="#">Blog</a></h3></li>
+<img src='./imgs/blog.png'/>
+<li><h3><a href="#">About</a></h3></li>
+<img src='./imgs/about.png'/>
+<li><h3><a href="#">Contact</a></h3></li>
+<img src='./imgs/contact.png'/>
+<li><h3><a href="#">Payment</a></h3></li>
+<img src='./imgs/buy.png'/>
+<img src='./imgs/buy2.png'/>
+<li><h3><a href="#">404</a></h3></li>
+<img src='./imgs/404.png'/>
 </ul>
 </section>
 
@@ -24,19 +36,27 @@
 			<p>The authentication and authorization system ensures that users can securely access their personal information and make purchases. Users can create accounts, log in, and manage their personal information and order history.</p>
 <h3>Pages</h3>
 <ul>
-<li><a href="#">Sign up</a></li>
-<li><a href="#">Log in</a></li>
-<li><a href="#">Verify</a></li>
-<li><a href="#">Forget Password</a></li>
+<li><h3><a href="#">Sign up</a></h3></li>
+<img src='./imgs/signUp.png'/>
+<li><h3><a href="#">Log in</a></h3></li>
+<img src='./imgs/login.png'/>
+<li><h3><a href="#">Verify</a></h3></li>
+<img src='./imgs/verify.png'/>
+<li><h3><a href="#">Forget Password</a></h3></li>
+<img src='./imgs/forget.png'/>
 </ul>
 		</section>
 <section>
+<h2>Account</h2>
+<img src='./imgs/account.png'/>
 			<h2>Cart Part</h2>
 			<p>The cart part of the website allows users to add products to their cart and manage their purchases. Users can view the contents of their cart, update quantities, and remove items.</p>
+      <img src='./imgs/cart.png'/>
 		</section>
 <section>
 			<h2>Love Part</h2>
 			<p>The love part of the website allows users to "like" or "favorite" products that they are interested in. This feature helps users keep track of products they may want to purchase in the future.</p>
+      <img src='./imgs/loves.png'/>
 		</section>
 <section>
 			<h2>Technologies Used</h2>
