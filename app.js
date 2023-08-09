@@ -1,13 +1,14 @@
 const express = require('express')
-const WebSocket = require('ws');
 const path = require('path')
 const morgan = require('morgan')
-// const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const SessionStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash')
+const compression = require('compression')
+const AppError = require('./Errors/classError')
+const errorHandler = require('./Errors/errorHandling')
 
 //! security
 require('dotenv').config({ path: './.env' }); //? configuration for dotenv
@@ -16,18 +17,15 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xssClean = require('xss-clean')
 const hpp = require('hpp')
-
+const cors = require('cors')
 
 const app = express();
-
-//TODO: Global middle wares
-//? set security http header
-// app.use(helmet())
+app.enable('trust proxy')
 
 //? Read files in 'public' folder
 app.set('view engine', 'ejs') //? EJS
 app.use(express.static(path.join(__dirname, 'public'))) //? css & js
-
+app.use(cors()) //allow access to send request from every origin *
 //? body- parser
 app.use(bodyParser.json()); //? reading a data from body to req.body
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -84,29 +82,16 @@ app.use('/auth', limiter) //! to prevent many requests attacks on this url
 //? for information about requests
 app.use(morgan('tiny'));
 
-
-// WebSocket Server 
-wss = new WebSocket.Server({ port: 8080 })
-wss.on('connection', function connection(ws) {
-  console.log('✅ WebSocket connected')
-  ws.on('message', function incoming(message) { console.log('📨 ', message) }) // incoming 
-})
-
 //? use routing
+app.use(compression())
+//app.use(helmet()) //? set security http header
 
 app.use('/', require('./routes/pages'));
 app.use('/api', require('./routes/api'));
 app.use('/auth', require('./routes/auth'));
 
 //! 404
-const AppError = require('./Errors/classError')
-const errorHandler = require('./Errors/errorHandling')
-
 app.all('*', (req, res, next) => next(new AppError('We can\'t find this page', 404)))
+
 app.use(errorHandler)
-
-
-
 module.exports = app
-
-

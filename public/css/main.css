@@ -773,6 +773,12 @@ body.hidden {
   background-color: #9dcca4 !important;
 }
 
+.product-box-icons .love-div .loading,
+.product-box-icons .remove-product-pop .loading {
+  top: 11px !important;
+  right: 11px !important;
+}
+
 .product-pop .size-count {
   flex-direction: column;
 }
@@ -849,9 +855,7 @@ body.hidden {
   margin-left: 5px;
 }
 
-
-
-.product01 .product-box .product-box-icons>div .loading {
+.change-email .product01 .product-box .product-box-icons>div .loading {
   bottom: 12px;
   right: 12px;
   box-shadow: inset 1px 0px 0px 0px black;
@@ -1838,7 +1842,7 @@ footer .contact {
   }
 
   #header .container {
-    padding: 20px 5px 20px 0px  !important;
+    padding: 20px 5px 20px 0px !important;
   }
 
   .products-holder .container {
@@ -2739,8 +2743,17 @@ form>div {
   margin-bottom: 0 !important;
 }
 
+.verify-holder .change-email i,
+.verify-holder .help-verify i {
+  font-size: 10px;
+}
+
 .reset-password .verify-holder .update-email {
   height: auto !important;
+}
+
+#updateEmail .update-email button .loading {
+  right: -30px !important;
 }
 
 .reset-password .main-log .email-input {
@@ -2833,8 +2846,8 @@ form>div {
 
 
 
-.verify-holder .change-email .update-email button .loading {
-  right: -25px !important;
+.verify-buttons button .loading {
+  left: 9px !important;
 }
 
 .verify-holder .change-email .update-email .sin-up button {
@@ -2905,12 +2918,12 @@ i.hidden-slide {
   min-width: 270px;
   max-width: 350px;
   width: 90%;
-  height: 30px;
+  height: 45px;
   position: fixed;
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px;
+  padding: 5px;
   border-radius: 6px;
   font-weight: 600;
   font-size: 12px;
@@ -2968,7 +2981,6 @@ i.hidden-slide {
 .flash-success {
   background-color: #ebf7ee;
   border-color: #bee5c8;
-  max-width: 300px;
   box-shadow: 0px 0px 30px rgb(0 0 0 / 15%);
 }
 
@@ -2976,7 +2988,7 @@ i.hidden-slide {
 .flash-success.hidden,
 .flash-warning.hidden,
 .flash-toast.hidden {
-  top: -30px;
+  top: -60px;
   box-shadow: none;
 }
 
@@ -2989,7 +3001,7 @@ i.hidden-slide {
 .flash-errors h6,
 .flash-warning h6,
 .flash-toast h6 {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -2998,7 +3010,7 @@ i.hidden-slide {
 .flash-warning i,
 .flash-toast i {
   color: hsl(0deg 96% 45%);
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 900;
   cursor: pointer;
 
@@ -3118,7 +3130,9 @@ button.clicked:hover {
 
 .verify-buttons {
   flex-direction: row !important;
-  gap: 10px !important;
+  justify-content: space-around !important;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 
@@ -3199,4 +3213,32 @@ button.clicked:hover {
 
 #contact-details p {
   margin: 0 !important;
+}
+
+/* 404 */
+.img-404,
+.text-404 {
+  margin: 50px auto 0;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 10px;
+}
+
+
+
+.text-404 p {
+  color: red;
+  font-size: 12px;
+}
+
+.text-404 {
+  margin-top: 10px;
+  line-height: 1.5em;
+  text-align: center;
+}
+
+.text-404 div a {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--main-color);
 }

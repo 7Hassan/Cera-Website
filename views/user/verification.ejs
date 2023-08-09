@@ -149,8 +149,8 @@
           </div>
           <div class="change-email">
             <div>
-              <i class="fa-solid fa-chevron-up hidden-slide"></i>
-              <i class="fa-solid fa-chevron-down"></i>
+              <i class="fa-solid fa-chevron-up "></i>
+              <i class="fa-solid fa-chevron-down  hidden-slide"></i>
               <a id="change-email" href onclick="changeEmailInput(event)"> Change email</a>
             </div>
             <form id="updateEmail">
@@ -161,7 +161,8 @@
                   <input type="text" placeholder="Email" name="email" id="email">
                 </div>
                 <div class="sin-up">
-                  <button>Update & Resend</button>
+
+                  <button> Update & Resend </button>
                 </div>
               </div>
             </form>
@@ -179,7 +180,7 @@
                 <p>
                   Email confirmation is an important security check that helps prevent other people from signing up for
                   an
-                  Upwork account using your email address.
+                  Cera account using your email address.
                 </p>
               </div>
               <div>
@@ -201,11 +202,19 @@
 
           </div>
           <div class="verify-buttons">
-            <a target="_blank" href="https://mail.google.com/mail/u/<%=user.email  %>/#search/from:cera.shp@gmail.com">
-              <button class="normal">Go To Gmail</button>
-            </a>
+            <div>
 
-            <button class="normal resend"> Resend Email</button>
+              <button class="normal resend">
+                Resend Email
+              </button>
+            </div>
+            <div>
+              <a target="_blank"
+                href="https://mail.google.com/mail/u/<%=user.email  %>/#search/from:cera.shp@gmail.com">
+                <button class="normal">Go To Gmail</button>
+              </a>
+            </div>
+
           </div>
         </div>
 

@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
-const socket = new WebSocket('ws://localhost:8080')
+const HOST = location.origin.replace(/^http/, 'ws')
+const socket = new WebSocket(HOST);
+
 
 // Get Elements in header
 let userIcon = document.querySelector('.user-icon .fa-user');

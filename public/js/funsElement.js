@@ -147,11 +147,11 @@ function forgetPassDiv(email) {
           </div>
           <div>
           <div class="verify-buttons">
+          <button class="normal send-email"> Send Email</button>
           <a target="_blank" href="https://mail.google.com/mail/u/${email}/#search/from:cera.shp@gmail.com">
             <button class="normal">Go To Gmail</button>
           </a>
 
-          <button class="normal send-email"> Send Email</button>
         </div>
         </div>
   `

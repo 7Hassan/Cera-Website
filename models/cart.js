@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const AppError = require('../Errors/classError')
 
 const cartSchema = new mongoose.Schema({
   products: [{
@@ -47,6 +46,7 @@ cartSchema.pre(/^find/, async function () {
   this.select("-__v").populate({ path: 'products.product', select: "-__v" })
   this.select("-__v").populate({ path: 'loves', select: "-__v" })
 })
+
 
 
 let Cart = mongoose.model('carts', cartSchema)

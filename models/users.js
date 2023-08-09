@@ -18,12 +18,28 @@ const userSchema = new mongoose.Schema({
     minlength: [3, 'Last name is less than 3 characters']
 
   },
+  role: {
+    type: String,
+    enum: ['user', 'admin', 'member', 'default'],
+    default: 'user'
+  },
   email: {
     type: String,
     required: [true, 'Email is required'],
-    unique: true,
     lowercase: [true, 'Email must be lowercase'],
-    validate: [validator.isEmail, 'Email is not valid']
+    validate: [
+      {
+        validator: validator.isEmail,
+        message: 'Email is not valid'
+      },
+      {
+        validator: async function (email) {
+          if (this.role === 'default') return true
+          return !await this.constructor.findOne({ _id: { $ne: this._id }, email })
+        },
+        message: 'Email already exists'
+      }
+    ]
   },
   emailConfig: {
     type: Boolean,
@@ -39,11 +55,6 @@ const userSchema = new mongoose.Schema({
   },
   passwordToken: String,
   expPasswordToken: Date,
-  role: {
-    type: String,
-    enum: ['user', 'admin', 'member'],
-    default: 'user'
-  },
   img: {
     type: String,
     default: 'default.webp'

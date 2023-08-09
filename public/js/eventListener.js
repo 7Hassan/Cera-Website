@@ -288,3 +288,14 @@ function checkCardNumbers(num) {
     }
   }
 }
+
+function sideScroll(ele, direction, speed, distance, step) {
+  scrollAmount = 0;
+  var slideTimer = setInterval(() => {
+    direction == 'left' ? (ele.scrollLeft -= step) : (ele.scrollLeft += step);
+    scrollAmount += step;
+    if (scrollAmount >= distance) {
+      window.clearInterval(slideTimer);
+    }
+  }, speed);
+}

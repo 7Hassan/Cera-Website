@@ -93,7 +93,6 @@ function resetPassword() {
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
     const newPassword = document.getElementById('newPassword')
-    console.log('🚀 ~ customizeInput(newPassword):', customizeInput(newPassword))
     if (customizeInput(newPassword) !== true) return 0
     postData(button, { password: newPassword.value }, window.location.pathname)
   })
@@ -141,7 +140,7 @@ function updateUserData() {
     }
     if (email.value !== emailAddress) {
       await checkEmail(email.value)
-      errors.push(checker)
+      errors.push(!checker)
     }
     if (errors.findIndex(err => err != true) == -1) {
       const form = new FormData()
