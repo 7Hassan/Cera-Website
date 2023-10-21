@@ -5,8 +5,7 @@ const AppError = require('../Errors/classError')
 const { countries, zones } = require("moment-timezone/data/meta/latest.json");
 const WebSocket = require('ws');
 const multer = require('multer')
-const sharp = require('sharp')
-const geoip = require('geoip-lite');
+// const geoip = require('geoip-lite');
 const requestIp = require('request-ip');
 const iso = require('iso-3166-1-alpha-2')
 
@@ -22,7 +21,8 @@ exports.createJwtToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expi
 
 exports.getCountry = (req) => {
   const ip = requestIp.getClientIp(req);
-  const countryCode = geoip.lookup(ip) ? geoip.lookup(ip).country : ''
+  // const countryCode = geoip.lookup(ip) ? geoip.lookup(ip).country : ''
+  const countryCode = ''
   const country = iso.getCountry(countryCode);
   return country
 }
