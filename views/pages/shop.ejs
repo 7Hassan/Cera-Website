@@ -1,0 +1,48 @@
+<%- include('../partials/head.ejs') -%>
+
+  <body>
+    <%- include('../partials/header.ejs') %>
+      <%- include('../partials/flashMsg.ejs') -%>
+
+        <div class="main-sec-shop holder-image">
+          <div class="container boxs">
+
+            <h2>Fashion Design</h2>
+          </div>
+        </div>
+        <div class="mian-shop products-holder">
+          <div class="product01 all-products">
+
+            <h2>Products</h2>
+
+            <p>Summer Collection New Modern design</p>
+            <div class="holder-cont">
+              <% for (let i=0; i < products.length; i++) {%>
+                <div class="button-products">
+                  <button class="left-slide"
+                    onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 2000)">
+                    <i class="fa-solid fa-angles-left"></i>
+                  </button>
+                  <div class="container boxs">
+                    <% for (let j=0; j < products[i].length; j++) {%>
+                      <%- include('../partials/product.ejs',{objProduct:products[i][j],place:"shope"}) %>
+                        <%}%>
+                  </div>
+                  <button class="right-slide"
+                    onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 2000)">
+                    <i class="fa-solid fa-angles-right"></i>
+                  </button>
+                </div>
+                <% }%>
+            </div>
+
+          </div>
+        </div>
+        <%- include('../partials/footer.ejs') -%>
+          <%- include('../partials/scripting.ejs') %>
+            <script>
+               observe.top()
+              goToElement()
+            </script>
+  </body>
+  </html>

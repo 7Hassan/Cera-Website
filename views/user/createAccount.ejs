@@ -1,0 +1,114 @@
+<%- include('../partials/head.ejs') %>
+
+  <body>
+    <%- include('../partials/flashMsg.ejs') -%>
+
+      <div class="layout sin-up">
+        <div class="img-log">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Flogo.png?alt=media&token=d411f5f0-91aa-44ff-a166-c86033169358&_gl=1*qn99tq*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3Mzk3OC4zOS4wLjA."
+            alt="">
+          <a href="/auth/login">Log In</a>
+        </div>
+        <div class="main-log">
+          <div class="head">
+            Sin Up to Cera
+          </div>
+          <div class="log">
+            <div class="accounts">
+
+              <div class="apple-log">
+                <button><i class="fa-brands fa-apple"></i> Continue with Apple</button>
+              </div>
+              <div class="google-log">
+                <button>Continue with Google</button>
+              </div>
+              <span>or </span>
+            </div>
+            <div class="email-input">
+              <form id="signup-form">
+                <div class="User-sinUp-name">
+                  <div>
+                    <span class="errors"></span>
+                    <input autocomplete="" class="input" type="text" name="firstName" id="firstName"
+                      placeholder="First name" oninput="customizeInput(this)" onblur="customizeInput(this)">
+                  </div>
+                  <div>
+                    <span class="errors"></span>
+                    <input autocomplete="" class="input" type="text" name="lastName" id="lastName"
+                      placeholder="Last name" oninput="customizeInput(this)" onblur="customizeInput(this)">
+                  </div>
+
+                </div>
+                <div class="User-signUp-email checkerEmail">
+                  <span class="errors"></span>
+                  <div class="loading"></div>
+                  <input autocomplete="" class="input" type="text" name="email" id="email" placeholder="Email"
+                    onblur="checkEmail(this.value)">
+                </div>
+                <div class="User-sinUp-pass">
+                  <span class="errors"></span>
+                  <input autocomplete="" class="input password-input" type="password" name="password" id="password"
+                    placeholder="Password" oninput="customizeInput(this)" onblur="customizeInput(this)">
+
+                  <div class="icon-eyes">
+                    <i class="fa-sharp fa-solid fa-eye-slash" onclick='showPassword(this)'></i>
+                    <i class="fa-solid fa-eye" style="display:none;" onclick='hidePassword(this)'></i>
+                  </div>
+                </div>
+                <div class="User-sinUp-country">
+                  <div class="layout" onclick="document.querySelector('.options').classList.toggle('hidden')">
+                    <span class="errors"></span>
+                    <% if(country) {%>
+                      <input class="input countryInput" type="text" id="country" value=<%=country%>
+                      placeholder="Country"
+                      name="country" readonly="readonly">
+                      <%}else{%>
+                        <input class="input countryInput" type="text" id="country" value="" placeholder="Country"
+                          name="country" readonly="readonly">
+                        <% } %>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24"
+                            role="img">
+                            <path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)"
+                              stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"
+                              d="M18 10l-6 5-6-5"></path>
+                          </svg>
+                  </div>
+                  <div class="options hidden">
+                    <div>
+                      <div class="search">
+                        <div>
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="search" class="searchInput">
+
+                      </div>
+                      <ul id="countries"></ul>
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="checkbox">
+                  <span class="errors"></span>
+                  <input class="input" type="checkbox" id="checkboxInput" checked onchange="customizeInput(this)"
+                    value="checked">
+                  <label for=""><small><strong> Send a validation for Email.</strong></small> </label>
+                </div>
+                <button class="normal">Create my account</button>
+              </form>
+            </div>
+            <div class=" log-in-text">
+              Already have an account?<a href="/auth/login"> Log In</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('../partials/scripting.ejs') %>
+  </body>
+  <script>
+    signUp()
+    getCountries()
+  </script>
+
+  </html>

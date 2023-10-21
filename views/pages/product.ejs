@@ -1,0 +1,98 @@
+<%- include('../partials/head.ejs') -%>
+
+  <body>
+    <%- include('../partials/header.ejs') -%>
+      <%- include('../partials/flashMsg.ejs') -%>
+        <div class="product-home">
+          <div class="product">
+            <div class="container" id='box-<%=product._id %>'>
+              <div class="imgs">
+                <img srcset="<%=product.imgSrc %>" id="main-img" />
+                <div class="other-imgs relative">
+                  <img id="first-img" srcset="<%=product.imgSrc %>"
+                    onclick="document.getElementById('main-img').srcset=this.srcset" />
+                  <img id="img-master" srcset="<%=product.imgSrc%>" />
+                  <%for (let i=0; i < product.imgs.length; i++) { %>
+                    <img srcset="/<%=product.imgs[i]%>" onerror="this.style.display='none'"
+                      onclick="document.getElementById('main-img').srcset=this.srcset" />
+                    <% } %>
+                </div>
+              </div>
+              <div class="text">
+                <h6>Home / <span>
+                    <%= product.name %>
+                  </span></h6>
+                <h4>Fashion <span>
+                    <%= product.name %>
+                  </span></h4>
+                <h2 id="price-product">
+                  $<%= product.price %>
+                </h2>
+                <div class="size-count">
+                  <span class="errors"></span>
+                  <select id="select-input">
+                    <option value="XL">XL</option>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="S">S</option>
+                  </select>
+                  <div class="stepperInput">
+                    <span class="errors"></span>
+                    <button class="button button--addOnLeft"
+                      onclick="changeInput('<%=product._id%>', 'minus','<%=product.price%>')">-</button>
+                    <input type="text" placeholder="Count" value="1" class="count-product input stepperInput__input">
+                    <button class="button button--addOnRight"
+                      onclick="changeInput('<%=product._id%>', 'plus','<%=product.price%>')">+</button>
+                  </div>
+
+                  <%if (user && user.emailConfig) {%>
+                    <% if(product.new){%>
+                      <button id="cart-shop" class="normal"
+                        onclick="flashMessage('On arrival, save it in Love section','toast')">Add To Cart</button>
+                      <% }else{ %>
+                        <button id="cart-shop" class="normal" onclick="addProductToCart(this,'<%=product._id %>')">Add
+                          To
+                          Cart</button>
+                        <% }}else{ %>
+                          <button id="cart-shop" class="normal"
+                            onclick="flashMessage('Please, Log in to get Access','errors')">Add To Cart</button>
+                          <% } %>
+                            <div class="product-details">
+                              <h4>Product Details</h4>
+                              <span>
+                                Lorem ipsum dolor sit amen consenter adipisicing, durius rerun
+                                fugit corrupts amen hic porno? Perspiciatis site expedite
+                                similitude dolors! Nebo vera corporal quasi dicta aut hic doit?
+                              </span>
+                            </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="other-products product01 ">
+            <h2>Other <%=product.name[product.name.length-1]=='s'?product.name:product.name+'s' %></h2>
+            <div class="holder-cont products-holder">
+              <div class="button-products ">
+                <button class="left-slide" onclick="sideScroll(this.parentElement.children[1], 'left', 4, 15000, 1000)">
+                  <i class="fa-solid fa-angles-left"></i>
+                </button>
+                <div class="container boxs">
+                  <% for (let i=0; i < products.length; i++) {%>
+                    <%- include('../partials/product.ejs',{objProduct:products[i],place:"shope"}) %>
+                      <% } %>
+                </div>
+                <button class="right-slide"
+                  onclick="sideScroll(this.parentElement.children[1], 'right',4, 15000, 1000)">
+                  <i class="fa-solid fa-angles-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <%- include('../partials/footer.ejs') %>
+            <%- include('../partials/scripting.ejs') %>
+  </body>
+  <script>
+    observe.top()
+  </script>
+
+  </html>

@@ -1,0 +1,115 @@
+<% if(objProduct.stoked){ %>
+  <div class="master-holder-product" id='box-<%=objProduct._id %>' onmouseleave="hiddenPopProduct(this)">
+    <div class="product-box">
+      <% if(place=="shope" ){%>
+        <div onclick="window.location.href=`${window.location.origin}/shop/<%=objProduct._id %>`">
+          <% }else if(place=='home' ){ %>
+            <div onclick="window.location.href=`${window.location.origin}/shop?<%= objProduct._id%>`">
+              <% } %>
+                <img src="<%=objProduct.imgSrc %>" alt="product image">
+                <div class="details"><span>Cera</span>
+                  <h5>Cartoon Astronaut <%= objProduct.name %>
+                  </h5>
+                  <div class="stars">
+                    <% for (let k=0; k < objProduct.stars; k++) {%>
+                      <i class="fa-solid fa-star"></i>
+                      <% } %>
+                  </div>
+                  <h4>$<%= objProduct.price %>
+                  </h4>
+                </div>
+            </div>
+            <div class="product-box-icons">
+              <% const id=(objProduct._id).toString() %>
+                <% if(user){ %>
+                  <% const indexLove=user.cart.loves.findIndex((obj)=>obj._id==id)%>
+                    <% if(user.emailConfig){ %>
+                      <%if(indexLove!==-1){%>
+                        <div class="love-div" onclick="quickRemoveLove(this,'<%= objProduct._id %>')">
+                          <i class="fa-solid fa-heart love"></i>
+                        </div>
+                        <% } else{%>
+                          <div class="love-div" onclick="quickAddLove(this,'<%= objProduct._id %>')">
+                            <i class="fa-regular fa-heart love"></i>
+                          </div>
+                          <% }}else{ %>
+                            <div class="love-div" onclick="flashMessage('Please, Confirm Your Email','warning')">
+                              <%if(indexLove!==-1){%>
+                                <i class="fa-solid fa-heart love"></i>
+                                <% }else{ %>
+                                  <i class="fa-regular fa-heart love"></i>
+                                  <% } %>
+                            </div>
+                            <% }}else{%>
+                              <div class="love-div" onclick="flashMessage('Please, Log in to get Access','errors')">
+                                <i class="fa-regular fa-heart love"></i>
+                              </div>
+                              <% } %>
+                                <% const indexCart=user?user.cart.products.findIndex((obj)=>obj.product._id==id):-1 %>
+                                  <% if(!objProduct.new) {%>
+                                    <%if(indexCart!==-1){%>
+
+
+                                      <% if(user.emailConfig){ %>
+                                        <div class="remove-product-pop"
+                                          onclick="quickRemoveProduct('<%= objProduct._id %>')">
+                                          <% }else{ %>
+                                            <div class="remove-product-pop"
+                                              onclick="flashMessage('Please, Confirm Your Email','warning')">
+                                              <% } %>
+                                                <i class="fa-solid fa-cart-shopping cart"></i>
+                                            </div>
+                                            <% }else{ %>
+                                              <div class="add-product-pop" onmouseover="showPopProduct(this)">
+                                                <i class="fa-solid fa-cart-plus cart"></i>
+                                              </div>
+                                              <% } } %>
+                                        </div>
+            </div>
+            <% if(!objProduct.new) {%>
+              <div class="product-pop product">
+                <div class="size-count text">
+                  <span class="errors"></span>
+                  <select id="select-input">
+                    <option value="XL">XL</option>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="S">S</option>
+                  </select>
+                  <input type="text" value="1" class="count-product input stepperInput__input">
+                  <% if(user){ %>
+                    <% if(user.emailConfig){ %>
+                      <button id="cart-shop" class="normal pop"
+                        onclick="quickAddProduct(this,'<%=objProduct._id%>')">Add</button>
+                      <% }else{ %>
+                        <button id="cart-shop" class="normal pop"
+                          onclick="flashMessage('Please, Confirm Your Email','warning')">Add</button>
+                        <% }}else{ %>
+                          <button id="cart-shop" class="normal pop"
+                            onclick="flashMessage('Please, Log in to get Access','errors')">Add</button>
+                          <% } %>
+                </div>
+              </div>
+              <% } %>
+        </div>
+        <% }else{ %>
+          <div class="product-box notStock">
+            <img src="<%=objProduct.imgSrc %>" alt="product image">
+            <div class="message-not-stock">It will be soon</div>
+            <div class="details"><span>Cera</span>
+              <h5>Cartoon Astronaut <%= objProduct.name %>
+              </h5>
+              <div class="stars">
+                <% for (let k=0; k < objProduct.stars; k++) {%>
+                  <i class="fa-solid fa-star"></i>
+                  <% } %>
+              </div>
+              <h4>$<%= objProduct.price %>
+              </h4>
+            </div>
+            <div class="product-box-icons">
+              <div> <i class="fa-regular fa-heart love"></i></div>
+              <div> <i class="fa-solid fa-cart-plus cart"></i></div>
+            </div>
+          </div>
+          <% } %>

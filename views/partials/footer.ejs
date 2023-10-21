@@ -1,0 +1,88 @@
+<div class="news-letters">
+  <div class="container boxs">
+    <div class="text">
+      <h4>Sign Up Newsletters</h4>
+      <p>
+        Get e-mail update about our latest shop and
+        <span>special offers.</span>
+      </p>
+    </div>
+    <% if(user){%>
+      <% if(!user.emailConfig){%>
+        <div class="input-email">
+          <input type="email" name="inputEmail" readonly placeholder="Your email address" value=<%=user.email %> />
+          <button class="normal" onclick="window.location.pathname='/auth/signup/verify'">
+            Verify
+          </button>
+        </div>
+
+        <%} }else{ %>
+          <div class="input-email">
+            <input type="email" name="inputEmail" id="" placeholder="Your email address" />
+            <button class="normal" onclick="window.location.pathname='/auth/signup'">
+              SignUp
+            </button>
+          </div>
+          <% } %>
+  </div>
+</div>
+<footer>
+  <div class="container">
+    <img
+      src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Flogo.png?alt=media&token=d411f5f0-91aa-44ff-a166-c86033169358&_gl=1*qn99tq*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3Mzk3OC4zOS4wLjA."
+      alt="logo Photo" />
+  </div>
+  <div class="container">
+    <div class="contact">
+      <h4>Contact</h4>
+      <p>
+        <strong>Address:</strong> 562 Welling Road Street 32.San Francisco
+      </p>
+      <p><strong>Phone:</strong> +10 2222 365 /(+91)012345 6789</p>
+      <p><strong>Hours:</strong> 10:00 - 18:00. Mon - sat</p>
+      <h5>Follow Us</h5>
+      <ul class="icons">
+        <li><i class="fa-brands fa-facebook-f"></i></li>
+        <li><i class="fa-brands fa-twitter"></i></li>
+        <li><i class="fa-brands fa-instagram"></i></li>
+        <li><i class="fa-brands fa-pinterest-p"></i></li>
+        <li><i class="fa-brands fa-youtube"></i></li>
+      </ul>
+    </div>
+    <div class="about">
+      <h4>About</h4>
+      <p>About Us</p>
+      <p>Delivery Information</p>
+      <p>Privacy Policy</p>
+      <p>Terms & Conditions</p>
+      <p>Contact Us</p>
+    </div>
+    <div class="Account">
+      <h4>My Account</h4>
+      <p>Sign In</p>
+      <p>View Cart</p>
+      <p>My Wishlist</p>
+      <p>Track My Order</p>
+      <p>Help</p>
+    </div>
+    <div class="install">
+      <h4>Install App</h4>
+      <p>From App Store or Google Play</p>
+      <div class="row">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/pay%2Fapp.jpg?alt=media&token=792e4711-2d98-4d8b-bbc9-356883f1ff91"
+          alt="" />
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/pay%2Fplay.jpg?alt=media&token=7ff6f454-7f3e-45a6-bd1d-0ed17c723302"
+          alt="" />
+      </div>
+      <p>Secured Payment Gateways</p>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/pay%2Fpay.png?alt=media&token=abadc990-0e4d-48ae-af54-0c39d5132a51"
+        alt="" />
+    </div>
+  </div>
+  <div class="copyright">
+    <p>&copy;2021. Tech2 etc - HTML CSS E-commerce Template</p>
+  </div>
+</footer>

@@ -1,0 +1,74 @@
+<%- include('../partials/head.ejs') -%>
+  <body>
+    <%- include('../partials/header.ejs') -%>
+      <%- include('../partials/flashMsg.ejs') -%>
+        <div class="main-sec-home" id="main">
+          <div class="container">
+            <h4>Trade-in-offer</h4>
+            <h2>Super value dales</h2>
+            <h1>On all Products</h1>
+            <p>Save more coupons & up to 70% off!</p>
+            <button onclick="window.location.pathname='shop'">Shop Now</button>
+          </div>
+        </div>
+        <div class="features">
+          <div class="container boxs">
+            <div>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/features%2Ff1.png?alt=media&token=ca16fc03-3d27-4e77-b1db-7d69e34f0fcd" alt="photo">
+              <h6>Free Shopping</span>
+            </div>
+            <div>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/features%2Ff6.png?alt=media&token=9ffb2c08-c5f9-4b5b-aa52-8fc78669a5cd" alt="photo">
+              <h6>Online order</span>
+            </div>
+            <div>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/features%2Ff3.png?alt=media&token=816de261-fac2-4e33-9b07-a78dc3b84449" alt="photo">
+              <h6>Save Money</span>
+            </div>
+            <div>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/features%2Ff4.png?alt=media&token=684970d9-4d8e-4524-90b4-c32e88a4996c" alt="photo">
+              <h6>Promotions</span>
+            </div>
+            <div>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/features%2Ff4.png?alt=media&token=684970d9-4d8e-4524-90b4-c32e88a4996c" alt="photo">
+              <h6>Happy Sell</span>
+            </div>
+            <div>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/features%2Ff2.png?alt=media&token=50801cb1-0b6a-4355-b754-089fd7d6a5a9" alt="photo">
+              <h6>F24/7 Support</span>
+            </div>
+          </div>
+        </div>
+        <div class="feature product01">
+          <h2>Feature Products</h2>
+          <p>Summer Collection New Modern design</p>
+          <div class="container boxs">
+            <% for (let i=0; i < featureProd.length; i++) {%>
+              <%- include('../partials/product.ejs',{objProduct:featureProd[i],place:"home"}) %>
+                <% }%>
+          </div>
+        </div>
+
+        <div class="banner">
+          <h4>Repair Services</h4>
+          <h2>Up to <span>70% off</span> -All T-Shirts & Accessories</h2>
+          <button class="normal">Explore More</button>
+        </div>
+        <div class="arrivals product01">
+          <h2> New Arrivals</h2>
+          <p>Summer Collection New Modern design</p>
+          <div class="container boxs">
+            <% for (let i=0; i < newProd.length; i++) {%>
+              <%- include('../partials/product.ejs',{objProduct:newProd[i],place:"home"}) %>
+                <% }%>
+          </div>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+          <%- include('../partials/scripting.ejs') %>
+  </body>
+  <script>
+    observe.left()
+
+  </script>
+
+  </html>

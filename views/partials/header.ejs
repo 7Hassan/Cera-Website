@@ -1,0 +1,141 @@
+<div id="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#"><img
+          src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Flogo.png?alt=media&token=d411f5f0-91aa-44ff-a166-c86033169358&_gl=1*qn99tq*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3Mzk3OC4zOS4wLjA."
+          alt="logo" /></a>
+    </div>
+    <%if(user) {%>
+      <div class="text">
+        <% if(user.emailConfig){%>
+          <div class="cart-icon">
+            <i id="carte" data-content=<%=user.cart.products.length %> class="fa-solid fa-cart-shopping shop-icon"
+              onclick="cartIconClicker(this)"></i>
+          </div>
+          <% } else{%>
+            <a href='/auth/signup/verify'>
+              <button class="normal special">
+                Verify
+              </button>
+            </a>
+            <% } %>
+              <div class="user-icon">
+                <img class="fa-user" src=<%=user.img %> alt="" onclick="userIconClicker(this)">
+              </div>
+              <div id="nav-buttom">
+                <i class="fa-solid fa-bars" onclick="showNav()"></i>
+              </div>
+      </div>
+      <% if(user.emailConfig) {%>
+        <div class="holder-cart">
+          <div class="holde-total">
+            <div class="total-carte">
+              Total:
+              <span class="total"></span>
+            </div>
+          </div>
+
+          <div class="container-cart">
+            <h6 style="text-align: center" class="text-cart">
+              Add products to Cart
+            </h6>
+            <% for(let i=0;i<user.cart.products.length;i++){%>
+              <div id='<%=user.cart.products[i].product.id%>'>
+                <img
+                  onclick="window.location.href=`${window.location.origin}/shop?<%= user.cart.products[i].product._id%>`"
+                  src='<%=user.cart.products[i].product.imgSrc %>'>
+                <h2>
+                  <%=user.cart.products[i].product.price %>
+                </h2>
+                <h6>x <%=user.cart.products[i].count %>
+                </h6>
+                <div class="total-product-price">
+
+                  <span>
+                    $<%=user.cart.products[i].count *user.cart.products[i].product.price %>
+                  </span>
+                </div>
+                <i class="fa-regular fa-circle-xmark" onclick='removeProduct(this.parentElement)'></i>
+              </div>
+              <% } %>
+          </div>
+          <div>
+            <a href="/payment">
+              <button id="buy-button" class="normal" style="background-color: #088178">
+                Buy
+              </button></a>
+          </div>
+        </div>
+        <% } %>
+          <div class="user-div">
+            <div class="user-img">
+              <img src=<%=user.img %> alt="">
+            </div>
+            <div class="user-name">
+              <%= user.firstName %>
+            </div>
+            <div class="setting" onclick="window.location.href='/me'">
+              <i class="fa-solid fa-user"></i>
+              <span>Account</span>
+            </div>
+
+            <div class="log-out" onclick="logOut(this)">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <button class="log-out">Log out</button>
+            </div>
+          </div>
+          <% } else { %>
+            <div class="auth">
+              <div class="log-in">
+                <a href="/auth/login">Log In</a>
+              </div>
+              <div class="sig-up">
+                <a href='/auth/signup'>
+                  <button class="normal special">
+                    Sign Up
+                  </button>
+                </a>
+              </div>
+              <div id="nav-buttom">
+                <i class="fa-solid fa-bars" onclick="showNav()"></i>
+              </div>
+            </div>
+            <%}%>
+
+              <div class="nav" id="nav-bar">
+
+                <div class="user">
+                  <div class="x-icon">
+                    <i class="fa-solid fa-x" onclick="hideNav()"></i>
+                  </div>
+                  <% if(user){%>
+                    <div class="img-user">
+                      <img src=<%=user.img %> alt="">
+                    </div>
+                    <div>Hello <a href="#">
+                        <%= user.firstName %>
+                      </a></div>
+                    <% }else{ %>
+                      <div class="crea">
+                        <img
+                          src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Flogo.png?alt=media&token=d411f5f0-91aa-44ff-a166-c86033169358&_gl=1*qn99tq*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3Mzk3OC4zOS4wLjA."
+                          alt="logo">
+                      </div>
+                      <% } %>
+                </div>
+                <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/shop">Shop</a></li>
+                  <li><a href="/blog">Blog</a></li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/contact">Contact</a></li>
+                </ul>
+              </div>
+  </div>
+  <div class="over-layout" onclick="hideNav()"></div>
+
+</div>
+
+
+<!-- <i class="fa-sharp fa-solid fa-plus"></i>
+<i class="fa-sharp fa-solid fa-minus"></i> -->
