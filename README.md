@@ -1,6 +1,6 @@
 <header>
 <h1>Cera Shop | <a target="_blank" href="https://cera-shop.herokuapp.com">Demo</a></h1>
-<img class="head-img" src="http://drive.google.com/uc?export=view&id=1Qe3gvR5cMvkennNxZm2bxs0e9oazCgzQ"
+<img class="head-img" src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2Fmain.png?alt=media&token=f1191b8b-f658-4391-afe9-c872b111f306&_gl=1*1c4jejy*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4MzUzMy4zLjEuMTY5Nzg4NjgwMi42MC4wLjA."
           alt="photo" />
 </header>
 
@@ -9,9 +9,9 @@
 <h2>Main Pages</h2>
 <ul>
 <li><h3><a href="#">Home</a></h3></li>
-<img src='https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2Fhome.png?alt=media&token=6dfe7125-5e11-4617-9a2f-b6b62753671e&_gl=1*1u52ec1*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4MzUzMy4zLjEuMTY5Nzg4NjIyNy42MC4wLjA.'/>
+<img src='https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2Fhome.jpeg?alt=media&token=e3d0d99f-9ca6-458d-a038-972d49501366&_gl=1*dcuqnf*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4OTk2My40LjEuMTY5Nzg5MDI4Ni41LjAuMA.'/>
 <li><h3><a href="#">Shop</a></h3></li>
-<img src='https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2Fshop.png?alt=media&token=22293dfd-d701-4d24-bb71-d97fdd16447c&_gl=1*zlx5d3*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4MzUzMy4zLjEuMTY5Nzg4NjI4MC43LjAuMA..'/>
+<img src='https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2Fshop.jpeg?alt=media&token=47957561-3de1-4ce4-9dd9-42d61ea7bb1c&_gl=1*luu6ko*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4OTk2My40LjEuMTY5Nzg5MDIzMS42MC4wLjA.'/>
 <li><h3><a href="#">Product</a></h3></li>
 <img src='https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2FaddProduct.png?alt=media&token=57362b16-7884-4b48-80af-63182829bc1a&_gl=1*13m5sfb*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4MzUzMy4zLjEuMTY5Nzg4NjMwNy42MC4wLjA.'/>
 <li><h3><a href="#">Blog</a></h3></li>
