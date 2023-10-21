@@ -2,7 +2,23 @@ const User = require('../models/users')
 const Product = require('../models/products')
 const catchError = require('../Errors/catch')
 const helper = require('./helperFunc')
+const sharp = require('sharp')
 const AppError = require('../Errors/classError')
+const { initializeApp } = require("firebase/app");
+const { getStorage, uploadBytes } = require("firebase/storage");
+const { getDownloadURL, ref } = require('firebase/storage');
+
+
+const firebaseConfig = {
+  apiKey: process.env.ApiKey,
+  authDomain: process.env.AuthDomain,
+  projectId: process.env.ProjectId,
+  storageBucket: process.env.StorageBucket,
+  messagingSenderId: process.env.MessagingSenderId,
+  appId: process.env.AppId
+};
+const fireBaseApp = initializeApp(firebaseConfig);
+const storage = getStorage(fireBaseApp)
 
 exports.aboutPage = (req, res) => res.render('pages/about', helper.pageObject('Cera | About', req))
 exports.paymentPage = (req, res) => res.render('pages/payment', helper.pageObject('Cera | Payment', req))
@@ -83,10 +99,22 @@ exports.logOut = catchError(async (req, res, next) => {
 
 
 exports.upload = helper.upload.single('userImg')
+
 exports.resizeImg = catchError(async (req, res, next) => {
-  if (!req.file) return next()
-  req.file.filename = `user-img-${req.user.id}-${Date.now()}.jpeg`
-  await helper.sharpImg(req)
+  const img = req.file;
+  if (!img) return next()
+  const imageBuffer = await sharp(img.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toBuffer();
+
+  const imgUrl = `/users/user-img-${req.user.id}-${Date.now()}.jpeg`
+  const imgRef = ref(storage, imgUrl);
+  const imgBytes = new Uint8Array(imageBuffer);
+  await uploadBytes(imgRef, imgBytes, { contentType: 'image/jpeg' });
+  const url = await getDownloadURL(imgRef);
+  req.file.filename = url
   next()
 })
 

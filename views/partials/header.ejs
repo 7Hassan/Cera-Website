@@ -1,7 +1,9 @@
 <div id="header">
   <div class="container">
     <div class="logo">
-      <a href="#"><img src="/imgs/logo.png" alt="logo" /></a>
+      <a href="#"><img
+          src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Flogo.png?alt=media&token=d411f5f0-91aa-44ff-a166-c86033169358&_gl=1*qn99tq*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3Mzk3OC4zOS4wLjA."
+          alt="logo" /></a>
     </div>
     <%if(user) {%>
       <div class="text">
@@ -18,7 +20,7 @@
             </a>
             <% } %>
               <div class="user-icon">
-                <img class="fa-user" src=/imgs/users/<%=user.img %> alt="" onclick="userIconClicker(this)">
+                <img class="fa-user" src=<%=user.img %> alt="" onclick="userIconClicker(this)">
               </div>
               <div id="nav-buttom">
                 <i class="fa-solid fa-bars" onclick="showNav()"></i>
@@ -41,7 +43,7 @@
               <div id='<%=user.cart.products[i].product.id%>'>
                 <img
                   onclick="window.location.href=`${window.location.origin}/shop?<%= user.cart.products[i].product._id%>`"
-                  src='/<%=user.cart.products[i].product.imgSrc %>'>
+                  src='<%=user.cart.products[i].product.imgSrc %>'>
                 <h2>
                   <%=user.cart.products[i].product.price %>
                 </h2>
@@ -67,7 +69,7 @@
         <% } %>
           <div class="user-div">
             <div class="user-img">
-              <img src=/imgs/users/<%=user.img %> alt="">
+              <img src=<%=user.img %> alt="">
             </div>
             <div class="user-name">
               <%= user.firstName %>
@@ -108,14 +110,16 @@
                   </div>
                   <% if(user){%>
                     <div class="img-user">
-                      <img src=/imgs/users/<%=user.img %> alt="">
+                      <img src=<%=user.img %> alt="">
                     </div>
                     <div>Hello <a href="#">
                         <%= user.firstName %>
                       </a></div>
                     <% }else{ %>
                       <div class="crea">
-                        <img src="/imgs/logo.png" alt="logo">
+                        <img
+                          src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Flogo.png?alt=media&token=d411f5f0-91aa-44ff-a166-c86033169358&_gl=1*qn99tq*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3Mzk3OC4zOS4wLjA."
+                          alt="logo">
                       </div>
                       <% } %>
                 </div>

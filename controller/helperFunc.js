@@ -60,12 +60,6 @@ const multerFilter = (req, file, cb) => {
 
 exports.upload = multer({ storage: multerStorage, fileFilter: multerFilter })
 
-exports.sharpImg = (req) => sharp(req.file.buffer)
-  .resize(500, 500) // size
-  .toFormat('jpeg') // to .jpeg
-  .jpeg({ quality: 90 }) //quality 90%
-  .toFile(`public/imgs/users/${req.file.filename}`)
-
 //! To slice data to show it in a shop page
 exports.sliceDataShop = (data, length) => {
   let products = []

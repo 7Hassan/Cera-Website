@@ -6,7 +6,7 @@
           <% }else if(place=='home' ){ %>
             <div onclick="window.location.href=`${window.location.origin}/shop?<%= objProduct._id%>`">
               <% } %>
-                <img src="/<%=objProduct.imgSrc %>" alt="product image">
+                <img src="<%=objProduct.imgSrc %>" alt="product image">
                 <div class="details"><span>Cera</span>
                   <h5>Cartoon Astronaut <%= objProduct.name %>
                   </h5>
@@ -94,7 +94,7 @@
         </div>
         <% }else{ %>
           <div class="product-box notStock">
-            <img src="../<%=objProduct.imgSrc %>" alt="product image">
+            <img src="<%=objProduct.imgSrc %>" alt="product image">
             <div class="message-not-stock">It will be soon</div>
             <div class="details"><span>Cera</span>
               <h5>Cartoon Astronaut <%= objProduct.name %>

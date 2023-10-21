@@ -1,7 +1,7 @@
 function createDivCarte(product, count) {
   return `
     <div id='${product._id}'>
-      <img src="/${product.imgSrc}" onclick="window.location.href='${window.location.origin}/shop?${product._id}'">
+      <img src=${product.imgSrc} onclick="window.location.href='${window.location.origin}/shop?${product._id}'">
     
     <h2> ${product.price}</h2 >
       <h6>x ${count}</h6>

@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
   expPasswordToken: Date,
   img: {
     type: String,
-    default: 'default.webp'
+    default: 'https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/users%2Fdefault.webp?alt=media&token=a03185a4-0d2a-430c-bf29-8a4724975fbf&_gl=1*pnsezd*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg3MTU5Mi4yLjEuMTY5Nzg3NDc2NS4xNy4wLjA.'
   },
   country: {
     type: String,

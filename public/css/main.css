@@ -570,7 +570,7 @@ body.hidden {
 
 /* Start main section  */
 .main-sec-home {
-  background-image: url(../imgs/hero4.png);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Fhero4.png?alt=media&token=aa5e4ece-77ff-45da-8531-3e28b8fb7e45);
   height: 90vh;
   background-size: cover;
   background-position: top 25% right 0;
@@ -590,7 +590,7 @@ body.hidden {
 
 .main-sec-home button {
   border: none;
-  background-image: url(../imgs/button.png);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/logo%2Fbutton.png?alt=media&token=4d9f69a0-a5c2-4673-bbe9-fb6ee616341e);
   background-size: cover;
   color: var(--main-color);
   background-color: transparent;
@@ -863,7 +863,7 @@ body.hidden {
 
 /* Start banner */
 .banner {
-  background-image: url(../imgs/banner/b2.jpg);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/banner%2Fb2.jpg?alt=media&token=6874af96-aaf9-4756-a407-dc7af0162e6f);
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -894,7 +894,6 @@ body.hidden {
 
 /* Start sm-banner */
 .sm-banner .banner-box {
-  background-image: url(../imgs/banner/b17.jpg);
   background-size: cover;
   background-position: center;
   min-width: 580px;
@@ -928,9 +927,6 @@ body.hidden {
   border-color: var(--main-color);
 }
 
-.sm-banner .banner-box2 {
-  background-image: url(../imgs/banner/b10.jpg);
-}
 
 /* Start third banner */
 .third-banner .container div {
@@ -946,17 +942,7 @@ body.hidden {
   margin-top: 20px;
 }
 
-.third-banner .container div:nth-child(1) {
-  background-image: url(../imgs/banner/b7.jpg);
-}
 
-.third-banner .container div:nth-child(2) {
-  background-image: url(../imgs/banner/b4.jpg);
-}
-
-.third-banner .container div:nth-child(3) {
-  background-image: url(../imgs/banner/b18.jpg);
-}
 
 .third-banner .container div h2 {
   color: white;
@@ -1150,7 +1136,7 @@ footer .copyright {
 }
 
 .main-sec-shop {
-  background-image: url(../imgs/banner/b1.jpg);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/banner%2Fb1.jpg?alt=media&token=c0f9c838-9470-431b-964e-32a1c4856a12);
 }
 
 
@@ -1368,7 +1354,7 @@ select {
 /* blog Page */
 
 .main-sec-blog {
-  background-image: url(../imgs/banner/b19.jpg);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/banner%2Fb19.jpg?alt=media&token=cc1bea9d-c231-4a5a-9f5d-a4b5b2ed7829);
   overflow-x: hidden;
 }
 
@@ -1418,11 +1404,11 @@ select {
 /* Start contact page */
 .main-sec-contact {
   /* background: linear-gradient(273deg, rgb(28, 170, 161) 0%, rgba(6, 59, 55, 1) 100%); */
-  background-image: url('../imgs/contact/contact.jpeg');
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/contant%2Fcontact.jpeg?alt=media&token=7c9db1f2-3448-4a6e-9d2f-ce51d072b2c4);
 }
 
 .main-sec-about {
-  background-image: url(../imgs/about/banner.png);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/about%2Fbanner.png?alt=media&token=12899008-a8e6-4dec-975d-6308b5359a04);
 }
 
 .main-about .container div,

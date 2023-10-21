@@ -7,11 +7,11 @@
           <div class="product">
             <div class="container" id='box-<%=product._id %>'>
               <div class="imgs">
-                <img srcset="/<%=product.imgSrc %>" id="main-img" />
+                <img srcset="<%=product.imgSrc %>" id="main-img" />
                 <div class="other-imgs relative">
-                  <img id="first-img" srcset="/<%=product.imgSrc %>"
+                  <img id="first-img" srcset="<%=product.imgSrc %>"
                     onclick="document.getElementById('main-img').srcset=this.srcset" />
-                  <img id="img-master" srcset="/<%=product.imgSrc%>" />
+                  <img id="img-master" srcset="<%=product.imgSrc%>" />
                   <%for (let i=0; i < product.imgs.length; i++) { %>
                     <img srcset="/<%=product.imgs[i]%>" onerror="this.style.display='none'"
                       onclick="document.getElementById('main-img').srcset=this.srcset" />
