@@ -41,7 +41,7 @@
                                   <% } %>
                             </div>
                             <% }}else{%>
-                              <div class="love-div" onclick="flashMessage('Please, Log in to get Access','errors')">
+                              <div class="love-div" onclick="window.location.href = '/auth/login'">
                                 <i class="fa-regular fa-heart love"></i>
                               </div>
                               <% } %>
@@ -86,7 +86,7 @@
                           onclick="flashMessage('Please, Confirm Your Email','warning')">Add</button>
                         <% }}else{ %>
                           <button id="cart-shop" class="normal pop"
-                            onclick="flashMessage('Please, Log in to get Access','errors')">Add</button>
+                            onclick="window.location.href = '/auth/login'">Add</button>
                           <% } %>
                 </div>
               </div>
