@@ -9,6 +9,7 @@ const flash = require('connect-flash')
 const compression = require('compression')
 const AppError = require('./Errors/classError')
 const errorHandler = require('./Errors/errorHandling')
+const ejs = require('ejs');
 
 //! security
 require('dotenv').config({ path: './.env' }); //? configuration for dotenv
@@ -23,7 +24,9 @@ const app = express();
 app.enable('trust proxy')
 
 //? Read files in 'public' folder
-app.set('view engine', 'ejs') //? EJS
+// app.set('view engine', 'ejs') //? EJS
+app.engine('ejs', ejs.renderFile) //? EJS
+app.set('views', './views') //? EJS
 app.use(express.static(path.join(__dirname, 'public'))) //? css & js
 app.use(cors())
 //? body- parser
