@@ -24,7 +24,7 @@ const app = express();
 app.enable('trust proxy')
 
 //? Read files in 'public' folder
-// app.set('view engine', 'ejs') //? EJS
+app.set('view engine', 'ejs') //? EJS
 app.engine('ejs', ejs.renderFile) //? EJS
 app.set('views', './views') //? EJS
 app.use(express.static(path.join(__dirname, 'public'))) //? css & js
