@@ -89,11 +89,6 @@ app.use(morgan('tiny'));
 app.use(compression())
 //app.use(helmet()) //? set security http header
 
-app.use((req, res, next) => {
-  console.log(req.url); // Log the URL to help diagnose the issue
-  next();
-});
-
 // Rest of your middleware and routing setup
 app.use('/', require('./routes/pages'));
 app.use('/api', require('./routes/api'));
