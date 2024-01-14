@@ -25,7 +25,7 @@ app.enable('trust proxy')
 //? Read files in 'public' folder
 app.set('view engine', 'ejs') //? EJS
 app.use(express.static(path.join(__dirname, 'public'))) //? css & js
-app.use(cors()) 
+app.use(cors())
 //? body- parser
 app.use(bodyParser.json()); //? reading a data from body to req.body
 app.use(bodyParser.urlencoded({ extended: false }))
