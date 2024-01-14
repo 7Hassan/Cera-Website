@@ -27,7 +27,7 @@ exports.blogPage = (req, res) => res.render('pages/blog', helper.pageObject('Cer
 exports.notFoundPage = (req, res) => res.status(404).render('pages/404', helper.pageObject('404', req))
 exports.settingPage = (req, res, next) => res.render('pages/setting', helper.pageObject('Cera | Account', req))
 exports.homePage = catchError(async (req, res, next) =>
-  res.render('pages/index', {
+  res.render('/pages/index', {
     featureProd: await Product.find({ stoked: false }),
     newProd: await Product.find({ new: true, stoked: true }),
     title: 'Cera',

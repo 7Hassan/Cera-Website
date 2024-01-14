@@ -61,8 +61,7 @@
     "parcel-bundler": "^1.12.5"
   },
   "engines": {
-    "node": "^18",
-    "npm": "9.4.0"
+    "node": "18.x"
   },
   "repository": {
     "type": "git",
