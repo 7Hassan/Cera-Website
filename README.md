@@ -1,5 +1,5 @@
 <header>
-<h1>Cera Shop | <a target="_blank" href="https://cera.onrender.com">Demo</a></h1>
+<h1>Cera Shop | <a target="_blank" href="https://cera-website.vercel.app">Demo</a></h1>
 <img class="head-img" src="https://firebasestorage.googleapis.com/v0/b/cera-1d79c.appspot.com/o/layout%2Fmain.png?alt=media&token=f1191b8b-f658-4391-afe9-c872b111f306&_gl=1*1c4jejy*_ga*Njk0MTExMjMzLjE2OTc4MzQzODA.*_ga_CW55HF8NVT*MTY5Nzg4MzUzMy4zLjEuMTY5Nzg4NjgwMi42MC4wLjA."
           alt="photo" />
 </header>
@@ -79,7 +79,7 @@
 		</section>
 <section>
 			<h2>Contributors</h2>
-			<p>This e-commerce website was developed by <a href="mailto:7hassan.dev@gmail.com">Hassan Hossam </a>. If you would like to contribute to this project, please feel free to submit a pull request or contact Your Name for more information.</p>
+			<p>This e-commerce website was developed by <a href="mailto:7hassan.dev@gmail.com">Hassan Hossam </a>. If you would like to contribute to this project, please feel free to submit a pull request.</p>
 		</section>
 
 <section>
@@ -89,5 +89,5 @@
 </main>
 
 <footer>
-	<p>&copy; 2023 E-commerce Website. All rights reserved.</p>
+	<p>&copy; 2023 <code>Cera</code> Website. All rights reserved.</p>
 </footer>
